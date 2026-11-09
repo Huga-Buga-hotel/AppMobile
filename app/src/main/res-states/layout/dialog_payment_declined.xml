@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_card"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_warning_red" />
+
+    <TextView
+        style="@style/HB.Text.H2"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="@string/err_payment_title" />
+
+    <TextView
+        style="@style/HB.Text.Muted"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/err_payment_desc"
+        android:textSize="@dimen/text_body" />
+
+    <TextView
+        style="@style/HB.Button.Primary"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/gap_l"
+        android:text="@string/btn_use_another_card" />
+
+    <TextView
+        style="@style/HB.Button.Outline"
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        android:text="@string/btn_pay_with_pix" />
+
+    <TextView
+        style="@style/HB.Text.Muted"
+        android:layout_marginTop="12dp"
+        android:text="@string/btn_pay_on_arrival"
+        android:textSize="12sp" />
+</LinearLayout>

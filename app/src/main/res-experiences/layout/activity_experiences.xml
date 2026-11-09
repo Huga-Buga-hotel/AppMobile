@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tela 04 · Experiências / Atividades (mobile 390) -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hb_cream">
+
+    <include
+        android:id="@+id/appBar"
+        layout="@layout/view_app_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/screen_margin">
+
+            <TextView
+                style="@style/HB.Text.Eyebrow"
+                android:text="@string/exp_eyebrow" />
+
+            <TextView
+                style="@style/HB.Text.H1"
+                android:layout_marginTop="4dp"
+                android:text="@string/exp_title" />
+
+            <TextView
+                style="@style/HB.Text.Muted"
+                android:layout_marginTop="@dimen/gap_s"
+                android:text="@string/exp_subtitle"
+                android:textSize="@dimen/text_body" />
+
+            <!-- Filtros de Categoria -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_m"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/chipAllAtividades"
+                        style="@style/HB.Chip.Selected"
+                        android:layout_marginEnd="@dimen/gap_s"
+                        android:text="@string/filter_all_short" />
+
+                    <TextView
+                        android:id="@+id/chipKidsAtividades"
+                        style="@style/HB.Chip"
+                        android:layout_marginEnd="@dimen/gap_s"
+                        android:text="@string/filter_kids_short" />
+
+                    <TextView
+                        android:id="@+id/chipFamilyAtividades"
+                        style="@style/HB.Chip"
+                        android:layout_marginEnd="@dimen/gap_s"
+                        android:text="@string/filter_family" />
+
+                    <TextView
+                        android:id="@+id/chipAdventureAtividades"
+                        style="@style/HB.Chip"
+                        android:text="@string/filter_adventure" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <!-- Lista de atividades -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/experiencesList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_l"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                xmlns:tools="http://schemas.android.com/tools"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_experience" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/hb_paper"
+        app:itemIconTint="@color/nav_item_color"
+        app:itemTextColor="@color/nav_item_color"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav" />
+</androidx.constraintlayout.widget.ConstraintLayout>

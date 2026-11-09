@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Indicadores dos Passos 1, 2, 3 -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/screen_margin"
+            android:paddingEnd="@dimen/screen_margin">
+
+            <!-- Passo 1 -->
+            <TextView
+                android:id="@+id/step1Indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_stepper_active"
+                android:paddingStart="12dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="6dp"
+                android:text="@string/step_1_title"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/HB.Text.Muted"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="6dp"
+                android:text="........."
+                android:textSize="10sp" />
+
+            <!-- Passo 2 -->
+            <TextView
+                android:id="@+id/step2Indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_chip"
+                android:paddingStart="12dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="6dp"
+                android:text="@string/step_2_title"
+                android:textColor="@color/hb_ink"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/HB.Text.Muted"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="6dp"
+                android:text="........."
+                android:textSize="10sp" />
+
+            <!-- Passo 3 -->
+            <TextView
+                android:id="@+id/step3Indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_chip"
+                android:paddingStart="12dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="6dp"
+                android:text="@string/step_3_title"
+                android:textColor="@color/hb_ink"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </HorizontalScrollView>
+</LinearLayout>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tela L2 · Loader Temático "Esfregando as pedras..." (mobile 390) -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hb_dark">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/screen_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_stones_fire" />
+
+        <TextView
+            style="@style/HB.Text.H1"
+            android:layout_marginTop="@dimen/gap_l"
+            android:text="@string/loading_stones_title"
+            android:textColor="@color/white" />
+
+        <TextView
+            style="@style/HB.Text.Muted"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/loading_stones_sub"
+            android:textColor="@color/hb_stone_dark"
+            android:textSize="@dimen/text_body" />
+
+        <!-- Barra de Progresso Animada -->
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="200dp"
+            android:layout_height="8dp"
+            android:layout_marginTop="@dimen/gap_l"
+            android:indeterminate="true"
+            android:progressDrawable="@drawable/bg_chip_selected" />
+    </LinearLayout>
+
+    <TextView
+        style="@style/HB.Text.H3"
+        android:layout_marginBottom="24dp"
+        android:text="HUGA BUGA"
+        android:textColor="@color/hb_orange"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

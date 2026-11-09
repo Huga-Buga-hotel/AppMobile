@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tela para escolher qual reserva receberá o agendamento da experiência -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hb_cream">
+
+    <include
+        android:id="@+id/appBar"
+        layout="@layout/view_app_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/screen_margin">
+
+            <TextView
+                style="@style/HB.Text.Eyebrow"
+                android:text="AGENDAMENTO DE EXPERIÊNCIA" />
+
+            <TextView
+                android:id="@+id/tvSelectBookingTitle"
+                style="@style/HB.Text.H1"
+                android:layout_marginTop="4dp"
+                android:text="Escolha sua Reserva" />
+
+            <TextView
+                android:id="@+id/tvSelectBookingSub"
+                style="@style/HB.Text.Muted"
+                android:layout_marginTop="@dimen/gap_s"
+                android:text="Selecione a reserva da sua tribo para vincular esta aventura e visualizar as datas disponíveis."
+                android:textSize="@dimen/text_body" />
+
+            <!-- Lista de reservas ativas -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvBookingsForExp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_l"
+                android:nestedScrollingEnabled="false"
+                tools:itemCount="2"
+                tools:listitem="@layout/item_booking_card" />
+
+            <TextView
+                android:id="@+id/tvEmptyBookingsForExp"
+                style="@style/HB.Text.Muted"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_l"
+                android:gravity="center"
+                android:text="Nenhuma reserva ativa encontrada. Faça uma reserva de caverna para agendar experiências! 🪨"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

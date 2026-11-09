@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="HB.Slot" parent="HB.Text">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:background">@drawable/bg_slot</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/slot_text</item>
+        <item name="android:clickable">true</item>
+    </style>
+</resources>

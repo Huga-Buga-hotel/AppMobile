@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tela 02 · Lista de Cavernas & Filtros (mobile 390) -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hb_cream">
+
+    <include
+        android:id="@+id/appBar"
+        layout="@layout/view_app_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/screen_margin">
+
+            <!-- Cabeçalho de Pesquisa por Nome, Data e Tribo -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_search" />
+
+                    <EditText
+                        android:id="@+id/etSearchQueryName"
+                        style="@style/HB.Text"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:hint="Pesquisar caverna por nome..."
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/hb_stone" />
+
+                <!-- Resumo de Datas e Tribo (Clicável para Alterar) -->
+                <LinearLayout
+                    android:id="@+id/layoutChangeSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp">
+
+                    <TextView
+                        android:id="@+id/tvSearchSummary"
+                        style="@style/HB.Text"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="12–15 out · 4 na tribo"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        style="@style/HB.Text.Muted"
+                        android:text="Alterar"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Chips de Filtros -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_m"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/chipAll"
+                        style="@style/HB.Chip.Selected"
+                        android:layout_marginEnd="6dp"
+                        android:text="Todas" />
+
+                    <TextView
+                        android:id="@+id/chipToca"
+                        style="@style/HB.Chip"
+                        android:layout_marginEnd="6dp"
+                        android:text="Toca" />
+
+                    <TextView
+                        android:id="@+id/chipFogueira"
+                        style="@style/HB.Chip"
+                        android:layout_marginEnd="6dp"
+                        android:text="Fogueira" />
+
+                    <TextView
+                        android:id="@+id/chipPrice"
+                        style="@style/HB.Chip"
+                        android:layout_marginEnd="6dp"
+                        android:text="Menor preço" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
+
+
+            <!-- Título da Lista -->
+            <TextView
+                android:id="@+id/tvCavernsListTitle"
+                style="@style/HB.Text.H2"
+                android:layout_marginTop="@dimen/gap_l"
+                android:text="@string/caverns_list_title" />
+
+            <TextView
+                android:id="@+id/tvCavernsListSubtitle"
+                style="@style/HB.Text.Muted"
+                android:layout_marginTop="2dp"
+                android:text="@string/caverns_list_subtitle"
+                android:textSize="12sp" />
+
+            <!-- Lista de Cards -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCaverns"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_m"
+                android:nestedScrollingEnabled="false" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/hb_paper"
+        app:itemIconTint="@color/nav_item_color"
+        app:itemTextColor="@color/nav_item_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Huga Buga</string>
+    <string name="hotel_tagline">HOTEL · 10.000 a.C.</string>
+
+    <!-- Navegação -->
+    <string name="nav_caverns">Cavernas</string>
+    <string name="nav_experiences">Experiências</string>
+    <string name="nav_banquet">O Banquete</string>
+    <string name="nav_tribe">A Tribo</string>
+    <string name="nav_home">Início</string>
+    <string name="nav_reservations">Reservas</string>
+    <string name="nav_profile">Perfil</string>
+    <string name="action_reserve">Reservar</string>
+    <string name="action_notify">Avisar</string>
+
+    <!-- Home / Hero -->
+    <string name="home_hero_eyebrow">HOTEL PRÉ-HISTÓRICO · VALE DOS DINOS</string>
+    <string name="home_hero_title_1">Durma como um homem das cavernas.</string>
+    <string name="home_hero_title_2">Acorde como um rei.</string>
+    <string name="home_hero_desc">Cavernas esculpidas na rocha, camas de pele macia e banquetes na fogueira — com todo o conforto do século XXI. Feito para famílias, tribos de amigos e viajantes do mundo todo.</string>
+    <string name="home_hero_badge">Até 5 anos não paga e ganha kit mini-caçador</string>
+    <string name="home_cta_caverns">Ver cavernas</string>
+    <string name="home_cta_tour">Tour 360° pela caverna</string>
+    <string name="home_hero_rating">4,9 · 3.200 relatos da tribo</string>
+    <string name="home_hero_photo_alt">Foto: entrada da caverna com tochas acesas ao entardecer</string>
+    <string name="marquee_text">UGA ◆ BUGA ◆ MAMUTE ◆ FOGUEIRA ◆ TRIBO ◆ UGA ◆ BUGA ◆ MAMUTE</string>
+    <string name="section_our_caverns_eyebrow">ONDE SUA TRIBO DORME</string>
+    <string name="section_our_caverns_title">Nossas cavernas</string>
+    <string name="section_our_caverns_see_all">Ver todas as 7 →</string>
+
+    <!-- Busca & Filtros -->
+    <string name="search_dates_label">DATAS</string>
+    <string name="search_dates_value">12 – 15 out · 3 noites</string>
+    <string name="search_tribe_label">TRIBO</string>
+    <string name="search_tribe_value">2 adultos · 2 crianças</string>
+    <string name="search_cavern_type_label">TIPO DE CAVERNA</string>
+    <string name="search_cavern_type_value">Todas as cavernas</string>
+    <string name="search_cta">Buga! Buscar</string>
+
+    <!-- Lista de Cavernas -->
+    <string name="caverns_list_title">7 cavernas livres pra sua tribo</string>
+    <string name="caverns_list_subtitle">2 filtros ativos · preços com taxas inclusas</string>
+    <string name="caverns_alert_holiday">Feriado à vista: 12 de outubro está disputado — 3 das 7 cavernas têm poucas unidades.</string>
+    <string name="caverns_sort_lowest_price">Menor preço</string>
+    <string name="caverns_badge_last_units">Últimas 2!</string>
+    <string name="caverns_cancellation_free">Cancelamento grátis até 10 out</string>
+    <string name="caverns_btn_view">Ver caverna</string>
+    <string name="per_night">/noite</string>
+
+    <!-- Nomes e especificações de Cavernas -->
+    <string name="cavern_1_name">Toca do Mamute</string>
+    <string name="cavern_1_tag">Família · Ala Leste</string>
+    <string name="cavern_1_capacity">até 5 pessoas</string>
+    <string name="cavern_1_beds">1 casal + beliche</string>
+    <string name="cavern_1_size">42 m²</string>
+    <string name="cavern_1_price">R$ 520</string>
+    <string name="cavern_1_total">R$ 1.560 · 3 noites</string>
+    <string name="cavern_1_rating">4,8 (212 relatos)</string>
+
+    <string name="cavern_2_name">Gruta do Casal</string>
+    <string name="cavern_2_tag">Casal</string>
+    <string name="cavern_2_capacity">até 2 pessoas</string>
+    <string name="cavern_2_beds">1 casal king</string>
+    <string name="cavern_2_size">30 m²</string>
+    <string name="cavern_2_price">R$ 390</string>
+    <string name="cavern_2_total">R$ 1.170 · 3 noites</string>
+    <string name="cavern_2_rating">4,9 (184 relatos)</string>
+
+    <string name="cavern_3_name">Covil dos Caçadores</string>
+    <string name="cavern_3_tag">Amigos</string>
+    <string name="cavern_3_capacity">até 6 pessoas</string>
+    <string name="cavern_3_beds">3 beliches</string>
+    <string name="cavern_3_size">55 m²</string>
+    <string name="cavern_3_price">R$ 610</string>
+    <string name="cavern_3_total">R$ 1.830 · 3 noites</string>
+    <string name="cavern_3_rating">4,7 (96 relatos)</string>
+
+    <string name="cavern_4_name">Suíte do Chefe da Tribo</string>
+    <string name="cavern_4_tag">Grupo</string>
+    <string name="cavern_4_capacity">até 8 pessoas</string>
+    <string name="cavern_4_beds">2 casal + 2 beliches</string>
+    <string name="cavern_4_size">86 m²</string>
+    <string name="cavern_4_price">R$ 980</string>
+    <string name="cavern_4_total">R$ 2.940 · 3 noites</string>
+    <string name="cavern_4_rating">4,7 (58 relatos)</string>
+
+    <!-- Detalhe da Caverna -->
+    <string name="detail_breadcrumb">Início > Cavernas > Toca do Mamute</string>
+    <string name="detail_location">Vista para o Vale dos Dinos</string>
+    <string name="detail_share">Compartilhar</string>
+    <string name="detail_save">Salvar</string>
+    <string name="detail_see_photos">Ver 24 fotos</string>
+    <string name="detail_desc">Escavada direto na rocha da ala leste, a Toca do Mamute é a caverna preferida das famílias: cama de casal forrada de pele sintética, um beliche-toca escondido na parede para as crianças e uma fogueira elétrica que estala de verdade. De manhã, a janela redonda mostra o Vale dos Dinos inteiro.</string>
+
+    <string name="detail_amenity_fire">Fogueira privativa</string>
+    <string name="detail_amenity_fire_sub">Elétrica, segura pras crianças</string>
+    <string name="detail_amenity_tub">Banheira de pedra</string>
+    <string name="detail_amenity_tub_sub">Aquecida, cabe a tribo</string>
+    <string name="detail_amenity_bed">Beliche-toca</string>
+    <string name="detail_amenity_bed_sub">Escondido na parede</string>
+    <string name="detail_amenity_coffee">Café jurássico</string>
+    <string name="detail_amenity_coffee_sub">Incluso pra todos</string>
+    <string name="detail_amenity_wifi">Wi-Fi rápido</string>
+    <string name="detail_amenity_wifi_sub">Sinal de fumaça 5G</string>
+    <string name="detail_amenity_climate">Clima de caverna</string>
+    <string name="detail_amenity_climate_sub">Ar-condicionado 22 °C</string>
+
+    <string name="detail_rules_title">Regras da tribo</string>
+    <string name="detail_rules_checkin">Check-in a partir das 14h</string>
+    <string name="detail_rules_checkout">Check-out até 12h</string>
+    <string name="detail_rules_pets">Pets pequenos bem-vindos (dinos não)</string>
+
+    <string name="detail_booking_scarcity">Só restam 2 tocas nessas datas</string>
+    <string name="detail_booking_cta">Buga! Reservar esta toca</string>
+    <string name="amenity_highlight">Destaque da caverna</string>
+    <string name="detail_price_breakdown_nights">R$ 520 × 3 noites</string>
+    <string name="detail_price_breakdown_breakfast">Café jurássico (4 pessoas)</string>
+    <string name="detail_price_breakdown_kids">Crianças até 5 anos</string>
+    <string name="detail_price_breakdown_total">Total</string>
+</resources>

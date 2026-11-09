@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tela 01 · Home & Cavernas (mobile 390) -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hb_cream">
+
+    <include
+        android:id="@+id/appBar"
+        layout="@layout/view_app_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Hero Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/screen_margin">
+
+                <TextView
+                    android:id="@+id/tvHomeEyebrow"
+                    style="@style/HB.Text.Eyebrow"
+                    android:text="@string/home_hero_eyebrow" />
+
+                <TextView
+                    android:id="@+id/tvHomeTitle1"
+                    style="@style/HB.Text.H1"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/home_hero_title_1" />
+
+                <TextView
+                    android:id="@+id/tvHomeTitle2"
+                    style="@style/HB.Text.H1"
+                    android:text="@string/home_hero_title_2"
+                    android:textColor="@color/hb_orange" />
+
+                <TextView
+                    android:id="@+id/tvHomeDesc"
+                    style="@style/HB.Text.Muted"
+                    android:layout_marginTop="@dimen/gap_s"
+                    android:text="@string/home_hero_desc"
+                    android:textSize="@dimen/text_body" />
+
+                <!-- Hero Photo Frame -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:layout_marginTop="@dimen/gap_m"
+                    android:background="@drawable/bg_photo_placeholder">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/home_hero_photo_alt"
+                        android:src="@drawable/ic_image_placeholder" />
+
+                    <TextView
+                        android:id="@+id/tvPhotoAlt"
+                        style="@style/HB.Text.Muted"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:layout_marginBottom="12dp"
+                        android:text="@string/home_hero_photo_alt"
+                        android:textSize="11sp" />
+                </FrameLayout>
+
+                <!-- Avaliação & Badge -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/gap_m"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_star" />
+
+                    <TextView
+                        android:id="@+id/tvRatingText"
+                        style="@style/HB.Text"
+                        android:layout_marginStart="4dp"
+                        android:text="@string/home_hero_rating"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_chip"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        style="@style/HB.Text.Muted"
+                        android:text="💡 "
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvBadgeText"
+                        style="@style/HB.Text"
+                        android:text="@string/home_hero_badge"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+
+
+
+
+                <!-- Card de Busca / Reserva -->
+                <include
+                    layout="@layout/view_search_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/gap_l" />
+            </LinearLayout>
+
+            <!-- Faixa Ticker / Marquee Banner -->
+            <TextView
+                android:id="@+id/tvMarqueeBanner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gradient_banner"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:singleLine="true"
+                android:text="@string/marquee_text"
+                android:textColor="@color/hb_dark"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/hb_paper"
+        app:itemIconTint="@color/nav_item_color"
+        app:itemTextColor="@color/nav_item_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

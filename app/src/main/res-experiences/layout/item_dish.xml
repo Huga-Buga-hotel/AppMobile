@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Item do cardápio (tábua com pontilhado ligando nome e preço) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/gap_m"
+    android:paddingBottom="@dimen/gap_m">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/dishName"
+            style="@style/HB.Text.H3"
+            android:text="@string/dish_1" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="@dimen/gap_s"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_dotted_line" />
+
+        <TextView
+            android:id="@+id/dishPrice"
+            style="@style/HB.Text.H3"
+            android:text="@string/dish_1_price" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/dishDesc"
+        style="@style/HB.Text.Muted"
+        android:layout_marginTop="2dp"
+        android:text="@string/dish_1_desc" />
+
+    <TextView
+        android:id="@+id/dishTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/bg_chip"
+        android:paddingHorizontal="6dp"
+        android:paddingVertical="1dp"
+        android:text="@string/dish_1_tag"
+        android:textSize="10sp"
+        android:textStyle="bold" />
+</LinearLayout>

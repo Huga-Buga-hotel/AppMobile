@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Card em grade (tablet/desktop): foto, título, meta, preço e botão -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/gap_s"
+    android:background="@drawable/bg_card"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:background="@drawable/bg_photo_placeholder">
+
+        <TextView
+            android:id="@+id/tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/tag_adventure"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/photo_placeholder"
+            android:src="@drawable/ic_image_placeholder" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/HB.Text.H3"
+        android:layout_marginTop="@dimen/gap_s"
+        android:text="@string/exp_trail" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_clock" />
+
+        <TextView
+            android:id="@+id/meta"
+            style="@style/HB.Text.Muted"
+            android:layout_marginStart="4dp"
+            android:text="@string/exp_trail_meta" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gap_m"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/price"
+                style="@style/HB.Text.H2"
+                android:text="@string/price_90" />
+
+            <TextView
+                android:id="@+id/spots"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/spots_left_2"
+                android:textColor="@color/hb_green"
+                android:textSize="@dimen/text_small"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnReserve"
+            style="@style/HB.Button.Outline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_reserve" />
+    </LinearLayout>
+</LinearLayout>

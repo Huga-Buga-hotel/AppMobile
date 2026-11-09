@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tela P1 · 404 Página Não Encontrada "Essa caverna não existe" (mobile 390) -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hb_cream">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/screen_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_dino" />
+
+        <TextView
+            style="@style/HB.Text.H1"
+            android:layout_marginTop="@dimen/gap_m"
+            android:text="@string/error_404_code"
+            android:textColor="@color/hb_orange"
+            android:textSize="48sp" />
+
+        <TextView
+            style="@style/HB.Text.H1"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="@string/error_404_title" />
+
+        <TextView
+            style="@style/HB.Text.Muted"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/error_404_desc"
+            android:textSize="@dimen/text_body" />
+
+        <TextView
+            style="@style/HB.Button.Primary"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/gap_l"
+            android:text="@string/btn_back_to_home" />
+
+        <TextView
+            style="@style/HB.Button.Outline"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:text="@string/home_cta_caverns" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

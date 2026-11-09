@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_card"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        style="@style/HB.Text.H3"
+        android:text="@string/checkout_resumo_title" />
+
+    <!-- Nome e Detalhes da Caverna -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_photo_placeholder">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_image_placeholder" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvSummaryCavernName"
+                style="@style/HB.Text"
+                android:text="@string/cavern_1_name"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/HB.Text.Muted"
+                android:text="★ 4,8 · Família · Ala Leste"
+                android:textSize="11sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="@color/hb_stone" />
+
+    <!-- Datas e Tribo -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/HB.Text.Eyebrow"
+                android:text="CHEGADA" />
+
+            <TextView
+                android:id="@+id/tvSummaryCheckIn"
+                style="@style/HB.Text"
+                android:text="Sex, 12 out"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/HB.Text.Eyebrow"
+                android:text="PARTIDA" />
+
+            <TextView
+                android:id="@+id/tvSummaryCheckOut"
+                style="@style/HB.Text"
+                android:text="Seg, 15 out"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvSummaryTribe"
+        style="@style/HB.Text.Muted"
+        android:layout_marginTop="8dp"
+        android:text="TRIBO: 2 adultos · 2 crianças"
+        android:textSize="11sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="@color/hb_stone" />
+
+    <!-- Valores -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvSummaryNightsBreakdown"
+            style="@style/HB.Text"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/detail_price_breakdown_nights"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvSummaryNightsTotal"
+            style="@style/HB.Text"
+            android:text="R$ 1.560"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Extras Selecionados -->
+    <LinearLayout
+        android:id="@+id/containerSummaryExtras"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="@color/hb_stone" />
+
+    <!-- Total -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/HB.Text.H3"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/detail_price_breakdown_total" />
+
+        <TextView
+            android:id="@+id/tvSummaryTotal"
+            style="@style/HB.Text.H2"
+            android:text="R$ 1.560"
+            android:textColor="@color/hb_dark" />
+    </LinearLayout>
+
+    <!-- Política -->
+    <TextView
+        style="@style/HB.Text.Muted"
+        android:layout_marginTop="10dp"
+        android:text="✓ Cancelamento grátis até 10 out"
+        android:textColor="@color/hb_green"
+        android:textSize="11sp" />
+</LinearLayout>

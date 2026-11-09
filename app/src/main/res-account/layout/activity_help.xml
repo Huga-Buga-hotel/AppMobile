@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hb_cream">
+
+    <include
+        android:id="@+id/appBar"
+        layout="@layout/view_app_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/screen_margin">
+
+            <TextView
+                android:id="@+id/tvTitleHelp"
+                style="@style/HB.Text.H1"
+                android:text="Ajuda da Tribo" />
+
+            <!-- Chatbot Card (Falar com a Xamã) -->
+            <LinearLayout
+                android:id="@+id/cardChatXama"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_m"
+                android:background="@drawable/bg_card_sand"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_group"
+                    app:tint="@color/hb_orange" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/HB.Text"
+                        android:text="Falar com a Xamã via Chat"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        style="@style/HB.Text.Muted"
+                        android:layout_marginTop="2dp"
+                        android:text="Suporte 24h instantâneo com o oráculo da tribo."
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Topic 1 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_m"
+                android:background="@drawable/bg_card"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_calendar"
+                    app:tint="@color/hb_ink" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/HB.Text"
+                        android:text="Check-in &amp; Check-out nas Cavernas"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        style="@style/HB.Text.Muted"
+                        android:layout_marginTop="2dp"
+                        android:text="Check-in a partir das 14h. Faça check-in online pelo app até 3 dias antes para pular a fila da recepção."
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Topic 2 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_m"
+                android:background="@drawable/bg_card"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_fire"
+                    app:tint="@color/hb_orange" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/HB.Text"
+                        android:text="O Banquete e Fogueira Central"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        style="@style/HB.Text.Muted"
+                        android:layout_marginTop="2dp"
+                        android:text="Serviço completo de carnes na brasa e pratos na pedra das 7h às 23h. Hóspedes têm 15% de desconto."
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Topic 3 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_m"
+                android:background="@drawable/bg_card"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_bone"
+                    app:tint="@color/hb_gold" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/HB.Text"
+                        android:text="Ossos e Níveis da Tribo"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        style="@style/HB.Text.Muted"
+                        android:layout_marginTop="2dp"
+                        android:text="Acumule Ossos a cada estadia e use-os para garantir descontos de até 50% em reservas futuras."
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Topic 4 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_m"
+                android:background="@drawable/bg_card"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_timer"
+                    app:tint="@color/hb_ink" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/HB.Text"
+                        android:text="Cancelamentos e Alterações"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        style="@style/HB.Text.Muted"
+                        android:layout_marginTop="2dp"
+                        android:text="Cancelamentos são gratuitos até 2 dias antes do check-in. Atividades podem ser canceladas até 4h antes."
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Topic 5 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_m"
+                android:background="@drawable/bg_card"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_wifi"
+                    app:tint="@color/hb_ink" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/HB.Text"
+                        android:text="Espírito da Caverna (Wi-Fi)"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        style="@style/HB.Text.Muted"
+                        android:layout_marginTop="2dp"
+                        android:text="Wi-Fi de alta velocidade disponível em todas as cavernas e áreas comuns. Conecte-se à rede 'HugaBuga_Guest'."
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

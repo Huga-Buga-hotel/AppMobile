@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tela 11 · Entrar & Criar Conta (mobile 390) -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hb_cream">
+
+    <include
+        android:id="@+id/appBar"
+        layout="@layout/view_app_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/screen_margin">
+
+            <TextView
+                style="@style/HB.Text.H1"
+                android:text="@string/auth_title_join" />
+
+            <!-- Tabs: Entrar | Criar conta -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_m"
+                android:background="@drawable/bg_chip"
+                android:padding="4dp">
+
+                <TextView
+                    android:id="@+id/tabLogin"
+                    style="@style/HB.Chip"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/auth_tab_login" />
+
+                <TextView
+                    android:id="@+id/tabRegister"
+                    style="@style/HB.Chip.Selected"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/auth_tab_register" />
+            </LinearLayout>
+
+            <!-- Formulário -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_m"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Campo Nome -->
+                <LinearLayout
+                    android:id="@+id/layoutName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/HB.Text.Muted"
+                        android:text="@string/auth_field_name"
+                        android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/etName"
+                        style="@style/HB.Text"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/bg_chip"
+                        android:hint="Marina Souza"
+                        android:inputType="textPersonName"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <!-- Campo E-mail -->
+                <TextView
+                    style="@style/HB.Text.Muted"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/auth_field_email"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etEmail"
+                    style="@style/HB.Text"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg_chip"
+                    android:hint="marina@tribo.com"
+                    android:inputType="textEmailAddress"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textSize="13sp" />
+
+                <!-- Campo Senha -->
+                <TextView
+                    style="@style/HB.Text.Muted"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/auth_field_password"
+                    android:textSize="12sp" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="4dp">
+
+                    <EditText
+                        android:id="@+id/etPassword"
+                        style="@style/HB.Text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_chip"
+                        android:hint="••••••••"
+                        android:inputType="textPassword"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="40dp"
+                        android:textSize="13sp" />
+
+                    <ImageView
+                        android:id="@+id/btnTogglePassword"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="end|center_vertical"
+                        android:layout_marginEnd="10dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:contentDescription="@null"
+                        android:focusable="true"
+                        android:padding="2dp"
+                        android:src="@drawable/ic_eye" />
+                </FrameLayout>
+
+
+
+                <!-- Botão Submit -->
+                <TextView
+                    android:id="@+id/btnSubmit"
+                    style="@style/HB.Button.Primary"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/gap_m"
+                    android:text="@string/auth_btn_register" />
+            </LinearLayout>
+
+            <!-- Link Convidado -->
+            <TextView
+                android:id="@+id/tvGuestLink"
+                style="@style/HB.Text.Muted"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/gap_l"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/auth_guest_link"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Experiências -->
+    <string name="exp_eyebrow">PRA CAÇADORES DE TODAS AS IDADES</string>
+    <string name="exp_title">Aventuras da tribo</string>
+    <string name="exp_subtitle">Reserve vagas pra sua estadia de 12 a 15 out. Hóspedes têm prioridade; crianças sempre com monitor.</string>
+
+    <string name="day_fri">SEX</string>
+    <string name="day_sat">SÁB</string>
+    <string name="day_sun">DOM</string>
+    <string name="day_mon">SEG</string>
+    <string name="day_checkin">chegada</string>
+    <string name="day_bookings">3 reservas</string>
+    <string name="day_one_booking">1 reserva</string>
+    <string name="day_checkout">partida</string>
+
+    <string name="filter_all">Todas · 12</string>
+    <string name="filter_all_short">Todas</string>
+    <string name="filter_kids">Crianças 4–12</string>
+    <string name="filter_kids_short">Crianças</string>
+    <string name="filter_family">Família</string>
+    <string name="filter_adventure">Aventura</string>
+    <string name="filter_night">À noite</string>
+
+    <string name="featured_badge">MAIS AMADA PELAS CRIANÇAS</string>
+    <string name="featured_title">Escavação de ovo de dino</string>
+    <string name="featured_desc">Pincel, pá de pedra e um mapa do tesouro. Cada criança encontra (e leva pra casa) seu próprio ovo de dinossauro.</string>
+    <string name="featured_time">10h e 15h</string>
+    <string name="featured_duration">1h30</string>
+    <string name="featured_age">4 a 12 anos</string>
+    <string name="featured_spots_label">Vagas às 10h</string>
+    <string name="featured_spots_left">restam 3 de 12</string>
+    <string name="featured_price">R$ 60</string>
+    <string name="featured_price_unit">/criança</string>
+    <string name="featured_cta">Reservar vaga</string>
+    <string name="photo_featured">Foto: crianças escavando ovo de dinossauro na areia</string>
+
+    <string name="agenda_date">SÁB, 13 OUT</string>
+    <string name="agenda_title">Agenda da sua tribo</string>
+    <string name="agenda_note">Atividades pagas entram na conta do quarto e podem ser canceladas até 4h antes.</string>
+    <string name="agenda_8h">8h</string>
+    <string name="agenda_10h">10h</string>
+    <string name="agenda_14h">14h</string>
+    <string name="agenda_16h">16h</string>
+    <string name="agenda_18h">18h</string>
+    <string name="agenda_20h">20h</string>
+    <string name="agenda_cafe">Café jurássico</string>
+    <string name="agenda_cafe_sub">O Banquete · incluso</string>
+    <string name="agenda_dig_sub">2 crianças · R$ 120</string>
+    <string name="agenda_paint_sub">4 pessoas · R$ 180</string>
+    <string name="agenda_fire">Jantar na fogueira</string>
+    <string name="agenda_fire_sub">Mesa para 4</string>
+
+    <string name="tag_family">FAMÍLIA</string>
+    <string name="tag_adventure">AVENTURA</string>
+    <string name="tag_night">À NOITE</string>
+    <string name="tag_adults">ADULTOS</string>
+    <string name="tag_kids">CRIANÇAS</string>
+
+    <string name="exp_paint">Oficina de pintura rupestre</string>
+    <string name="exp_paint_meta">11h · todas as idades</string>
+    <string name="exp_trail">Trilha dos Mamutes</string>
+    <string name="exp_trail_meta">8h · 10+ anos</string>
+    <string name="exp_bow">Arco e flecha de pedra</string>
+    <string name="exp_bow_meta">14h · 8+ anos</string>
+    <string name="exp_fire">Fogueira &amp; histórias</string>
+    <string name="exp_fire_meta">19h · família</string>
+    <string name="exp_mud">Banho de lama quente</string>
+    <string name="exp_mud_meta">16h · 18+</string>
+    <string name="exp_mini">Mini-caçadores</string>
+    <string name="exp_mini_meta">9h – 17h · 4 a 10 anos</string>
+
+    <string name="price_45">R$ 45</string>
+    <string name="price_90">R$ 90</string>
+    <string name="price_55">R$ 55</string>
+    <string name="price_free">Grátis</string>
+    <string name="price_120">R$ 120</string>
+    <string name="price_80">R$ 80</string>
+    <string name="spots_8">8 vagas</string>
+    <string name="spots_left_2">restam 2</string>
+    <string name="spots_left_4">restam 4</string>
+    <string name="spots_5">5 vagas</string>
+    <string name="spots_soldout">Esgotado nesse dia</string>
+    <string name="spots_free">livre</string>
+    <string name="photo_placeholder">Foto da atividade</string>
+
+    <!-- Banquete -->
+    <string name="banq_eyebrow">RESTAURANTE · FOGUEIRA CENTRAL</string>
+    <string name="banq_title">O Banquete</string>
+    <string name="banq_subtitle">Tudo assado na fogueira e servido em pedra quente. Aberto a hóspedes e visitantes — hóspedes têm 15% de desconto na conta da caverna.</string>
+    <string name="banq_status">Aberto agora · jantar até 23h</string>
+    <string name="photo_banquet">Foto: salão com fogueira central e mesas de pedra</string>
+
+    <string name="meal_breakfast">CAFÉ JURÁSSICO</string>
+    <string name="meal_breakfast_time">7h – 10h30</string>
+    <string name="meal_lunch">ALMOÇO</string>
+    <string name="meal_lunch_time">12h – 15h</string>
+    <string name="meal_dinner">JANTAR NA FOGUEIRA</string>
+    <string name="meal_dinner_time">19h – 23h</string>
+
+    <string name="tab_fire">Na fogueira</string>
+    <string name="tab_starters">Entradas</string>
+    <string name="tab_kids">Menu kids</string>
+    <string name="tab_garden">Da horta</string>
+    <string name="tab_desserts">Sobremesas</string>
+    <string name="tab_potions">Poções</string>
+
+    <string name="dish_1">Costela de Mamute</string>
+    <string name="dish_1_desc">Costela bovina 12h na brasa, mandioca na pedra e farofa de tutano.</string>
+    <string name="dish_1_price">R$ 89</string>
+    <string name="dish_1_tag">Carro-chefe</string>
+    <string name="dish_2">Espeto do Caçador</string>
+    <string name="dish_2_desc">Picanha, linguiça artesanal e legumes tostados no fogo.</string>
+    <string name="dish_2_price">R$ 62</string>
+    <string name="dish_2_tag">Pra dividir</string>
+    <string name="dish_3">Coxa de Pterodáctilo</string>
+    <string name="dish_3_desc">Sobrecoxa de frango caipira defumada com mel de pedra.</string>
+    <string name="dish_3_price">R$ 48</string>
+    <string name="dish_3_tag">Sem glúten</string>
+    <string name="dish_4">Peixe do Rio Gelado</string>
+    <string name="dish_4_desc">Truta da serra embrulhada em folha de bananeira, na brasa.</string>
+    <string name="dish_4_price">R$ 68</string>
+    <string name="dish_5">Raízes da Tribo</string>
+    <string name="dish_5_desc">Batata-doce, abóbora e cogumelos assados com ervas do vale.</string>
+    <string name="dish_5_price">R$ 44</string>
+    <string name="dish_5_tag">Vegano</string>
+    <string name="dish_6">Mini-Mamute</string>
+    <string name="dish_6_desc">Hambúrguer pequeno em pão de pedra, batata rústica e suco.</string>
+    <string name="dish_6_price">R$ 36</string>
+    <string name="dish_6_tag">Kids</string>
+    <string name="menu_disclaimer">Nenhum mamute foi ferido: nossas "carnes de mamute" são cortes bovinos de produtores da serra.</string>
+
+    <!-- Reserva de mesa -->
+    <string name="book_title">Reservar mesa na fogueira</string>
+    <string name="book_day_label">DIA</string>
+    <string name="book_day_value">Sáb, 13 out</string>
+    <string name="book_people_label">PESSOAS</string>
+    <string name="book_people_value">4</string>
+    <string name="book_time_label">Horário</string>
+    <string name="book_legend">Riscado = lotado</string>
+    <string name="book_highchair">Cadeirinha infantil</string>
+    <string name="book_fire_side">Mesa ao lado da fogueira</string>
+    <string name="book_cta">Uga! Reservar mesa · 20h</string>
+    <string name="book_policy">Tolerância de 15 min · cancele até 2h antes</string>
+    <string name="cd_minus">Diminuir pessoas</string>
+    <string name="cd_plus">Aumentar pessoas</string>
+</resources>

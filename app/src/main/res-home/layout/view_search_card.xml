@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_card"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Datas -->
+    <LinearLayout
+        android:id="@+id/layoutDates"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_chip"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_calendar" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvDatesLabel"
+                style="@style/HB.Text.Eyebrow"
+                android:text="@string/search_dates_label"
+                android:textColor="@color/hb_muted" />
+
+            <TextView
+                android:id="@+id/tvDatesValue"
+                style="@style/HB.Text"
+                android:text="@string/search_dates_value"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Tribo -->
+    <LinearLayout
+        android:id="@+id/layoutTribe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_chip"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_user" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTribeLabel"
+                style="@style/HB.Text.Eyebrow"
+                android:text="@string/search_tribe_label"
+                android:textColor="@color/hb_muted" />
+
+            <TextView
+                android:id="@+id/tvTribeValue"
+                style="@style/HB.Text"
+                android:text="@string/search_tribe_value"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Botão Buscar -->
+    <TextView
+        android:id="@+id/btnSearch"
+        style="@style/HB.Button.Primary"
+        android:layout_width="match_parent"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_button_primary"
+        android:text="@string/search_cta" />
+</LinearLayout>

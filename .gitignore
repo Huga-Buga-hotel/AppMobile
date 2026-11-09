@@ -1,0 +1,49 @@
+# Built application files
+*.apk
+*.ap_
+*.aab
+
+# Files for the Dalvik VM
+*.dex
+
+# Java class files
+*.class
+
+# Generated files
+bin/
+gen/
+out/
+build/
+
+# Gradle files
+.gradle/
+
+# Local configuration file (sdk path, etc.)
+local.properties
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.navigation/
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Profiler files
+*.hprof
+
+# Firebase / Google Services
+google-services.json
+
+# Local artifacts and caches
+.artifacts/
+.kotlin/
