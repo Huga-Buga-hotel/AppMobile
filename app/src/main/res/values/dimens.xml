@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="screen_margin">20dp</dimen>
+    <dimen name="gap_s">8dp</dimen>
+    <dimen name="gap_m">12dp</dimen>
+    <dimen name="gap_l">20dp</dimen>
+    <dimen name="border">2dp</dimen>
+    <dimen name="shadow_offset">4dp</dimen>
+    <dimen name="radius">12dp</dimen>
+    <dimen name="radius_chip">10dp</dimen>
+    <dimen name="text_h1">32sp</dimen>
+    <dimen name="text_h2">22sp</dimen>
+    <dimen name="text_h3">18sp</dimen>
+    <dimen name="text_body">14sp</dimen>
+    <dimen name="text_small">12sp</dimen>
+    <dimen name="text_eyebrow">11sp</dimen>
+    <dimen name="header_height">64dp</dimen>
+    <dimen name="thumb_size">84dp</dimen>
+    <dimen name="day_width">72dp</dimen>
+    <dimen name="day_height">84dp</dimen>
+    <dimen name="button_height">44dp</dimen>
+</resources>

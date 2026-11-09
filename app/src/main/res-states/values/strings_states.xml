@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Carregando (Loading) -->
+    <string name="loading_stones_title">Esfregando as pedras...</string>
+    <string name="loading_stones_sub">Confirmando sua reserva com a caverna central. Não feche o app.</string>
+    <string name="loading_btn_search">🐾 🐾 🐾 Farejando cavernas...</string>
+    <string name="loading_btn_pay">🐚 Contando as conchas...</string>
+    <string name="loading_btn_coupon">🐚 Checando</string>
+
+    <!-- Banners & Avisos -->
+    <string name="toast_timer_title">A fogueira da sua reserva está apagando</string>
+    <string name="toast_timer_desc">Em 2 minutos a toca volta pra outras tribos.</string>
+    <string name="toast_timer_add">+10 min</string>
+    <string name="alert_urgency_2_left">Só restam 2 tocas nessas datas. 6 tribos estão olhando esta caverna agora.</string>
+    <string name="alert_price_changed">O preço mudou desde sua busca. Toca do Mamute: R$ 480 ➔ R$ 520/noite.</string>
+    <string name="btn_guarantee">Garantir</string>
+    <string name="btn_understood">Entendi</string>
+
+    <!-- Erros & Modais -->
+    <string name="err_form_title">Ugh! 2 campos precisam de atenção antes de continuar.</string>
+    <string name="err_email_invalid">Esse e-mail não parece pedra lascada: falta o @</string>
+    <string name="err_phone_invalid">Precisamos de um jeito de te chamar (sinal de fumaça não conta)</string>
+    <string name="err_payment_title">Ugh! O pagamento não passou</string>
+    <string name="err_payment_desc">O banco recusou o cartão final 7730 (saldo ou limite). Nada foi cobrado.</string>
+    <string name="btn_use_another_card">Usar outro cartão</string>
+    <string name="btn_pay_with_pix">Pagar com Pix</string>
+    <string name="btn_pay_on_arrival">Pagar na chegada ao hotel</string>
+    <string name="err_net_title">Buga... o mamute tropeçou no cabo</string>
+    <string name="err_net_desc">Não conseguimos falar com a caverna central. Confira sua internet — se estiver tudo certo, o problema é nosso.</string>
+    <string name="err_net_code">erro 503 · ref HB-702X</string>
+    <string name="btn_retry">Tentar de novo</string>
+    <string name="btn_contact_frontdesk">Falar com a recepção</string>
+
+    <!-- Estados Vazios & Sem Disponibilidade -->
+    <string name="empty_bookings_title">Sua caverna está vazia</string>
+    <string name="empty_bookings_desc">Nenhuma reserva por aqui ainda. Bora caçar uma?</string>
+    <string name="btn_explore_caverns">Explorar cavernas</string>
+    <string name="empty_search_title">Nenhuma pegada encontrada</string>
+    <string name="empty_search_desc">Nenhuma caverna corresponde aos filtros selecionados.</string>
+    <string name="btn_clear_filters">Limpar filtros</string>
+    <string name="no_availability_title">Todas as cavernas ocupadas</string>
+    <string name="no_availability_desc">A tribo lotou de 12 a 15 de outubro para 4 pessoas. Mas tem caverna livre bem pertinho dessas datas:</string>
+
+    <!-- 404 & Sessão Expirada -->
+    <string name="error_404_code">4 🦴 4</string>
+    <string name="error_404_title">Essa caverna não existe</string>
+    <string name="error_404_desc">Talvez um dinossauro tenha comido esta página. Ou o link veio de muito, muito antes de Cristo.</string>
+    <string name="btn_back_to_home">Voltar pro início</string>
+    <string name="expired_session_title">A fogueira apagou</string>
+    <string name="expired_session_desc">Você ficou um tempão parado e sua sessão expirou por segurança. Sua reserva em andamento foi guardada.</string>
+    <string name="btn_reignite">Acender de novo (entrar)</string>
+
+    <!-- Sucesso -->
+    <string name="success_guaranteed_title">Buga! Vaga garantida</string>
+    <string name="btn_view_agenda">Ver agenda</string>
+    <string name="btn_close">Fechar</string>
+</resources>

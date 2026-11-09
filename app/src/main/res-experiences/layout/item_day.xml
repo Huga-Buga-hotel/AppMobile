@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Item do seletor de dias (RecyclerView horizontal) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/day_width"
+    android:layout_height="@dimen/day_height"
+    android:layout_marginEnd="@dimen/gap_s"
+    android:background="@drawable/bg_day"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dayName"
+        style="@style/HB.Text.Muted"
+        android:text="@string/day_sat"
+        android:textSize="11sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/dayNumber"
+        style="@style/HB.Text.H1"
+        android:text="13" />
+
+    <TextView
+        android:id="@+id/dayHint"
+        style="@style/HB.Text.Muted"
+        android:text="@string/day_bookings"
+        android:textSize="10sp" />
+</LinearLayout>

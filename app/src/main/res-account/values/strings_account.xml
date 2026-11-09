@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Onboarding -->
+    <string name="onboarding_skip">Pular</string>
+    <string name="onboarding_1_eyebrow">BEM-VINDO À TRIBO</string>
+    <string name="onboarding_1_title">O hotel mais antigo do mundo, no seu bolso</string>
+    <string name="onboarding_1_desc">Reserve cavernas, veja a agenda da tribo e fale com a recepção sem sair da toca.</string>
+    <string name="onboarding_2_eyebrow">CHAVE DE PEDRA DIGITAL</string>
+    <string name="onboarding_2_title">Seu celular abre a caverna</string>
+    <string name="onboarding_2_desc">Faça check-in online e use o QR do voucher pra abrir a porta da toca.</string>
+    <string name="onboarding_3_eyebrow">AVENTURAS</string>
+    <string name="onboarding_3_title">Escavação, trilha e banquete a um toque</string>
+    <string name="onboarding_3_desc">Agende atividades pras crianças e reserve mesa na fogueira em segundos.</string>
+    <string name="onboarding_next">Próximo →</string>
+    <string name="onboarding_start">Uga! Começar →</string>
+
+    <!-- Entrar / Criar Conta (Auth) -->
+    <string name="auth_title_welcome">Uga! Bom te ver de volta.</string>
+    <string name="auth_title_join">Entre pra tribo</string>
+    <string name="auth_tab_login">Entrar</string>
+    <string name="auth_tab_register">Criar conta</string>
+    <string name="auth_field_name">Nome</string>
+    <string name="auth_field_email">E-mail</string>
+    <string name="auth_field_password">Senha</string>
+    <string name="auth_forgot_password">Esqueceu a senha</string>
+    <string name="auth_remember_me">Manter a fogueira acesa (lembrar de mim)</string>
+    <string name="auth_opt_in_email">Quero receber ofertas da tribo por e-mail</string>
+    <string name="auth_btn_login">Entrar na caverna</string>
+    <string name="auth_btn_register">Criar conta</string>
+    <string name="auth_divider">ou</string>
+    <string name="auth_google">Google</string>
+    <string name="auth_apple">Apple</string>
+    <string name="auth_guest_link">Só quer reservar? Continuar sem conta</string>
+
+    <!-- Minhas Reservas -->
+    <string name="bookings_title">Minhas reservas</string>
+    <string name="tab_upcoming">Próximas · 2</string>
+    <string name="tab_past">Passadas · 3</string>
+    <string name="tab_canceled">Canceladas · 1</string>
+    <string name="btn_new_booking">+ Nova reserva</string>
+    <string name="status_confirmed">CONFIRMADA</string>
+    <string name="status_pending_payment">AGUARDANDO PAGAMENTO</string>
+    <string name="countdown_days">FALTAM 20 dias pra caverna</string>
+    <string name="countdown_sub">Check-in online libera em 17 dias</string>
+    <string name="btn_manage">Gerenciar</string>
+    <string name="btn_change_dates">Alterar datas</string>
+    <string name="btn_cancel">Cancelar</string>
+
+    <!-- Perfil & Fidelidade (Ossos da Tribo) -->
+    <string name="profile_title">Perfil da tribo</string>
+    <string name="profile_member_since">Na tribo desde 2024</string>
+    <string name="profile_level">Caçadora</string>
+    <string name="loyalty_bones_title">OSSOS DA TRIBO</string>
+    <string name="loyalty_bones_points">340 🦴</string>
+    <string name="loyalty_bones_discount">= R$ 34 de desconto na próxima caçada</string>
+    <string name="loyalty_bones_level">Nível Caçadora</string>
+    <string name="loyalty_bones_progress">faltam 160 ossos pra Xamã</string>
+    <string name="menu_personal_data">Dados pessoais</string>
+    <string name="menu_tribe_members">Membros da tribo</string>
+    <string name="menu_saved_payments">Pagamentos salvos</string>
+    <string name="menu_favorite_caverns">Cavernas favoritas</string>
+    <string name="menu_notifications">Notificações</string>
+    <string name="menu_language">Idioma · Português</string>
+    <string name="menu_help">Ajuda da tribo</string>
+    <string name="menu_logout">Sair da caverna</string>
+    <string name="btn_edit">Editar</string>
+    <string name="btn_add">+ Adicionar</string>
+</resources>

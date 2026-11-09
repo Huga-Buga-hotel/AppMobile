@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="@drawable/bg_amenity_card"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <ImageView
+        android:id="@+id/ivAmenityIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_fire" />
+
+    <TextView
+        android:id="@+id/tvAmenityTitle"
+        style="@style/HB.Text"
+        android:layout_marginTop="6dp"
+        android:text="@string/detail_amenity_fire"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvAmenitySubtitle"
+        style="@style/HB.Text.Muted"
+        android:layout_marginTop="2dp"
+        android:text="@string/detail_amenity_fire_sub"
+        android:textSize="@dimen/text_small" />
+</LinearLayout>

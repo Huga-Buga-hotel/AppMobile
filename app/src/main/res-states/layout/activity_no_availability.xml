@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tela N1 · Sem Disponibilidade "Todas as cavernas ocupadas" (mobile 390) -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hb_cream">
+
+    <include
+        android:id="@+id/appBar"
+        layout="@layout/view_app_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/screen_margin">
+
+            <TextView
+                style="@style/HB.Text.H1"
+                android:text="@string/no_availability_title" />
+
+            <TextView
+                style="@style/HB.Text.Muted"
+                android:layout_marginTop="6dp"
+                android:text="@string/no_availability_desc"
+                android:textSize="@dimen/text_body" />
+
+            <!-- Alternativa 1 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_m"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    style="@style/HB.Text.Eyebrow"
+                    android:text="2 DIAS DEPOIS: 14 – 17 OUT" />
+
+                <TextView
+                    style="@style/HB.Text"
+                    android:layout_marginTop="2dp"
+                    android:text="Toca do Mamute livre · R$ 490/noite"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Alternativa 2 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    style="@style/HB.Text.Eyebrow"
+                    android:text="SEMANA SEGUINTE: 19 – 22 OUT" />
+
+                <TextView
+                    style="@style/HB.Text"
+                    android:layout_marginTop="2dp"
+                    android:text="4 cavernas livres · a partir de R$ 390"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Ações -->
+            <TextView
+                style="@style/HB.Button.Primary"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/gap_l"
+                android:text="🔔 Me avise se abrir vaga" />
+
+            <TextView
+                style="@style/HB.Button.Outline"
+                android:layout_width="match_parent"
+                android:layout_marginTop="8dp"
+                android:text="Mudar tamanho da tribo" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

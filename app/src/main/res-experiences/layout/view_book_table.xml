@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Bottom sheet: Reservar mesa na fogueira -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_card"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        style="@style/HB.Text.H2"
+        android:text="@string/book_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gap_m"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/gap_s"
+            android:layout_weight="1"
+            android:background="@drawable/bg_chip"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                style="@style/HB.Text.Muted"
+                android:text="@string/book_day_label"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/bookDay"
+                style="@style/HB.Text"
+                android:text="@string/book_day_value"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_chip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/HB.Text.Muted"
+                    android:text="@string/book_people_label"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/bookPeople"
+                    style="@style/HB.Text"
+                    android:text="@string/book_people_value"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btnMinus"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/cd_minus"
+                android:src="@drawable/ic_minus" />
+
+            <ImageButton
+                android:id="@+id/btnPlus"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/cd_plus"
+                android:src="@drawable/ic_plus" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        style="@style/HB.Text"
+        android:layout_marginTop="@dimen/gap_m"
+        android:text="@string/book_time_label"
+        android:textStyle="bold" />
+
+    <!-- Horários: use enabled=false para "lotado", selected=true para escolhido -->
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gap_s"
+        android:columnCount="3">
+
+        <TextView style="@style/HB.Slot" android:text="19:00" />
+        <TextView style="@style/HB.Slot" android:enabled="false" android:text="19:30" />
+        <TextView style="@style/HB.Slot" android:text="20:00" />
+        <TextView style="@style/HB.Slot" android:text="20:30" />
+        <TextView style="@style/HB.Slot" android:enabled="false" android:text="21:00" />
+        <TextView style="@style/HB.Slot" android:text="21:30" />
+    </GridLayout>
+
+    <TextView
+        style="@style/HB.Text.Muted"
+        android:layout_marginTop="4dp"
+        android:text="@string/book_legend"
+        android:textSize="11sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gap_m"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/HB.Text"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/book_highchair"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:thumb="@drawable/switch_thumb"
+            app:track="@drawable/switch_track"
+            xmlns:app="http://schemas.android.com/apk/res-auto" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gap_s"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/HB.Text"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/book_fire_side"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:thumb="@drawable/switch_thumb"
+            app:track="@drawable/switch_track"
+            xmlns:app="http://schemas.android.com/apk/res-auto" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnBook"
+        style="@style/HB.Button.Primary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gap_l"
+        android:text="@string/book_cta" />
+
+    <TextView
+        style="@style/HB.Text.Muted"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/gap_s"
+        android:gravity="center"
+        android:text="@string/book_policy"
+        android:textSize="11sp" />
+</LinearLayout>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
+        android:theme="@style/Theme.HugaBuga">
+
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.HugaBuga"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity android:name=".ui.caverns.CavernsListActivity" />
+        <activity android:name=".ui.caverns.CavernDetailActivity" />
+        <activity android:name=".ui.experiences.ExperiencesActivity" />
+        <activity android:name=".ui.experiences.SelectBookingForExperienceActivity" />
+        <activity android:name=".ui.experiences.ExperienceScheduleActivity" />
+        <activity android:name=".ui.experiences.ManageBookingActivity" />
+        <activity android:name=".ui.banquet.BanquetActivity" />
+        <activity android:name=".ui.checkout.CheckoutStep1Activity" />
+        <activity android:name=".ui.checkout.CheckoutStep2Activity" />
+        <activity android:name=".ui.checkout.CheckoutStep3Activity" />
+        <activity android:name=".ui.checkout.VoucherActivity" />
+        <activity android:name=".ui.auth.OnboardingActivity" />
+        <activity
+            android:name=".ui.auth.AuthActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.account.MyBookingsActivity" />
+        <activity android:name=".ui.account.ProfileActivity" />
+        <activity android:name=".ui.account.EditProfileActivity" />
+        <activity android:name=".ui.account.SavedPaymentsActivity" />
+        <activity android:name=".ui.account.FavoriteCavernsActivity" />
+        <activity android:name=".ui.account.NotificationsActivity" />
+        <activity android:name=".ui.account.LanguageActivity" />
+        <activity android:name=".ui.account.HelpActivity" />
+        <activity android:name=".ui.account.ChatbotActivity" />
+        <activity android:name=".ui.states.LoadingStonesActivity" />
+        <activity android:name=".ui.states.ErrorNetworkActivity" />
+        <activity android:name=".ui.states.Error404Activity" />
+        <activity android:name=".ui.states.EmptyBookingsActivity" />
+        <activity android:name=".ui.states.NoAvailabilityActivity" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+    </application>
+
+</manifest>

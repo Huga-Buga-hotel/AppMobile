@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Stepper & Checkout General -->
+    <string name="step_1_title">1 · Quem vem</string>
+    <string name="step_2_title">2 · Extras</string>
+    <string name="step_3_title">3 · Pagamento</string>
+    <string name="timer_secure">Sua toca está segura por 14:52</string>
+    <string name="checkout_resumo_title">Resumo da caçada</string>
+
+    <!-- Step 1: Quem vem -->
+    <string name="step1_heading">Quem vem pra caverna?</string>
+    <string name="step1_chief_title">Chefe da tribo (responsável)</string>
+    <string name="step1_field_full_name">Nome completo</string>
+    <string name="step1_field_email">E-mail</string>
+    <string name="step1_field_phone">Celular / WhatsApp</string>
+    <string name="step1_kids_ages">Idade das crianças</string>
+    <string name="step1_kid_1">Criança 1 · 6 anos</string>
+    <string name="step1_kid_2">Criança 2 · 9 anos</string>
+    <string name="step1_continue">Continuar</string>
+
+    <!-- Step 2: Extras -->
+    <string name="step2_heading">Turbine a estadia da tribo</string>
+    <string name="step2_subheading">Tudo opcional. Dá pra adicionar depois pelo app também.</string>
+    <string name="extra_1_title">Café jurássico</string>
+    <string name="extra_1_desc">Já incluso na sua toca</string>
+    <string name="extra_1_price">incluso</string>
+    <string name="extra_2_title">Kit mini-caçador</string>
+    <string name="extra_2_desc">Lança de espuma, colar e mapa</string>
+    <string name="extra_2_price">R$ 70 / criança</string>
+    <string name="extra_3_title">Late check-out 15h</string>
+    <string name="extra_3_desc">Mais 3 horas na caverna</string>
+    <string name="extra_3_price">R$ 90</string>
+    <string name="extra_4_title">Transfer \"carro de pedra\"</string>
+    <string name="extra_4_desc">Rodoviária ⇄ hotel</string>
+    <string name="extra_4_price">R$ 120</string>
+    <string name="extra_5_title">Festa na caverna</string>
+    <string name="extra_5_desc">Bolo-ovo + decoração rupestre</string>
+    <string name="extra_5_price">R$ 180</string>
+    <string name="extra_6_title">Fogueira VIP no terraço</string>
+    <string name="extra_6_desc">Marshmallow e cobertores</string>
+    <string name="extra_6_price">R$ 95</string>
+    <string name="step2_skip">Pular extras</string>
+    <string name="step2_to_payment">Ir pro pagamento</string>
+
+    <!-- Step 3: Pagamento -->
+    <string name="step3_heading">Como a tribo vai pagar?</string>
+    <string name="tab_card">Cartão</string>
+    <string name="tab_pix">Pix -5%</string>
+    <string name="tab_pay_arrival">Na chegada</string>
+    <string name="pix_heading">Pague com Pix</string>
+    <string name="pix_timer">⏰ Código expira em 09:41</string>
+    <string name="pix_copy_code">Copiar código Pix</string>
+    <string name="pix_subtext">Total com desconto Pix: R$ 1.530</string>
+    <string name="pix_status">Esperando o sinal de fumaça do banco...</string>
+    <string name="coupon_applied">UGABUGA10 aplicado · -R$ 179</string>
+    <string name="coupon_remove">remover</string>
+    <string name="terms_agree">Li e aceito as Regras da tribo e a política de cancelamento</string>
+    <string name="btn_pay_total">Pagar R$ 1.611</string>
+
+    <!-- Voucher & Confirmação -->
+    <string name="voucher_title">Seu voucher</string>
+    <string name="voucher_badge">BUGA! Tá reservado.</string>
+    <string name="voucher_desc">A Toca do Mamute é da sua tribo de 12 a 15 de outubro. Mandamos o voucher para marina@tribo.com e pelo WhatsApp.</string>
+    <string name="voucher_code_label">CÓDIGO DA TRIBO</string>
+    <string name="voucher_code">HB-4F7K</string>
+    <string name="voucher_wing">Ala Leste · T-07</string>
+    <string name="voucher_paid">R$ 1.611</string>
+    <string name="voucher_qr_hint">Aproxime da porta da toca pra abrir</string>
+    <string name="voucher_download_pdf">Baixar tábua (PDF)</string>
+    <string name="voucher_add_calendar">Adicionar à agenda</string>
+    <string name="before_arrival_title">Antes de chegar na caverna</string>
+    <string name="before_action_checkin">Fazer check-in online</string>
+    <string name="before_action_checkin_sub">Pule a fila da recepção</string>
+    <string name="before_action_adventures">Agendar aventuras da tribo</string>
+    <string name="before_action_adventures_sub">Escavação de ovo tem só 3 vagas no sábado</string>
+    <string name="before_action_banquet">Reservar mesa no Banquete</string>
+    <string name="before_action_banquet_sub">Jantar na fogueira lota no feriado</string>
+    <string name="btn_wallet">Wallet</string>
+    <string name="btn_pdf">PDF</string>
+</resources>

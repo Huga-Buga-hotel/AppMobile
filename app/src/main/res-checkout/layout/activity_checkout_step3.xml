@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tela 08 · Reserva Passo 3: Pagamento (Cartão, Pix, Na chegada) (mobile 390) -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hb_cream">
+
+    <!-- Header com Voltar e Título -->
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_height"
+        android:background="@color/hb_paper"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/screen_margin"
+        android:paddingEnd="@dimen/screen_margin"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:background="@drawable/bg_avatar"
+            android:contentDescription="@null"
+            android:padding="5dp"
+            android:src="@drawable/ic_chevron_right"
+            android:rotation="180" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/HB.Text"
+                android:text="Pagamento"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/HB.Text.Muted"
+                android:text="PEGADA 3 DE 3"
+                android:textSize="11sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="12dp"
+            android:paddingBottom="@dimen/screen_margin">
+
+            <!-- Stepper -->
+            <include layout="@layout/view_checkout_stepper" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/screen_margin">
+
+                <TextView
+                    style="@style/HB.Text.H1"
+                    android:text="@string/step3_heading" />
+
+                <!-- Tabs de Pagamento: Cartão | Pix -5% | Na chegada -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/gap_m"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tabCard"
+                        style="@style/HB.Chip"
+                        android:layout_width="0dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/tab_card" />
+
+                    <TextView
+                        android:id="@+id/tabPix"
+                        style="@style/HB.Chip.Selected"
+                        android:layout_width="0dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/tab_pix" />
+
+                    <TextView
+                        android:id="@+id/tabArrival"
+                        style="@style/HB.Chip"
+                        android:layout_width="0dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/tab_pay_arrival" />
+                </LinearLayout>
+
+                <!-- Área Cartão de Crédito -->
+                <LinearLayout
+                    android:id="@+id/layoutCardForm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/gap_m"
+                    android:background="@drawable/bg_card"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/HB.Text.H3"
+                        android:text="Cartão de Crédito" />
+
+                    <TextView
+                        style="@style/HB.Text.Muted"
+                        android:layout_marginTop="12dp"
+                        android:text="Número do Cartão"
+                        android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/etCardNumber"
+                        style="@style/HB.Text"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/bg_chip"
+                        android:hint="4000 0000 0000 0000"
+                        android:inputType="number"
+                        android:maxLength="19"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        style="@style/HB.Text.Muted"
+                        android:layout_marginTop="10dp"
+                        android:text="Nome no Cartão"
+                        android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/etCardName"
+                        style="@style/HB.Text"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/bg_chip"
+                        android:hint="MARINA SOUZA"
+                        android:inputType="textCapCharacters"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:textSize="13sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="6dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/HB.Text.Muted"
+                                android:text="Validade"
+                                android:textSize="12sp" />
+
+                            <EditText
+                                android:id="@+id/etCardExpiry"
+                                style="@style/HB.Text"
+                                android:layout_width="match_parent"
+                                android:layout_height="44dp"
+                                android:layout_marginTop="4dp"
+                                android:background="@drawable/bg_chip"
+                                android:hint="MM/AA"
+                                android:inputType="date"
+                                android:maxLength="5"
+                                android:paddingStart="12dp"
+                                android:paddingEnd="12dp"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/HB.Text.Muted"
+                                android:text="CVV"
+                                android:textSize="12sp" />
+
+                            <EditText
+                                android:id="@+id/etCardCvv"
+                                style="@style/HB.Text"
+                                android:layout_width="match_parent"
+                                android:layout_height="44dp"
+                                android:layout_marginTop="4dp"
+                                android:background="@drawable/bg_chip"
+                                android:hint="123"
+                                android:inputType="numberPassword"
+                                android:maxLength="4"
+                                android:paddingStart="12dp"
+                                android:paddingEnd="12dp"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Área Pix -->
+                <LinearLayout
+                    android:id="@+id/layoutPixForm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/gap_m"
+                    android:background="@drawable/bg_card"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:visibility="visible">
+
+                    <TextView
+                        style="@style/HB.Text.H3"
+                        android:text="@string/pix_heading" />
+
+                    <!-- Quadro do QR Code -->
+                    <FrameLayout
+                        android:layout_width="160dp"
+                        android:layout_height="160dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bg_qr_box"
+                        android:padding="12dp">
+
+                        <ImageView
+                            android:id="@+id/ivPixQrCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_qr_code" />
+                    </FrameLayout>
+
+                    <!-- Timer e Código -->
+                    <TextView
+                        android:id="@+id/tvPixTimer"
+                        style="@style/HB.Text"
+                        android:layout_marginTop="12dp"
+                        android:text="⏰ Código expira em 09:59"
+                        android:textColor="@color/hb_orange"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutPixCopyContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_chip"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/tvPixCode"
+                            style="@style/HB.Text.Muted"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:ellipsize="middle"
+                            android:singleLine="true"
+                            android:text="00020126360014BR.GOV.BCB.PIX0114h"
+                            android:textSize="11sp" />
+
+                        <ImageView
+                            android:id="@+id/btnCopyPixIcon"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_marginStart="8dp"
+                            android:contentDescription="@string/pix_copy_code"
+                            android:src="@drawable/ic_copy" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvPixSubtext"
+                        style="@style/HB.Text"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/pix_subtext"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        style="@style/HB.Text.Muted"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/pix_status"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <!-- Área Pagamento na Chegada -->
+                <LinearLayout
+                    android:id="@+id/layoutArrivalForm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/gap_m"
+                    android:background="@drawable/bg_card"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/HB.Text.H3"
+                        android:text="Pagamento na Chegada" />
+
+                    <TextView
+                        style="@style/HB.Text.Muted"
+                        android:layout_marginTop="8dp"
+                        android:lineSpacingExtra="3dp"
+                        android:text="Sua reserva ficará 100% garantida. O pagamento será realizado diretamente na recepção do Huga Buga Hotel durante o check-in."
+                        android:textSize="13sp" />
+
+                    <TextView
+                        style="@style/HB.Text"
+                        android:layout_marginTop="10dp"
+                        android:text="Formas aceitas na recepção: Pedras de troca, cartão de crédito/débito e PIX."
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Resumo da Caçada -->
+                <include
+                    layout="@layout/view_booking_summary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/gap_l" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Barra Inferior de Ação -->
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/hb_paper"
+        android:elevation="8dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/btnActionPay"
+            style="@style/HB.Button.Primary"
+            android:layout_width="match_parent"
+            android:text="@string/pix_copy_code" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

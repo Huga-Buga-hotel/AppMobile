@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hb_cream">
+
+    <include
+        android:id="@+id/appBar"
+        layout="@layout/view_app_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/screen_margin">
+
+            <TextView
+                style="@style/HB.Text.Eyebrow"
+                android:text="GERENCIAMENTO DA RESERVA" />
+
+            <TextView
+                android:id="@+id/tvManageTitle"
+                style="@style/HB.Text.H1"
+                android:layout_marginTop="4dp"
+                android:text="Gerenciar Reserva" />
+
+            <TextView
+                android:id="@+id/tvManageSub"
+                style="@style/HB.Text.Muted"
+                android:layout_marginTop="@dimen/gap_s"
+                android:text="Visualize extras, experiências agendadas e acerte pendências."
+                android:textSize="@dimen/text_body" />
+
+            <!-- Card Resumo da Reserva -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_l"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tvManageCavern"
+                    style="@style/HB.Text.H2"
+                    android:text="Toca do Mamute" />
+
+                <TextView
+                    android:id="@+id/tvManageDates"
+                    style="@style/HB.Text.Muted"
+                    android:layout_marginTop="4dp"
+                    android:text="📅 7 out – 14 out" />
+
+                <TextView
+                    android:id="@+id/tvManageTotal"
+                    style="@style/HB.Text"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/hb_dark"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:text="💰 Total atualizado: R$ 1.560,00" />
+            </LinearLayout>
+
+            <!-- Card Pagamento Pendente de Experiências -->
+            <LinearLayout
+                android:id="@+id/layoutManagePendingPayment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_m"
+                android:background="@drawable/bg_warning_card"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="14dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvManagePendingText"
+                        style="@style/HB.Text"
+                        android:text="Despesas pendentes: R$ 60,00"
+                        android:textColor="@color/hb_warning_text"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        style="@style/HB.Text.Muted"
+                        android:text="Pagamento via Pix/Cartão pendente de acerto"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/btnManagePayInApp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_chip_selected"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:text="Pagar pelo App"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Seção de Experiências Agendadas -->
+            <TextView
+                style="@style/HB.Text.H3"
+                android:layout_marginTop="@dimen/gap_l"
+                android:text="Experiências e Atividades Agendadas" />
+
+            <LinearLayout
+                android:id="@+id/layoutManageBookedExperiences"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_m"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/tvManageNoExperiences"
+                style="@style/HB.Text.Muted"
+                android:layout_marginTop="@dimen/gap_s"
+                android:text="Nenhuma experiência agendada para esta reserva."
+                android:visibility="gone" />
+
+            <!-- Botão Adicionar Experiência -->
+            <Button
+                android:id="@+id/btnAddExperienceFromManage"
+                style="@style/HB.Button.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_l"
+                android:drawableStart="@drawable/ic_plus"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/white"
+                android:text="Adicionar Experiência" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

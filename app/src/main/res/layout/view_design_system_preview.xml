@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Guia e Amostra do Sistema de Design Huga Buga -->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hb_areia">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/screen_margin">
+
+        <!-- Título do Sistema de Design -->
+        <TextView
+            style="@style/HB.Text.Eyebrow"
+            android:text="HUGA BUGA · GUIA DE DESIGN"
+            android:textColor="@color/hb_fogo" />
+
+        <TextView
+            style="@style/HB.Text.H1"
+            android:layout_marginTop="4dp"
+            android:text="Sistema de Design" />
+
+        <TextView
+            style="@style/HB.Text.Muted"
+            android:layout_marginTop="4dp"
+            android:text="Cores, tipografia, botões, formas, badges e componentes da tribo." />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/hb_pedra" />
+
+        <!-- 01 · Cores da Tribo -->
+        <TextView
+            style="@style/HB.Text.H2"
+            android:text="01 · Cores da Tribo" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_badge_red"
+                android:gravity="center"
+                android:text="Fogo"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_button_carvao"
+                android:gravity="center"
+                android:text="Caverna"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_card_couro"
+                android:gravity="center"
+                android:text="Couro"
+                android:textColor="@color/hb_carvao"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_badge_musgo"
+                android:gravity="center"
+                android:text="Musgo"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/hb_pedra" />
+
+        <!-- 02 · Tipografia -->
+        <TextView
+            style="@style/HB.Text.H2"
+            android:text="02 · Tipografia" />
+
+        <TextView
+            style="@style/HB.Text.H1"
+            android:layout_marginTop="8dp"
+            android:text="BUGA! Tá reservado." />
+
+        <TextView
+            style="@style/HB.Text.H2"
+            android:layout_marginTop="4dp"
+            android:text="Toca do Mamute" />
+
+        <TextView
+            style="@style/HB.Text.H3"
+            android:layout_marginTop="4dp"
+            android:text="Nossas cavernas" />
+
+        <TextView
+            style="@style/HB.Text.Eyebrow"
+            android:layout_marginTop="8dp"
+            android:text="ONDE SUA TRIBO DORME" />
+
+        <TextView
+            style="@style/HB.Text"
+            android:layout_marginTop="4dp"
+            android:text="Cavernas esculpidas na rocha, camas de pele macia e banquetes na fogueira." />
+
+        <TextView
+            style="@style/HB.Text.Muted"
+            android:layout_marginTop="4dp"
+            android:text="HB-4F7K · Código da tribo em monospace" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/hb_pedra" />
+
+        <!-- 03 · Botões -->
+        <TextView
+            style="@style/HB.Text.H2"
+            android:text="03 · Botões" />
+
+        <TextView
+            style="@style/HB.Button.Primary"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:text="Botão Fogo (Principal)" />
+
+        <TextView
+            style="@style/HB.Button.Primary"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_button_carvao"
+            android:text="Botão Carvão (Busca / Ação)" />
+
+        <TextView
+            style="@style/HB.Button.Outline"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:text="Botão Contorno (Secundário)" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/hb_pedra" />
+
+        <!-- 04 · Campos de Formulário -->
+        <TextView
+            style="@style/HB.Text.H2"
+            android:text="04 · Campos de Entrada" />
+
+        <TextView
+            style="@style/HB.Text.Muted"
+            android:layout_marginTop="8dp"
+            android:text="Campo Padrão"
+            android:textSize="12sp" />
+
+        <EditText
+            style="@style/HB.Text"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_input_field"
+            android:hint="Marina Souza"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:textSize="13sp" />
+
+        <TextView
+            style="@style/HB.Text.Muted"
+            android:layout_marginTop="8dp"
+            android:text="Campo com Erro"
+            android:textSize="12sp" />
+
+        <EditText
+            style="@style/HB.Text"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_input_error"
+            android:hint="marina.tribo.com"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:textColor="@color/hb_barro"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

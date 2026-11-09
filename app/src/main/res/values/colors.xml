@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tokens Design System Huga Buga -->
+    <color name="hb_fogo">#E0682B</color>
+    <color name="hb_brasa_clara">#F7A372</color>
+    <color name="hb_tocha">#E8783C</color>
+    <color name="hb_link">#B94F1D</color>
+    <color name="hb_brasa">#9C4318</color>
+    <color name="hb_carvao">#2A221C</color>
+    <color name="hb_areia">#FAF6EE</color>
+    <color name="hb_papel">#FFFDF8</color>
+    <color name="hb_couro">#ECDCC5</color>
+    <color name="hb_bege">#EFE2CF</color>
+    <color name="hb_linha">#F0C4A4</color>
+    <color name="hb_pedra">#8A7C6F</color>
+    <color name="hb_texto2">#6E6257</color>
+    <color name="hb_musgo">#3F7D3A</color>
+    <color name="hb_ambar">#F59E0B</color>
+    <color name="hb_barro">#C23B22</color>
+    <color name="hb_rio">#2E70A7</color>
+
+    <color name="hb_cream">#FAF6EE</color>
+    <color name="hb_paper">#FFFDF8</color>
+    <color name="hb_dark">#231C17</color>
+    <color name="hb_ink">#2A221C</color>
+    <color name="hb_orange">#E0682B</color>
+    <color name="hb_orange_dark">#B84E1A</color>
+    <color name="hb_sand">#EBD3B0</color>
+    <color name="hb_stone">#EEEBE6</color>
+    <color name="hb_stone_dark">#D9D4CC</color>
+    <color name="hb_muted">#6F655C</color>
+    <color name="hb_green">#3F7D3A</color>
+    <color name="hb_red">#C23B22</color>
+    <color name="hb_badge_red">#DC2626</color>
+    <color name="hb_badge_red_bg">#FEE2E2</color>
+    <color name="hb_warning_bg">#FFF8E7</color>
+    <color name="hb_warning_border">#EBD3B0</color>
+    <color name="hb_warning_text">#8C4A00</color>
+    <color name="hb_error_bg">#FEF2F2</color>
+    <color name="hb_error_border">#F87171</color>
+    <color name="hb_error_text">#991B1B</color>
+    <color name="hb_skeleton_bg">#EBE7DF</color>
+    <color name="hb_gold">#E5A000</color>
+    <color name="hb_bone_gold">#E5A000</color>
+    <color name="hb_pix_green">#16A34A</color>
+    <color name="hb_pix_bg">#F0FDF4</color>
+    <color name="hb_stepper_done">#3F7D3A</color>
+    <color name="hb_shadow">#1F2A221C</color>
+    <color name="white">#FFFFFF</color>
+</resources>

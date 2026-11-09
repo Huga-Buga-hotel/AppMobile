@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/bg_card"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvPaymentTitle"
+        style="@style/HB.Text"
+        android:text="💳 Cartão do Mamute •••• 4242"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvPaymentDetails"
+        style="@style/HB.Text.Muted"
+        android:layout_marginTop="4dp"
+        android:text="Expira em 12/28 · Crédito principal"
+        android:textSize="12sp" />
+</LinearLayout>

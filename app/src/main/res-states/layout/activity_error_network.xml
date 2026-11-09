@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tela E3 · Erro de Rede "Buga... o mamute tropeçou no cabo" (mobile 390) -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hb_cream">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/screen_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@drawable/bg_photo_placeholder">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_image_placeholder" />
+        </FrameLayout>
+
+        <TextView
+            style="@style/HB.Text.H1"
+            android:layout_marginTop="@dimen/gap_l"
+            android:gravity="center"
+            android:text="@string/err_net_title" />
+
+        <TextView
+            style="@style/HB.Text.Muted"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/err_net_desc"
+            android:textSize="@dimen/text_body" />
+
+        <TextView
+            style="@style/HB.Text.Muted"
+            android:layout_marginTop="12dp"
+            android:text="@string/err_net_code"
+            android:textSize="11sp" />
+
+        <TextView
+            style="@style/HB.Button.Primary"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/gap_l"
+            android:text="@string/btn_retry" />
+
+        <TextView
+            style="@style/HB.Button.Outline"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:text="@string/btn_contact_frontdesk" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
