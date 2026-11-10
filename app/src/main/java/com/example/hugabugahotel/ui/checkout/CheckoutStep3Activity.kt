@@ -262,7 +262,7 @@ class CheckoutStep3Activity : AppCompatActivity() {
         val codigo = pixAtual?.pixCopiaCola ?: return
         (getSystemService(CLIPBOARD_SERVICE) as ClipboardManager)
             .setPrimaryClip(ClipData.newPlainText("Código Pix Huga Buga", codigo))
-        Toast.makeText(this, "Código Pix copiado! Pague no app do seu banco 🪨", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Código Pix copiado! Pague no app do seu banco", Toast.LENGTH_SHORT).show()
     }
 
     private fun irParaVoucher() {

@@ -81,7 +81,7 @@ class CavernDetailActivity : AppCompatActivity() {
 
         binding.btnFavorite.setOnClickListener {
             if (!SessionManager(this).isLoggedIn()) {
-                Toast.makeText(this, "Entre na sua conta para favoritar cavernas 🪨", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Entre na sua conta para favoritar cavernas", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             val targetFavorited = !isFavorited
@@ -422,7 +422,7 @@ class CavernDetailActivity : AppCompatActivity() {
 
     private fun iniciarReserva() {
         if (checkInIso.isEmpty() || checkOutIso.isEmpty()) {
-            Toast.makeText(this, "Por favor, selecione as datas da estadia antes de reservar! 🪨", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Por favor, selecione as datas da estadia antes de reservar!", Toast.LENGTH_SHORT).show()
             showDatePicker()
             return
         }

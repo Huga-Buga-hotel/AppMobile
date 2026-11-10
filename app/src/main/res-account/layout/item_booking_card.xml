@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/gap_m"
@@ -51,19 +52,25 @@
     <TextView
         android:id="@+id/tvBookingDates"
         style="@style/HB.Text.Muted"
-        android:layout_marginTop="2dp"
-        android:text="📅 12 – 15 out"
+        android:layout_marginTop="4dp"
+        android:drawablePadding="6dp"
+        app:drawableStartCompat="@drawable/ic_calendar"
+        app:drawableTint="@color/hb_muted"
+        android:text="12 – 15 out"
         android:textSize="12sp" />
 
     <!-- Soma dos Gastos e Quantidade de Pessoas -->
     <TextView
         android:id="@+id/tvBookingTotalAndPeople"
         style="@style/HB.Text"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="6dp"
         android:textColor="@color/hb_dark"
         android:textSize="13sp"
         android:textStyle="bold"
-        android:text="💰 Total: R$ 1.560,00   👥 2 pessoas na tribo" />
+        android:drawablePadding="6dp"
+        app:drawableStartCompat="@drawable/ic_wallet"
+        app:drawableTint="@color/hb_dark"
+        android:text="Total: R$ 1.560,00 · 2 pessoas na tribo" />
 
     <!-- Atividades Agendadas Chips -->
     <LinearLayout

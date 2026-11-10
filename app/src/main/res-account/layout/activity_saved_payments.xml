@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
             android:gravity="center"
-            android:text="Nenhum pagamento salvo na tribo 🪨"
+            android:text="Nenhum pagamento salvo na tribo"
             android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView

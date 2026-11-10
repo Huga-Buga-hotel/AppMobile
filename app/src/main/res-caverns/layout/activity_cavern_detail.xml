@@ -116,10 +116,13 @@
                 android:padding="12dp"
                 android:visibility="gone">
 
-                <TextView
-                    style="@style/HB.Text"
-                    android:text="⚠️ "
-                    android:textSize="14sp" />
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_warning_red"
+                    android:contentDescription="@null"
+                    app:tint="@color/hb_warning_text" />
 
                 <TextView
                     android:id="@+id/tvOccupiedWarningText"
@@ -173,12 +176,16 @@
                     <TextView
                         style="@style/HB.Text.Muted"
                         android:layout_marginStart="8dp"
-                        android:text="·  📍 "
+                        android:layout_marginEnd="8dp"
+                        android:text="·"
                         android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tvLocation"
                         style="@style/HB.Text.Muted"
+                        android:drawablePadding="4dp"
+                        app:drawableStartCompat="@drawable/ic_location"
+                        app:drawableTint="@color/hb_muted"
                         android:text="@string/detail_location"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -257,8 +264,10 @@
 
                     <TextView
                         style="@style/HB.Text"
-                        android:text="🛡️ Cancelamento grátis em até 2 dias antes do dia da reserva"
-                        android:textSize="13sp" />
+                        android:text="Cancelamento grátis em até 2 dias antes do dia da reserva"
+                        android:textSize="13sp"
+                        app:drawableStartCompat="@drawable/ic_check_circle"
+                        android:drawablePadding="8dp" />
                 </LinearLayout>
 
             </LinearLayout>

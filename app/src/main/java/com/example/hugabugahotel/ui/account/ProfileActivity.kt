@@ -99,7 +99,7 @@ class ProfileActivity : AppCompatActivity() {
                     }
                 }
                 session.clearAuth()
-                Toast.makeText(this@ProfileActivity, "Sessão encerrada. Até logo! 🪨", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ProfileActivity, "Sessão encerrada. Até logo!", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this@ProfileActivity, AuthActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 })
@@ -127,10 +127,6 @@ class ProfileActivity : AppCompatActivity() {
 
         binding.menuNotifications.setOnClickListener {
             startActivity(Intent(this, NotificationsActivity::class.java))
-        }
-
-        binding.menuLanguage.setOnClickListener {
-            startActivity(Intent(this, LanguageActivity::class.java))
         }
 
         binding.menuHelp.setOnClickListener {
@@ -266,7 +262,7 @@ class ProfileActivity : AppCompatActivity() {
                 val membro = MembroTribo(id = null, nome = nome, tipo = tipo, dataNascimento = nascimento)
                 val response = api.adicionarMembroTribo(membro)
                 if (response.isSuccessful) {
-                    Toast.makeText(this@ProfileActivity, "Membro adicionado à tribo! 🪨", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ProfileActivity, "Membro adicionado à tribo!", Toast.LENGTH_SHORT).show()
                     fetchMembros()
                 } else {
                     Toast.makeText(this@ProfileActivity, ApiErrors.mensagem(response), Toast.LENGTH_LONG).show()

@@ -97,3 +97,12 @@ data class PaginaRelatos(
     val size: Int,
     val total: Long
 )
+
+data class CavernasFiltrosResponse(
+    val categorias: List<String> = emptyList(),
+    val comodidades: List<ComodidadeItem> = emptyList(),
+    val minNoites: Int = 1,
+    val maxNoites: Int = 30,
+    val antecedenciaMaxDias: Int = 365
+)
+

@@ -176,7 +176,7 @@ class MyBookingsActivity : AppCompatActivity() {
                                 body.multaCentavos > 0 -> "Multa a pagar na chegada: ${Formatos.reais(body.multaCentavos)}"
                                 else -> "Nada foi cobrado."
                             }
-                            AlertDialog.Builder(this@MyBookingsActivity).setTitle("Reserva cancelada 🪨")
+                            AlertDialog.Builder(this@MyBookingsActivity).setTitle("Reserva cancelada")
                                 .setMessage(detalhe).setPositiveButton("OK", null).show()
                             fetchReservas()
                         } else {
@@ -202,7 +202,7 @@ class MyBookingsActivity : AppCompatActivity() {
         val fotosLabel = TextView(this).apply { text = "Nenhuma foto"; setPadding(0, pad / 2, 0, 0) }
         reviewFotosLabel = fotosLabel
         val escolher = TextView(this).apply {
-            text = "📷 Escolher fotos (até 5, 25 MB cada)"
+            text = "Escolher fotos (até 5, 25 MB cada)"
             setPadding(0, pad, 0, 0)
             setTextColor(resources.getColor(R.color.hb_orange, theme))
             setOnClickListener {
@@ -231,7 +231,7 @@ class MyBookingsActivity : AppCompatActivity() {
                     codigo, Uploads.texto(nota.coerceIn(1, 5).toString()),
                     texto.takeIf { it.isNotBlank() }?.let { Uploads.texto(it) }, partes)
                 if (response.isSuccessful) {
-                    Toast.makeText(this@MyBookingsActivity, "Avaliação publicada! Obrigado, tribo 🪨", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@MyBookingsActivity, "Avaliação publicada! Obrigado, tribo", Toast.LENGTH_LONG).show()
                     fetchReservas()
                 } else {
                     // 413 ARQUIVO_GRANDE, 400 tipo de imagem inválido, 422 já avaliada
