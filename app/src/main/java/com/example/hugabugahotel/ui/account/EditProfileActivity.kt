@@ -81,7 +81,7 @@ class EditProfileActivity : AppCompatActivity() {
                 )
                 val response = api.updateUserProfile(request)
                 if (response.isSuccessful) {
-                    Toast.makeText(this@EditProfileActivity, "Perfil atualizado com sucesso! Uga! 🪨", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@EditProfileActivity, "Perfil atualizado com sucesso!", Toast.LENGTH_SHORT).show()
                     setResult(RESULT_OK)
                     finish()
                 } else {

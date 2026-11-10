@@ -47,7 +47,7 @@ class LanguageActivity : AppCompatActivity() {
                     runCatching { ApiClient.getApi(applicationContext).atualizarPreferencias(PreferenciasDto(idioma = idiomaApi)) }
                 }
             }
-            Toast.makeText(this, "Idioma alterado com sucesso! Uga! 🪨", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Idioma alterado com sucesso!", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, HomeActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

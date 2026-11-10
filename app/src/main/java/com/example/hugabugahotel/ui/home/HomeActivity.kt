@@ -141,7 +141,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun navigateToCaverns() {
         if (selectedCheckIn.isEmpty() || selectedCheckOut.isEmpty()) {
-            Toast.makeText(this, "Por favor, selecione o período da estadia antes de procurar cavernas! 🪨", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Por favor, selecione o período da estadia antes de procurar cavernas!", Toast.LENGTH_SHORT).show()
             return
         }
 

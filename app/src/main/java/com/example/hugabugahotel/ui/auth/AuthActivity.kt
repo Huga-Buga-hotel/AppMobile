@@ -112,7 +112,7 @@ class AuthActivity : AppCompatActivity() {
         // para reservar, o e-mail do responsável é pedido no checkout.
         binding.tvGuestLink.setOnClickListener {
             SessionManager(this).clearAuth()
-            Toast.makeText(this, "Entrando como visitante da tribo 🪨", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Entrando como visitante da tribo", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, HomeActivity::class.java))
             finish()
         }

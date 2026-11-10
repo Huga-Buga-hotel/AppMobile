@@ -153,3 +153,8 @@ data class PagamentoResponse(
     val pixExpiraEm: String? = null,
     val motivoRecusa: String? = null
 )
+
+data class AlterarDatasRequest(
+    val checkIn: String,
+    val checkOut: String
+)

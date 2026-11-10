@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
                 android:gravity="center"
-                android:text="Nenhuma reserva encontrada na tribo 🪨"
+                android:text="Nenhuma reserva encontrada na tribo"
                 android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView

@@ -62,17 +62,23 @@
                 <TextView
                     android:id="@+id/tvManageDates"
                     style="@style/HB.Text.Muted"
-                    android:layout_marginTop="4dp"
-                    android:text="📅 7 out – 14 out" />
+                    android:layout_marginTop="8dp"
+                    android:drawablePadding="8dp"
+                    app:drawableStartCompat="@drawable/ic_calendar"
+                    app:drawableTint="@color/hb_muted"
+                    android:text="7 out – 14 out" />
 
                 <TextView
                     android:id="@+id/tvManageTotal"
                     style="@style/HB.Text"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/hb_dark"
-                    android:textSize="13sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
-                    android:text="💰 Total atualizado: R$ 1.560,00" />
+                    android:drawablePadding="8dp"
+                    app:drawableStartCompat="@drawable/ic_wallet"
+                    app:drawableTint="@color/hb_dark"
+                    android:text="Total atualizado: R$ 1.560,00" />
             </LinearLayout>
 
             <!-- Card Pagamento Pendente de Experiências -->
@@ -86,6 +92,14 @@
                 android:orientation="horizontal"
                 android:padding="14dp"
                 android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="12dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_warning_red"
+                    app:tint="@color/hb_warning_text" />
 
                 <LinearLayout
                     android:layout_width="0dp"

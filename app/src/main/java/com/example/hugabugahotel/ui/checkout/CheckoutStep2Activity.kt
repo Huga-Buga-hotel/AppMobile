@@ -157,7 +157,7 @@ class CheckoutStep2Activity : AppCompatActivity() {
         }
         for (combo in combos) {
             val preco = "${Formatos.reais(combo.precoAdultoCentavos)} adulto · ${Formatos.reais(combo.precoCriancaCentavos)} criança / noite"
-            adicionarCard("🍖 Combo ${combo.nome}", combo.descricao.orEmpty(), preco,
+            adicionarCard("Combo ${combo.nome}", combo.descricao.orEmpty(), preco,
                 selecionado = { comboEscolhido?.id == combo.id }) { aoMudar ->
                 if (comboEscolhido?.id == combo.id) {
                     comboEscolhido = null; comboHorario = null; bindBookingSummary(); aoMudar()

@@ -101,9 +101,7 @@ class SessionManager(context: Context) {
     fun saveLanguage(lang: String) = prefs.edit().putString(KEY_LANGUAGE, lang).apply()
 
     fun getLanguage(): String {
-        prefs.getString(KEY_LANGUAGE, null)?.let { return it }
-        val sysLang = java.util.Locale.getDefault().language.lowercase(java.util.Locale.ROOT)
-        return if (sysLang.startsWith("en")) "en" else "pt"
+        return "pt"
     }
 
     fun saveBaseUrl(url: String) = prefs.edit().putString(KEY_BASE_URL, url).apply()

@@ -67,14 +67,16 @@ class BookingsAdapter(
             (item.diasParaCheckIn?.takeIf { it > 0 && currentTab == "proximas" }?.let { " · $it dias pra caverna" } ?: "")
         holder.tvBookingCode.text = item.codigo
         holder.tvCavernTitle.text = item.cavernaNome
-        holder.tvBookingDates.text = "📅 ${Formatos.dataCompleta(item.checkIn)} – ${Formatos.dataCompleta(item.checkOut)}"
+        holder.tvBookingDates.text = "${Formatos.dataCompleta(item.checkIn)} – ${Formatos.dataCompleta(item.checkOut)}"
         holder.tvBookingTotalAndPeople.text =
-            "💰 ${Formatos.reais(item.total)}${if (item.pago) " (pago)" else ""}   👥 ${item.pessoas} na tribo"
+            "${Formatos.reais(item.total)}${if (item.pago) " (pago)" else ""} · ${item.pessoas} na tribo"
 
         if (isSelectionMode) {
             holder.btnCancelBooking.visibility = View.GONE
             holder.btnManageExperiences.visibility = View.GONE
             (holder.btnVoucher as? TextView)?.text = selectionButtonText
+            holder.btnVoucher.isEnabled = true
+            holder.btnVoucher.alpha = 1.0f
             holder.btnVoucher.setOnClickListener { onSelect?.invoke(item) }
             holder.itemView.setOnClickListener { onSelect?.invoke(item) }
             return
@@ -82,8 +84,18 @@ class BookingsAdapter(
 
         holder.itemView.setOnClickListener(null)
         (holder.btnVoucher as? TextView)?.text = context.getString(R.string.voucher_title)
-        holder.btnVoucher.setOnClickListener {
-            context.startActivity(Intent(context, VoucherActivity::class.java).putExtra("RESERVA_CODIGO", item.codigo))
+
+        val isCancelada = currentTab == "canceladas" || item.status == "CANCELADA"
+        if (isCancelada) {
+            holder.btnVoucher.isEnabled = false
+            holder.btnVoucher.alpha = 0.4f
+            holder.btnVoucher.setOnClickListener(null)
+        } else {
+            holder.btnVoucher.isEnabled = true
+            holder.btnVoucher.alpha = 1.0f
+            holder.btnVoucher.setOnClickListener {
+                context.startActivity(Intent(context, VoucherActivity::class.java).putExtra("RESERVA_CODIGO", item.codigo))
+            }
         }
 
         val ativa = item.status == "CONFIRMADA" || item.status == "AGUARDANDO_PAGAMENTO"
@@ -100,7 +112,7 @@ class BookingsAdapter(
             }
             currentTab == "passadas" && item.podeAvaliar -> {
                 holder.btnCancelBooking.visibility = View.VISIBLE
-                holder.btnCancelBooking.text = "⭐ Avaliar estadia"
+                holder.btnCancelBooking.text = "Avaliar estadia"
                 holder.btnCancelBooking.setOnClickListener { onReviewClick?.invoke(item) }
             }
             else -> holder.btnCancelBooking.visibility = View.GONE

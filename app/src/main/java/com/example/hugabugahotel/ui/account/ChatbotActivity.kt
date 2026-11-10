@@ -44,7 +44,7 @@ class ChatbotActivity : AppCompatActivity() {
 
     private val pedirMicrofone = registerForActivityResult(ActivityResultContracts.RequestPermission()) { ok ->
         if (ok) iniciarGravacao()
-        else Toast.makeText(this, "Sem o microfone, escreva sua pergunta 🪨", Toast.LENGTH_SHORT).show()
+        else Toast.makeText(this, "Sem o microfone, escreva sua pergunta", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -134,7 +134,7 @@ class ChatbotActivity : AppCompatActivity() {
         val ok = runCatching { gravador?.stop() }.isSuccess // stop() falha se a gravação foi curta demais
         liberarGravador()
         if (!ok || arquivo == null || !arquivo.exists() || arquivo.length() == 0L) {
-            Toast.makeText(this, "Áudio muito curto. Segure um pouco mais 🎙️", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Áudio muito curto. Grave um pouco mais.", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -164,7 +164,7 @@ class ChatbotActivity : AppCompatActivity() {
     private fun conversar(aoTranscrever: ((String) -> Unit)? = null, chamada: suspend () -> String) {
         aguardando = true
         binding.btnSendMessage.isEnabled = false
-        val pensando = ChatMessage("Bugão está pensando... 🔥", false)
+        val pensando = ChatMessage("Bugão está pensando...", false)
         adicionar(pensando)
 
         lifecycleScope.launch {

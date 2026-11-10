@@ -192,7 +192,7 @@ class ExperienceScheduleActivity : AppCompatActivity() {
                 if (r.isSuccessful && a != null) {
                     val valor = if (a.valorCentavos == 0L) "grátis" else "${Formatos.reais(a.valorCentavos)} na conta da toca"
                     Toast.makeText(this@ExperienceScheduleActivity,
-                        "$experienceNome às ${Formatos.hora(a.inicio)} agendada ($valor) 🪨", Toast.LENGTH_LONG).show()
+                        "$experienceNome às ${Formatos.hora(a.inicio)} agendada ($valor)", Toast.LENGTH_LONG).show()
                     atualizarDia()
                 } else {
                     // 409 VAGAS_ESGOTADAS, 400 faixa de idade, 422 reserva não confirmada

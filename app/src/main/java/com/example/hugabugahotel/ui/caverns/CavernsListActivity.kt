@@ -292,7 +292,7 @@ class CavernsListActivity : AppCompatActivity() {
 
     private fun handleFavoriteToggle(cavern: CavernSummary, isFavorite: Boolean) {
         if (!SessionManager(this).isLoggedIn()) {
-            Toast.makeText(this, "Entre na sua conta para favoritar cavernas 🪨", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Entre na sua conta para favoritar cavernas", Toast.LENGTH_SHORT).show()
             return
         }
         lifecycleScope.launch {
@@ -352,6 +352,10 @@ class CavernsListActivity : AppCompatActivity() {
     private fun fetchCaverns() {
         lifecycleScope.launch {
             val api = ApiClient.getApi(this@CavernsListActivity)
+            try {
+                api.getCavernasFiltros()
+            } catch (_: Exception) {}
+
             if (SessionManager(this@CavernsListActivity).isLoggedIn()) try {
                 val favResponse = api.getCavernasFavoritas()
                 if (favResponse.isSuccessful && favResponse.body() != null) {

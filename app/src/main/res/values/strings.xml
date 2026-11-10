@@ -24,10 +24,10 @@
     <string name="home_cta_tour">Tour 360° pela caverna</string>
     <string name="home_hero_rating">4,9 · 3.200 relatos da tribo</string>
     <string name="home_hero_photo_alt">Foto: entrada da caverna com tochas acesas ao entardecer</string>
-    <string name="marquee_text">UGA ◆ BUGA ◆ MAMUTE ◆ FOGUEIRA ◆ TRIBO ◆ UGA ◆ BUGA ◆ MAMUTE</string>
+    <string name="marquee_text">UGA - BUGA - MAMUTE - FOGUEIRA - TRIBO - UGA - BUGA - MAMUTE</string>
     <string name="section_our_caverns_eyebrow">ONDE SUA TRIBO DORME</string>
     <string name="section_our_caverns_title">Nossas cavernas</string>
-    <string name="section_our_caverns_see_all">Ver todas as 7 →</string>
+    <string name="section_our_caverns_see_all">Ver todas as 7</string>
 
     <!-- Busca & Filtros -->
     <string name="search_dates_label">DATAS</string>

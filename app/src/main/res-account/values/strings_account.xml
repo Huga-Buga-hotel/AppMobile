@@ -11,8 +11,8 @@
     <string name="onboarding_3_eyebrow">AVENTURAS</string>
     <string name="onboarding_3_title">Escavação, trilha e banquete a um toque</string>
     <string name="onboarding_3_desc">Agende atividades pras crianças e reserve mesa na fogueira em segundos.</string>
-    <string name="onboarding_next">Próximo →</string>
-    <string name="onboarding_start">Uga! Começar →</string>
+    <string name="onboarding_next">Próximo</string>
+    <string name="onboarding_start">Uga! Começar</string>
 
     <!-- Entrar / Criar Conta (Auth) -->
     <string name="auth_title_welcome">Uga! Bom te ver de volta.</string>

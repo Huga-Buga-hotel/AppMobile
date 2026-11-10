@@ -45,6 +45,9 @@ interface HugaBugaApi {
         @Query("size") size: Int = 10
     ): Response<CavernListResponse>
 
+    @GET("cavernas/filtros")
+    suspend fun getCavernasFiltros(): Response<CavernasFiltrosResponse>
+
     @GET("cavernas/{slug}")
     suspend fun getCavernaDetail(@Path("slug") slug: String): Response<CavernDetailResponse>
 
@@ -119,18 +122,37 @@ interface HugaBugaApi {
     @GET("pagamentos/{id}")
     suspend fun getStatusPagamento(@Path("id") id: String): Response<PagamentoResponse>
 
+    @POST("pagamentos/{id}/simular-confirmacao")
+    suspend fun simularConfirmacaoPagamento(@Path("id") id: String): Response<PagamentoResponse>
+
     @GET("reservas/{codigo}")
     suspend fun getVoucherReserva(@Path("codigo") codigo: String): Response<ReservaResponse>
+
+    @GET("reservas/buscar")
+    suspend fun buscarReservaSemConta(
+        @Query("codigo") codigo: String,
+        @Query("email") email: String
+    ): Response<ReservaResponse>
 
     @GET("reservas/{codigo}/voucher.pdf")
     @Streaming
     suspend fun downloadVoucherPdf(@Path("codigo") codigo: String): Response<ResponseBody>
+
+    @GET("reservas/{codigo}/agenda.ics")
+    @Streaming
+    suspend fun downloadAgendaIcs(@Path("codigo") codigo: String): Response<ResponseBody>
 
     @POST("reservas/{codigo}/checkin")
     suspend fun realizarCheckin(@Path("codigo") codigo: String): Response<ReservaResponse>
 
     @POST("reservas/{codigo}/cancelar")
     suspend fun cancelarReserva(@Path("codigo") codigo: String): Response<CancelarResponse>
+
+    @PATCH("reservas/{codigo}/datas")
+    suspend fun alterarDatasReserva(
+        @Path("codigo") codigo: String,
+        @Body body: AlterarDatasRequest
+    ): Response<ReservaResponse>
 
     /** Avaliação: multipart com nota (1 a 5), texto e até 5 fotos de até 25 MB. */
     @Multipart
@@ -145,6 +167,12 @@ interface HugaBugaApi {
     // --- Atividades ---
     @GET("atividades")
     suspend fun getAtividades(@Query("categoria") categoria: String? = null): Response<AtividadesListResponse>
+
+    @GET("atividades/{id}")
+    suspend fun getAtividadeDetail(@Path("id") id: String): Response<AtividadeItem>
+
+    @GET("atividades/sessoes")
+    suspend fun getSessoesData(@Query("data") data: String): Response<List<SessaoAtividade>>
 
     @GET("atividades/{id}/sessoes")
     suspend fun getSessoesAtividade(
@@ -206,6 +234,9 @@ interface HugaBugaApi {
     @POST("restaurante/reservas-mesa")
     suspend fun reservarMesa(@Body body: ReservaMesaRequest): Response<MesaResponse>
 
+    @GET("restaurante/reservas-mesa/{codigo}")
+    suspend fun getReservaMesaDetail(@Path("codigo") codigo: String): Response<MesaResponse>
+
     @DELETE("restaurante/reservas-mesa/{codigo}")
     suspend fun cancelarMesa(@Path("codigo") codigo: String): Response<MesaResponse>
 
@@ -230,6 +261,12 @@ interface HugaBugaApi {
 
     @POST("me/membros")
     suspend fun adicionarMembroTribo(@Body body: MembroTribo): Response<MembroTribo>
+
+    @PATCH("me/membros/{id}")
+    suspend fun patchMembroTribo(
+        @Path("id") id: String,
+        @Body body: MembroTribo
+    ): Response<MembroTribo>
 
     @DELETE("me/membros/{id}")
     suspend fun removerMembroTribo(@Path("id") id: String): Response<Unit>

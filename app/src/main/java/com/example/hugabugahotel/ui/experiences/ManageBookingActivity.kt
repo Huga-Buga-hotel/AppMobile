@@ -57,8 +57,8 @@ class ManageBookingActivity : AppCompatActivity() {
                 val reserva = api.getVoucherReserva(reservaCodigo)
                 val r = reserva.body() ?: return@launch erro(ApiErrors.mensagem(reserva))
                 binding.tvManageCavern.text = r.cavernaNome
-                binding.tvManageDates.text = "📅 ${Formatos.dataCompleta(r.checkIn)} – ${Formatos.dataCompleta(r.checkOut)}"
-                binding.tvManageTotal.text = "💰 Total da estadia: ${Formatos.reais(r.total)}"
+                binding.tvManageDates.text = "${Formatos.dataCompleta(r.checkIn)} – ${Formatos.dataCompleta(r.checkOut)}"
+                binding.tvManageTotal.text = "Total da estadia: ${Formatos.reais(r.total)}"
 
                 val lista = api.getAgendamentos(reservaCodigo)
                 renderAgendamentos(lista.body().orEmpty().filter { it.status == "ATIVO" })
@@ -81,15 +81,18 @@ class ManageBookingActivity : AppCompatActivity() {
             val card = LinearLayout(this).apply {
                 orientation = LinearLayout.HORIZONTAL
                 setBackgroundResource(R.drawable.bg_card)
-                setPadding(28, 20, 28, 20)
+                setPadding(32, 24, 32, 24)
                 gravity = Gravity.CENTER_VERTICAL
                 layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT).apply { setMargins(0, 0, 0, 12) }
+                    LinearLayout.LayoutParams.WRAP_CONTENT).apply { setMargins(0, 0, 0, 16) }
             }
             val info = LinearLayout(this).apply {
                 orientation = LinearLayout.VERTICAL
                 layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
-                addView(TextView(context).apply { text = "${a.atividade} (${Formatos.hora(a.inicio)})"; setTextAppearance(R.style.HB_Text_H3) })
+                addView(TextView(context).apply {
+                    text = "${a.atividade} (${Formatos.hora(a.inicio)})"
+                    setTextAppearance(R.style.HB_Text_H3)
+                })
                 addView(TextView(context).apply {
                     text = "${Formatos.dataCompleta(a.inicio)} · ${a.quantidade} pessoa(s) · " +
                         if (a.valorCentavos == 0L) "grátis" else Formatos.reais(a.valorCentavos)

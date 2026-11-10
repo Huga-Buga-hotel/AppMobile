@@ -107,7 +107,7 @@ class VoucherActivity : AppCompatActivity() {
                 val r = response.body()
                 if (response.isSuccessful && r != null) {
                     bind(r)
-                    Toast.makeText(this@VoucherActivity, "Check-in online feito! Uga! 🪨", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@VoucherActivity, "Check-in online feito!", Toast.LENGTH_SHORT).show()
                 } else {
                     erro(ApiErrors.mensagem(response))
                 }
@@ -118,7 +118,7 @@ class VoucherActivity : AppCompatActivity() {
     }
 
     private fun baixarPdf() {
-        Toast.makeText(this, "Baixando a tábua (PDF)... 🪨", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Baixando a tábua (PDF)...", Toast.LENGTH_SHORT).show()
         lifecycleScope.launch {
             try {
                 val response = ApiClient.getApi(this@VoucherActivity).downloadVoucherPdf(reservaCodigo)
