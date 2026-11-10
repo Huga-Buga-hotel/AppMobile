@@ -1,5 +1,7 @@
 package com.example.hugabugahotel.data.model
 
+// Espelha com.hugabuga.api.dto.ContaDtos (backend).
+
 data class UserProfileResponse(
     val id: String,
     val nome: String,
@@ -11,13 +13,16 @@ data class UserProfileResponse(
     val documentoMascarado: String?,
     val dataNascimento: String?,
     val aceitaOfertas: Boolean,
-    val saldoOssos: Int,
-    val nivel: String,
-    val idioma: String = "PT"
+    /** VISITANTE ou ADMIN. */
+    val role: String = "VISITANTE",
+    /** pt-BR, en ou es. */
+    val idioma: String = "pt-BR"
 )
 
+/** PATCH /me: campos nulos não são alterados. */
 data class UpdateProfileRequest(
     val nome: String? = null,
+    val sobrenome: String? = null,
     val celular: String? = null,
     val aceitaOfertas: Boolean? = null,
     val dataNascimento: String? = null
@@ -28,29 +33,43 @@ data class TrocarSenhaRequest(
     val novaSenha: String
 )
 
+data class PreferenciasDto(
+    val idioma: String? = null,
+    val notificacoesEmail: Boolean? = null,
+    val notificacoesWhatsapp: Boolean? = null,
+    val aceitaOfertas: Boolean? = null
+)
+
 data class MembroTribo(
     val id: String?,
     val nome: String,
-    val tipo: String, // ADULTO ou CRIANCA
+    /** ADULTO ou CRIANCA. */
+    val tipo: String,
+    /** yyyy-MM-dd; obrigatória para criança. */
     val dataNascimento: String? = null,
+    /** Calculada pelo backend (somente leitura). */
     val idade: Int? = null,
     val observacoes: String? = null
 )
 
-data class ExtratoItemDto(
-    val quantidade: Int,
-    val motivo: String,
-    val reservaId: String?,
-    val criadoEm: String
-)
-
-data class OssosResponse(
-    val saldo: Int,
-    val acumulado: Int,
-    val nivel: String,
-    val proximoNivel: String?,
-    val faltam: Int,
-    val extrato: List<ExtratoItemDto> = emptyList()
+data class ReservaResumoDto(
+    val codigo: String,
+    val cavernaId: String,
+    val cavernaNome: String?,
+    val cavernaSlug: String?,
+    val fotoUrl: String?,
+    val checkIn: String,
+    val checkOut: String,
+    val noites: Int,
+    val adultos: Int,
+    val criancas: Int,
+    val status: String,
+    val total: Long,
+    val pago: Boolean,
+    /** "20 dias pra caverna". Nulo se já passou. */
+    val diasParaCheckIn: Int?,
+    val temCombo: Boolean,
+    val podeAvaliar: Boolean
 )
 
 data class MesaResumoDto(
@@ -58,29 +77,35 @@ data class MesaResumoDto(
     val data: String,
     val horario: String,
     val pessoas: Int,
-    val status: String
+    val status: String,
+    val origem: String? = null
 )
 
 data class MinhasReservasResponse(
-    val estadias: List<ReservaResponse> = emptyList(),
-    val mesas: List<MesaResumoDto> = emptyList()
+    val estadias: List<ReservaResumoDto> = emptyList(),
+    val mesas: List<MesaResumoDto> = emptyList(),
+    /** proximas, passadas, canceladas -> quantidade. */
+    val contagem: Map<String, Int> = emptyMap()
 )
 
-data class PagamentoSalvoDto(
-    val id: String?,
-    val titulo: String,
-    val detalhes: String,
+/** Histórico de pagamentos (GET /me/pagamentos). Nenhum cartão fica salvo: só final e bandeira. */
+data class PagamentoResumoDto(
+    val id: String,
+    val reservaCodigo: String?,
     val metodo: String,
-    val principal: Boolean? = false
+    val status: String,
+    val valorCentavos: Long,
+    val parcelas: Int?,
+    val cartaoFinal: String?,
+    val cartaoBandeira: String?,
+    val criadoEm: String,
+    val aprovadoEm: String?
 )
 
+/** Notificação local do app (o backend não tem caixa de notificações). */
 data class NotificacaoDto(
     val id: String?,
     val titulo: String,
     val descricao: String,
     val lida: Boolean? = false
-)
-
-data class FavoritoRequest(
-    val cavernaId: String
 )

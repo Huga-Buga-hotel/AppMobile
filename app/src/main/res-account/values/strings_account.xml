@@ -45,16 +45,9 @@
     <string name="btn_manage">Gerenciar</string>
     <string name="btn_change_dates">Alterar datas</string>
     <string name="btn_cancel">Cancelar</string>
-
-    <!-- Perfil & Fidelidade (Ossos da Tribo) -->
     <string name="profile_title">Perfil da tribo</string>
     <string name="profile_member_since">Na tribo desde 2024</string>
     <string name="profile_level">Caçadora</string>
-    <string name="loyalty_bones_title">OSSOS DA TRIBO</string>
-    <string name="loyalty_bones_points">340 🦴</string>
-    <string name="loyalty_bones_discount">= R$ 34 de desconto na próxima caçada</string>
-    <string name="loyalty_bones_level">Nível Caçadora</string>
-    <string name="loyalty_bones_progress">faltam 160 ossos pra Xamã</string>
     <string name="menu_personal_data">Dados pessoais</string>
     <string name="menu_tribe_members">Membros da tribo</string>
     <string name="menu_saved_payments">Pagamentos salvos</string>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Tela 13 · Perfil & Fidelidade Ossos da Tribo (mobile 390) -->
+<!-- Tela 13 · Perfil (mobile 390) -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -63,80 +63,11 @@
                     <TextView
                         android:id="@+id/tvProfileSubtitle"
                         style="@style/HB.Text.Muted"
-                        android:text="Caçadora · desde 2024"
+                        android:text="Visitante da tribo"
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Card de Fidelidade "OSSOS DA TRIBO" -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/gap_l"
-                android:background="@drawable/bg_loyalty_card"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/HB.Text.Eyebrow"
-                        android:text="@string/loyalty_bones_title"
-                        android:textColor="@color/hb_stone_dark" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        style="@style/HB.Text.Muted"
-                        android:text="160 pra Xamã"
-                        android:textColor="@color/hb_stone_dark"
-                        android:textSize="10sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tvBonesBalance"
-                        style="@style/HB.Text.H1"
-                        android:text="340"
-                        android:textColor="@color/white" />
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginStart="6dp"
-                        android:contentDescription="@null"
-                        android:src="@drawable/ic_bone" />
-                </LinearLayout>
-
-                <TextView
-                    style="@style/HB.Text.Muted"
-                    android:layout_marginTop="2dp"
-                    android:text="@string/loyalty_bones_discount"
-                    android:textColor="@color/hb_sand"
-                    android:textSize="11sp" />
-
-                <!-- Barra de Progresso de Nível -->
-                <ProgressBar
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="6dp"
-                    android:layout_marginTop="12dp"
-                    android:progress="65"
-                    android:progressDrawable="@drawable/bg_chip_selected" />
-            </LinearLayout>
 
             <!-- Seção: Dados Pessoais -->
             <LinearLayout

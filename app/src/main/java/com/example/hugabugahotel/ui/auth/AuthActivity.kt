@@ -9,10 +9,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.hugabugahotel.R
+import androidx.appcompat.app.AlertDialog
+import android.widget.EditText
 import com.example.hugabugahotel.data.api.ApiClient
+import com.example.hugabugahotel.data.api.ApiErrors
 import com.example.hugabugahotel.data.api.SessionManager
-import com.example.hugabugahotel.data.model.CadastroRequest
-import com.example.hugabugahotel.data.model.LoginRequest
+import com.example.hugabugahotel.data.model.*
 import com.example.hugabugahotel.databinding.ActivityAuthBinding
 import com.example.hugabugahotel.ui.home.HomeActivity
 import com.example.hugabugahotel.util.LanguageManager
@@ -80,6 +82,7 @@ class AuthActivity : AppCompatActivity() {
             binding.tabRegister.setTextColor(resources.getColor(R.color.hb_ink, theme))
 
             binding.layoutName.visibility = View.GONE
+            binding.tvForgotPassword.visibility = View.VISIBLE
             binding.btnSubmit.text = LanguageManager.get(this, "auth_btn_login")
         } else {
             binding.tabRegister.setBackgroundResource(R.drawable.bg_chip_selected)
@@ -88,113 +91,159 @@ class AuthActivity : AppCompatActivity() {
             binding.tabLogin.setTextColor(resources.getColor(R.color.hb_ink, theme))
 
             binding.layoutName.visibility = View.VISIBLE
+            binding.tvForgotPassword.visibility = View.GONE
             binding.btnSubmit.text = LanguageManager.get(this, "auth_btn_register")
         }
     }
 
     private fun setupListeners() {
         binding.btnSubmit.setOnClickListener {
-            if (isLoginMode) {
-                realizarLogin()
-            } else {
-                realizarRegistro()
-            }
+            if (isLoginMode) realizarLogin() else realizarRegistro()
         }
 
+        binding.tvForgotPassword.setOnClickListener { esqueciSenha() }
+
+        // Visitante: navega sem conta. Nenhum token é salvo (a API recusaria um token inventado);
+        // para reservar, o e-mail do responsável é pedido no checkout.
         binding.tvGuestLink.setOnClickListener {
-            SessionManager(this).saveSession(
-                accessToken = "guest_token_hb",
-                refreshToken = null,
-                userId = "guest",
-                userName = "Convidado da Tribo",
-                userEmail = "convidado@tribo.com"
-            )
-            Toast.makeText(this, "Entrando como Visitante da Tribo 🪨", Toast.LENGTH_SHORT).show()
+            SessionManager(this).clearAuth()
+            Toast.makeText(this, "Entrando como visitante da tribo 🪨", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, HomeActivity::class.java))
             finish()
         }
     }
 
+    private fun entrar(body: LoginResponse, email: String, boasVindas: String) {
+        SessionManager(this).saveSession(
+            accessToken = body.accessToken,
+            refreshToken = body.refreshToken,
+            userId = body.usuarioId,
+            userName = body.nome,
+            userEmail = email,
+            role = body.role
+        )
+        Toast.makeText(this, boasVindas, Toast.LENGTH_SHORT).show()
+        startActivity(Intent(this, HomeActivity::class.java))
+        finish()
+    }
+
     private fun realizarLogin() {
         val email = binding.etEmail.text.toString().trim()
         val senha = binding.etPassword.text.toString()
-
         if (email.isEmpty() || senha.isEmpty()) {
             Toast.makeText(this, "Preencha e-mail e senha", Toast.LENGTH_SHORT).show()
             return
         }
 
+        binding.btnSubmit.isEnabled = false
         lifecycleScope.launch {
             try {
-                val api = ApiClient.getApi(this@AuthActivity)
-                val response = api.login(LoginRequest(email, senha))
-                if (response.isSuccessful && response.body() != null) {
-                    val body = response.body()!!
-                    SessionManager(this@AuthActivity).saveSession(
-                        accessToken = body.accessToken,
-                        refreshToken = body.refreshToken,
-                        userId = body.usuarioId,
-                        userName = body.nome,
-                        userEmail = email
-                    )
-                    Toast.makeText(this@AuthActivity, "Uga! Bem-vindo de volta!", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@AuthActivity, HomeActivity::class.java))
-                    finish()
+                val response = ApiClient.getApi(this@AuthActivity).login(LoginRequest(email, senha))
+                val body = response.body()
+                if (response.isSuccessful && body != null) {
+                    entrar(body, email, "Uga! Bem-vindo de volta, ${body.nome}!")
                 } else {
-                    val errorMsg = response.errorBody()?.string() ?: "E-mail ou senha incorretos"
-                    Toast.makeText(this@AuthActivity, "Erro no login: $errorMsg", Toast.LENGTH_LONG).show()
+                    mostrarErro(ApiErrors.mensagem(response))
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@AuthActivity, "Falha de conexão com a API: ${e.localizedMessage ?: e.message}", Toast.LENGTH_LONG).show()
+                mostrarErro(ApiErrors.mensagem(e))
+            } finally {
+                binding.btnSubmit.isEnabled = true
             }
         }
     }
 
     private fun realizarRegistro() {
-        val fullName = binding.etName.text.toString().trim().ifEmpty { "Marina Souza" }
-        val parts = fullName.split(" ")
-        val nome = parts.firstOrNull() ?: "Marina"
-        val sobrenome = parts.drop(1).joinToString(" ").ifEmpty { "Souza" }
+        val partes = binding.etName.text.toString().trim().split(Regex("\\s+")).filter { it.isNotEmpty() }
         val email = binding.etEmail.text.toString().trim()
         val senha = binding.etPassword.text.toString()
+        val celular = binding.etPhone.text.toString().trim()
+        val cpf = binding.etDocument.text.toString().filter { it.isDigit() }
 
-        if (email.isEmpty() || senha.isEmpty()) {
-            Toast.makeText(this, "Preencha e-mail e senha", Toast.LENGTH_SHORT).show()
-            return
+        when {
+            partes.size < 2 -> return aviso("Informe nome e sobrenome")
+            email.isEmpty() -> return aviso("Informe o e-mail")
+            senha.length < 8 -> return aviso("A senha precisa ter pelo menos 8 caracteres")
+            celular.isEmpty() -> return aviso("Informe o celular")
+            cpf.length != 11 -> return aviso("Informe um CPF com 11 dígitos")
         }
 
+        binding.btnSubmit.isEnabled = false
+        lifecycleScope.launch {
+            try {
+                val request = CadastroRequest(
+                    nome = partes.first(),
+                    sobrenome = partes.drop(1).joinToString(" "),
+                    email = email,
+                    senha = senha,
+                    celular = celular,
+                    numeroDocumento = cpf
+                )
+                val response = ApiClient.getApi(this@AuthActivity).cadastro(request)
+                val body = response.body()
+                if (response.isSuccessful && body != null) {
+                    entrar(body, email, "Conta criada! Uga, ${body.nome}!")
+                } else {
+                    mostrarErro(ApiErrors.mensagem(response))
+                }
+            } catch (e: Exception) {
+                mostrarErro(ApiErrors.mensagem(e))
+            } finally {
+                binding.btnSubmit.isEnabled = true
+            }
+        }
+    }
+
+    /** Pede o link de redefinição. Sem servidor de e-mail, o backend em perfil dev devolve o token. */
+    private fun esqueciSenha() {
+        val email = binding.etEmail.text.toString().trim()
+        if (email.isEmpty()) return aviso("Digite seu e-mail no campo acima")
         lifecycleScope.launch {
             try {
                 val api = ApiClient.getApi(this@AuthActivity)
-                val request = CadastroRequest(
-                    nome = nome,
-                    sobrenome = sobrenome,
-                    email = email,
-                    senha = senha,
-                    celular = "+5554999999999",
-                    numeroDocumento = "12345678909",
-                    dataNascimento = "1990-01-01"
-                )
-                val response = api.cadastro(request)
-                if (response.isSuccessful && response.body() != null) {
-                    val body = response.body()!!
-                    SessionManager(this@AuthActivity).saveSession(
-                        accessToken = body.accessToken,
-                        refreshToken = body.refreshToken,
-                        userId = body.usuarioId,
-                        userName = body.nome,
-                        userEmail = email
-                    )
-                    Toast.makeText(this@AuthActivity, "Conta criada com sucesso! Uga!", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@AuthActivity, HomeActivity::class.java))
-                    finish()
+                val response = api.esqueciSenha(EsqueciSenhaRequest(email))
+                val body = response.body()
+                if (!response.isSuccessful || body == null) return@launch mostrarErro(ApiErrors.mensagem(response))
+                if (body.tokenDev == null) {
+                    mostrarErro(body.mensagem, "Confira seu e-mail")
                 } else {
-                    val errorMsg = response.errorBody()?.string() ?: "Erro ao cadastrar"
-                    Toast.makeText(this@AuthActivity, "Erro no cadastro: $errorMsg", Toast.LENGTH_LONG).show()
+                    pedirNovaSenha(body.tokenDev)
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@AuthActivity, "Falha de conexão com a API: ${e.localizedMessage ?: e.message}", Toast.LENGTH_LONG).show()
+                mostrarErro(ApiErrors.mensagem(e))
             }
         }
+    }
+
+    private fun pedirNovaSenha(token: String) {
+        val campo = EditText(this).apply {
+            hint = "Nova senha (mín. 8 caracteres)"
+            inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+        }
+        AlertDialog.Builder(this)
+            .setTitle("Criar nova senha")
+            .setView(campo)
+            .setPositiveButton("Salvar") { _, _ ->
+                lifecycleScope.launch {
+                    try {
+                        val r = ApiClient.getApi(this@AuthActivity)
+                            .redefinirSenha(RedefinirSenhaRequest(token, campo.text.toString()))
+                        if (r.isSuccessful) aviso("Senha alterada! Entre com a nova senha.")
+                        else mostrarErro(ApiErrors.mensagem(r))
+                    } catch (e: Exception) {
+                        mostrarErro(ApiErrors.mensagem(e))
+                    }
+                }
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun aviso(texto: String) {
+        Toast.makeText(this, texto, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun mostrarErro(texto: String, titulo: String = "Ugh!") {
+        AlertDialog.Builder(this).setTitle(titulo).setMessage(texto).setPositiveButton("OK", null).show()
     }
 }

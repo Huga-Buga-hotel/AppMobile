@@ -7,20 +7,43 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hugabugahotel.R
-import com.example.hugabugahotel.data.api.SessionManager
 import com.example.hugabugahotel.data.model.ReservaResponse
+import com.example.hugabugahotel.data.model.ReservaResumoDto
 import com.example.hugabugahotel.ui.checkout.VoucherActivity
-import com.example.hugabugahotel.ui.experiences.ExperienceScheduleActivity
-import java.util.Locale
+import com.example.hugabugahotel.ui.experiences.ManageBookingActivity
+import com.example.hugabugahotel.util.Formatos
+
+/** Uma estadia na lista, venha de /me/reservas (com conta) ou de /reservas/{codigo} (sem conta). */
+data class BookingItem(
+    val codigo: String,
+    val cavernaNome: String,
+    val checkIn: String,
+    val checkOut: String,
+    val pessoas: Int,
+    val total: Long,
+    val status: String,
+    val pago: Boolean,
+    val diasParaCheckIn: Int?,
+    val podeAvaliar: Boolean
+) {
+    companion object {
+        fun de(r: ReservaResumoDto) = BookingItem(r.codigo, r.cavernaNome.orEmpty(), r.checkIn, r.checkOut,
+            r.adultos + r.criancas, r.total, r.status, r.pago, r.diasParaCheckIn, r.podeAvaliar)
+
+        /** Sem conta não há avaliação (a API exige a conta que reservou). */
+        fun de(r: ReservaResponse) = BookingItem(r.codigo, r.cavernaNome, r.checkIn, r.checkOut,
+            r.adultos + r.criancas, r.total, r.status, r.pago, null, false)
+    }
+}
 
 class BookingsAdapter(
-    private var items: List<ReservaResponse>,
+    private var items: List<BookingItem>,
     private val currentTab: String = "proximas",
     private val isSelectionMode: Boolean = false,
-    private val selectionButtonText: String = "Reservar",
-    private val onVoucherClick: ((ReservaResponse) -> Unit)? = null,
-    private val onManageClick: ((ReservaResponse) -> Unit)? = null,
-    private val onCancelClick: ((ReservaResponse) -> Unit)? = null
+    private val selectionButtonText: String = "Escolher",
+    private val onSelect: ((BookingItem) -> Unit)? = null,
+    private val onCancelClick: ((BookingItem) -> Unit)? = null,
+    private val onReviewClick: ((BookingItem) -> Unit)? = null
 ) : RecyclerView.Adapter<BookingsAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -34,93 +57,59 @@ class BookingsAdapter(
         val btnCancelBooking: TextView = view.findViewById(R.id.btnCancelBooking)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_booking_card, parent, false)
-        return ViewHolder(view)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
+        ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_booking_card, parent, false))
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val estadia = items[position]
-        holder.tvBookingStatus.text = estadia.status
-        holder.tvBookingCode.text = estadia.codigo
-        holder.tvCavernTitle.text = estadia.cavernaNome
-        holder.tvBookingDates.text = "📅 ${estadia.checkIn} – ${estadia.checkOut}"
-
-        val sessionManager = SessionManager(holder.itemView.context)
-        val baseCentavos = if (estadia.totalCentavos > 0) estadia.totalCentavos else 156000L
-        val extraCentavos = sessionManager.getExtraExpenses(estadia.codigo)
-        val finalCentavos = baseCentavos + extraCentavos
-
-        val totalReais = String.format(Locale("pt", "BR"), "R$ %.2f", finalCentavos / 100.0)
-        val qtdPessoas = if (estadia.adultos > 0) "${estadia.adultos} pessoas" else "2 pessoas"
-        holder.tvBookingTotalAndPeople.text = "💰 Total: $totalReais   👥 $qtdPessoas na tribo"
+        val item = items[position]
+        val context = holder.itemView.context
+        holder.tvBookingStatus.text = Formatos.status(item.status) +
+            (item.diasParaCheckIn?.takeIf { it > 0 && currentTab == "proximas" }?.let { " · $it dias pra caverna" } ?: "")
+        holder.tvBookingCode.text = item.codigo
+        holder.tvCavernTitle.text = item.cavernaNome
+        holder.tvBookingDates.text = "📅 ${Formatos.dataCompleta(item.checkIn)} – ${Formatos.dataCompleta(item.checkOut)}"
+        holder.tvBookingTotalAndPeople.text =
+            "💰 ${Formatos.reais(item.total)}${if (item.pago) " (pago)" else ""}   👥 ${item.pessoas} na tribo"
 
         if (isSelectionMode) {
             holder.btnCancelBooking.visibility = View.GONE
             holder.btnManageExperiences.visibility = View.GONE
-            holder.btnVoucher.visibility = View.VISIBLE
             (holder.btnVoucher as? TextView)?.text = selectionButtonText
-            holder.btnVoucher.setOnClickListener {
-                onVoucherClick?.invoke(estadia)
-            }
-            holder.itemView.setOnClickListener {
-                onVoucherClick?.invoke(estadia)
-            }
-        } else {
-            (holder.btnVoucher as? TextView)?.text = holder.itemView.context.getString(R.string.voucher_title)
-            holder.itemView.setOnClickListener(null)
+            holder.btnVoucher.setOnClickListener { onSelect?.invoke(item) }
+            holder.itemView.setOnClickListener { onSelect?.invoke(item) }
+            return
+        }
 
-            if (currentTab == "proximas") {
-                holder.btnManageExperiences.visibility = View.VISIBLE
+        holder.itemView.setOnClickListener(null)
+        (holder.btnVoucher as? TextView)?.text = context.getString(R.string.voucher_title)
+        holder.btnVoucher.setOnClickListener {
+            context.startActivity(Intent(context, VoucherActivity::class.java).putExtra("RESERVA_CODIGO", item.codigo))
+        }
+
+        val ativa = item.status == "CONFIRMADA" || item.status == "AGUARDANDO_PAGAMENTO"
+        holder.btnManageExperiences.visibility = if (currentTab == "proximas" && item.status == "CONFIRMADA") View.VISIBLE else View.GONE
+        holder.btnManageExperiences.setOnClickListener {
+            context.startActivity(Intent(context, ManageBookingActivity::class.java).putExtra("RESERVA_CODIGO", item.codigo))
+        }
+
+        when {
+            currentTab == "proximas" && ativa -> {
                 holder.btnCancelBooking.visibility = View.VISIBLE
-
-                holder.btnManageExperiences.setOnClickListener {
-                    if (onManageClick != null) {
-                        onManageClick.invoke(estadia)
-                    } else {
-                        val context = holder.itemView.context
-                        val intent = Intent(context, com.example.hugabugahotel.ui.experiences.ManageBookingActivity::class.java).apply {
-                            putExtra("RESERVA_CODIGO", estadia.codigo)
-                            putExtra("CAVERN_NOME", estadia.cavernaNome)
-                            putExtra("CHECK_IN", estadia.checkIn)
-                            putExtra("CHECK_OUT", estadia.checkOut)
-                            putExtra("TOTAL_CENTAVOS", estadia.totalCentavos)
-                        }
-                        context.startActivity(intent)
-                    }
-                }
-
-                holder.btnCancelBooking.setOnClickListener {
-                    onCancelClick?.invoke(estadia)
-                }
-            } else {
-                holder.btnManageExperiences.visibility = View.GONE
-                holder.btnCancelBooking.visibility = View.GONE
+                holder.btnCancelBooking.text = "Cancelar"
+                holder.btnCancelBooking.setOnClickListener { onCancelClick?.invoke(item) }
             }
-
-            holder.btnVoucher.setOnClickListener {
-                if (onVoucherClick != null) {
-                    onVoucherClick.invoke(estadia)
-                } else {
-                    val context = holder.itemView.context
-                    val intent = Intent(context, VoucherActivity::class.java).apply {
-                        putExtra("RESERVA_CODIGO", estadia.codigo)
-                        putExtra("CAVERN_NOME", estadia.cavernaNome)
-                        putExtra("CHECK_IN", estadia.checkIn)
-                        putExtra("CHECK_OUT", estadia.checkOut)
-                        putExtra("ADULTS", estadia.adultos)
-                        putExtra("TOTAL_CENTAVOS", finalCentavos)
-                    }
-                    context.startActivity(intent)
-                }
+            currentTab == "passadas" && item.podeAvaliar -> {
+                holder.btnCancelBooking.visibility = View.VISIBLE
+                holder.btnCancelBooking.text = "⭐ Avaliar estadia"
+                holder.btnCancelBooking.setOnClickListener { onReviewClick?.invoke(item) }
             }
+            else -> holder.btnCancelBooking.visibility = View.GONE
         }
     }
 
     override fun getItemCount(): Int = items.size
 
-    fun updateData(newItems: List<ReservaResponse>) {
+    fun updateData(newItems: List<BookingItem>) {
         items = newItems
         notifyDataSetChanged()
     }

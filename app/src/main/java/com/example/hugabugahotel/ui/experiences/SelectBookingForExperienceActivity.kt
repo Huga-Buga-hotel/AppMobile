@@ -7,12 +7,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hugabugahotel.data.api.ApiClient
-import com.example.hugabugahotel.data.model.ReservaResponse
+import com.example.hugabugahotel.data.api.ApiErrors
+import com.example.hugabugahotel.data.api.SessionManager
 import com.example.hugabugahotel.databinding.ActivitySelectBookingBinding
+import com.example.hugabugahotel.ui.account.BookingItem
 import com.example.hugabugahotel.ui.account.BookingsAdapter
 import kotlinx.coroutines.launch
-import java.util.Locale
 
+/** Escolhe em qual reserva CONFIRMADA a atividade será agendada (a API só agenda para hóspede confirmado). */
 class SelectBookingForExperienceActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySelectBookingBinding
@@ -25,69 +27,48 @@ class SelectBookingForExperienceActivity : AppCompatActivity() {
         binding = ActivitySelectBookingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        experienceId = intent.getStringExtra("EXPERIENCE_ID") ?: "1"
+        experienceId = intent.getStringExtra("EXPERIENCE_ID") ?: run { finish(); return }
         experienceNome = intent.getStringExtra("EXPERIENCE_NOME") ?: "Experiência"
+        binding.tvSelectBookingTitle.text = "Escolha sua reserva para $experienceNome"
 
-        binding.tvSelectBookingTitle.text = "Escolha sua Reserva para $experienceNome"
-
-        setupRecyclerView()
-        fetchBookings()
-    }
-
-    private fun setupRecyclerView() {
-        adapter = BookingsAdapter(
-            items = emptyList(),
-            currentTab = "proximas",
-            isSelectionMode = true,
-            selectionButtonText = "Reservar",
-            onVoucherClick = { reserva ->
-                openScheduleForBooking(reserva)
-            },
-            onCancelClick = null
-        )
+        adapter = BookingsAdapter(emptyList(), isSelectionMode = true, selectionButtonText = "Escolher",
+            onSelect = { reserva ->
+                startActivity(Intent(this, ExperienceScheduleActivity::class.java).apply {
+                    putExtra("EXPERIENCE_ID", experienceId)
+                    putExtra("EXPERIENCE_NOME", experienceNome)
+                    putExtra("RESERVA_CODIGO", reserva.codigo)
+                })
+            })
         binding.rvBookingsForExp.layoutManager = LinearLayoutManager(this)
         binding.rvBookingsForExp.adapter = adapter
-    }
-
-    private fun openScheduleForBooking(reserva: ReservaResponse) {
-        val intent = Intent(this, ExperienceScheduleActivity::class.java).apply {
-            putExtra("EXPERIENCE_ID", experienceId)
-            putExtra("EXPERIENCE_NOME", experienceNome)
-            putExtra("RESERVA_CODIGO", reserva.codigo)
-            putExtra("CAVERN_NOME", reserva.cavernaNome)
-            putExtra("CHECK_IN", reserva.checkIn)
-            putExtra("CHECK_OUT", reserva.checkOut)
-        }
-        startActivity(intent)
+        fetchBookings()
     }
 
     private fun fetchBookings() {
         lifecycleScope.launch {
-            val apiList = try {
-                val api = ApiClient.getApi(this@SelectBookingForExperienceActivity)
-                val response = api.getMinhasReservas("proximas")
-                if (response.isSuccessful && response.body() != null) {
-                    response.body()!!.estadias
+            val session = SessionManager(this@SelectBookingForExperienceActivity)
+            val api = ApiClient.getApi(this@SelectBookingForExperienceActivity)
+            val confirmadas = try {
+                if (session.isLoggedIn()) {
+                    api.getMinhasReservas("proximas").body()?.estadias.orEmpty().map { BookingItem.de(it) }
                 } else {
-                    emptyList()
-                }
-            } catch (_: Exception) {
+                    session.getGuestBookings().mapNotNull { runCatching { api.getVoucherReserva(it).body() }.getOrNull() }
+                        .map { BookingItem.de(it) }
+                }.filter { it.status == "CONFIRMADA" }
+            } catch (e: Exception) {
+                binding.tvEmptyBookingsForExp.text = ApiErrors.mensagem(e)
                 emptyList()
             }
 
-            // Filtra estadias ativas (não canceladas, não expiradas, não pendentes) estritamente do usuário logado
-            val activeBookings = apiList.filter { reserva ->
-                val status = reserva.status.uppercase(Locale.getDefault())
-                status != "CANCELADA" && status != "EXPIRADA" && status != "PENDENTE"
-            }
-
-            if (activeBookings.isEmpty()) {
-                adapter.updateData(emptyList())
-                binding.tvEmptyBookingsForExp.text = "Você não possui reservas ativas nesta conta para agendar experiências. Faça uma reserva primeiro!"
+            adapter.updateData(confirmadas)
+            if (confirmadas.isEmpty()) {
+                if (binding.tvEmptyBookingsForExp.text.isNullOrBlank() || session.isLoggedIn() || session.getGuestBookings().isEmpty()) {
+                    binding.tvEmptyBookingsForExp.text =
+                        "Você não tem reservas confirmadas para agendar atividades. Reserve uma caverna primeiro!"
+                }
                 binding.tvEmptyBookingsForExp.visibility = View.VISIBLE
                 binding.rvBookingsForExp.visibility = View.GONE
             } else {
-                adapter.updateData(activeBookings)
                 binding.tvEmptyBookingsForExp.visibility = View.GONE
                 binding.rvBookingsForExp.visibility = View.VISIBLE
             }

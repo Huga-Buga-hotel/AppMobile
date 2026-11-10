@@ -29,6 +29,8 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private var selectedCheckIn = ""
     private var selectedCheckOut = ""
+    private var selectedCheckInIso = ""
+    private var selectedCheckOutIso = ""
     private var adultCount = 2
     private var childCount = 2
 
@@ -39,7 +41,6 @@ class HomeActivity : AppCompatActivity() {
 
         setupNavigation()
         setupSearchCard()
-        fetchCaverns()
         fetchTribeMembersFromProfile()
     }
 
@@ -147,6 +148,8 @@ class HomeActivity : AppCompatActivity() {
             flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
             if (selectedCheckIn.isNotEmpty()) putExtra("CHECK_IN", selectedCheckIn)
             if (selectedCheckOut.isNotEmpty()) putExtra("CHECK_OUT", selectedCheckOut)
+            putExtra("CHECK_IN_ISO", selectedCheckInIso)
+            putExtra("CHECK_OUT_ISO", selectedCheckOutIso)
             putExtra("ADULTS", adultCount)
             putExtra("CHILDREN", childCount)
         }
@@ -166,9 +169,11 @@ class HomeActivity : AppCompatActivity() {
             val startDate = selection.first
             val endDate = selection.second
             if (startDate != null && endDate != null) {
-                val sdf = SimpleDateFormat("dd MMM", Locale.forLanguageTag("pt-BR"))
-                selectedCheckIn = sdf.format(Date(startDate))
-                selectedCheckOut = sdf.format(Date(endDate))
+                // meia-noite em UTC: converter em UTC evita o dia anterior
+                selectedCheckInIso = java.time.Instant.ofEpochMilli(startDate).atZone(java.time.ZoneOffset.UTC).toLocalDate().toString()
+                selectedCheckOutIso = java.time.Instant.ofEpochMilli(endDate).atZone(java.time.ZoneOffset.UTC).toLocalDate().toString()
+                selectedCheckIn = com.example.hugabugahotel.util.Formatos.dataCurta(selectedCheckInIso)
+                selectedCheckOut = com.example.hugabugahotel.util.Formatos.dataCurta(selectedCheckOutIso)
                 val dateStr = "$selectedCheckIn – $selectedCheckOut"
                 binding.root.findViewById<TextView>(R.id.tvDatesValue)?.text = dateStr
                 Toast.makeText(this, "Período: $dateStr", Toast.LENGTH_SHORT).show()
@@ -270,20 +275,5 @@ class HomeActivity : AppCompatActivity() {
             }
             .setNegativeButton("Cancelar", null)
             .show()
-    }
-
-    private fun fetchCaverns() {
-        lifecycleScope.launch {
-            try {
-                val api = ApiClient.getApi(this@HomeActivity)
-                val response = api.getCavernas(page = 0, size = 5)
-                if (response.isSuccessful) {
-                    val body = response.body()
-                    val total = body?.total ?: 0
-                }
-            } catch (e: Exception) {
-                // Modo offline / fallback
-            }
-        }
     }
 }

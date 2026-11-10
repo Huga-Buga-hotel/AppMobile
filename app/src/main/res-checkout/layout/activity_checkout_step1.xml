@@ -157,6 +157,27 @@
                         android:paddingEnd="12dp"
                         android:textSize="13sp" />
 
+                    <!-- Campo Documento (obrigatório na API) -->
+                    <TextView
+                        style="@style/HB.Text.Muted"
+                        android:layout_marginTop="10dp"
+                        android:text="CPF do responsável"
+                        android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/etDocument"
+                        style="@style/HB.Text"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/bg_chip"
+                        android:hint="000.000.000-00"
+                        android:inputType="number"
+                        android:maxLength="14"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:textSize="13sp" />
+
                     <!-- Idade das crianças -->
                     <TextView
                         style="@style/HB.Text.Muted"

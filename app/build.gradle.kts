@@ -1,7 +1,15 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.compose)
 }
+
+/**
+ * URL da API. Debug: o backend no seu computador visto pelo emulador (10.0.2.2).
+ * Release (AWS): passe a URL pública, ex.:
+ *   ./gradlew assembleRelease -Phugabuga.apiUrl=https://api.seudominio.com.br/api/v1/
+ * ou coloque hugabuga.apiUrl=... no ~/.gradle/gradle.properties.
+ */
+val apiUrlDebug = (findProperty("hugabuga.apiUrlDebug") as String?) ?: "http://10.0.2.2:8080/api/v1/"
+val apiUrlRelease = (findProperty("hugabuga.apiUrl") as String?) ?: "https://api.hugabuga.example/api/v1/"
 
 android {
     namespace = "com.example.hugabugahotel"
@@ -18,7 +26,15 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "API_BASE_URL", "\"$apiUrlDebug\"")
+            // HTTP sem TLS só no desenvolvimento (backend local)
+            manifestPlaceholders["usesCleartextTraffic"] = "true"
+        }
         release {
+            buildConfigField("String", "API_BASE_URL", "\"$apiUrlRelease\"")
+            // Em produção a API precisa estar em HTTPS
+            manifestPlaceholders["usesCleartextTraffic"] = "false"
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
@@ -32,8 +48,8 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     buildFeatures {
-        compose = true
         viewBinding = true
+        buildConfig = true
     }
 
     sourceSets {
@@ -54,12 +70,6 @@ android {
 }
 
 dependencies {
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.graphics)
-    implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
     implementation(libs.google.material)
     implementation(libs.retrofit.core)
@@ -68,12 +78,8 @@ dependencies {
     implementation(libs.okhttp.logging)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.coil)
-    implementation("com.google.zxing:core:3.5.3")
+    implementation(libs.zxing.core)
     testImplementation(libs.junit)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
-    debugImplementation(libs.androidx.compose.ui.tooling)
 }

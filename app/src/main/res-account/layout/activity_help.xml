@@ -159,7 +159,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:contentDescription="@null"
-                    android:src="@drawable/ic_bone"
+                    android:src="@drawable/ic_star"
                     app:tint="@color/hb_gold" />
 
                 <LinearLayout
@@ -171,13 +171,13 @@
 
                     <TextView
                         style="@style/HB.Text"
-                        android:text="Ossos e Níveis da Tribo"
+                        android:text="Avaliações da Estadia"
                         android:textStyle="bold" />
 
                     <TextView
                         style="@style/HB.Text.Muted"
                         android:layout_marginTop="2dp"
-                        android:text="Acumule Ossos a cada estadia e use-os para garantir descontos de até 50% em reservas futuras."
+                        android:text="Depois da estadia, avalie a caverna em Minhas reservas: dê sua nota, conte como foi e anexe até 5 fotos."
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>

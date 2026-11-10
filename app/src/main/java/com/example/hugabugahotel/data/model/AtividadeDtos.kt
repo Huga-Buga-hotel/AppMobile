@@ -1,26 +1,26 @@
 package com.example.hugabugahotel.data.model
 
+// Espelha com.hugabuga.api.dto.AtividadeDtos (backend).
+
 data class AtividadeItem(
     val id: String,
-    val nome: String? = null,
-    val titulo: String? = null,
+    val nome: String,
+    /** CRIANCAS, FAMILIA, AVENTURA, NOITE ou ADULTOS. */
     val categoria: String,
     val descricao: String? = null,
-    val precoCentavos: Long = 0L,
-    val duracaoMin: Int? = null,
-    val duracaoMinutos: Int? = null,
+    val duracaoMin: Int = 0,
     val idadeMin: Int? = null,
     val idadeMax: Int? = null,
+    /** 0 = grátis. Vai para a conta da toca (pago no hotel). */
+    val precoCentavos: Long = 0L,
+    /** POR_PESSOA ou POR_CRIANCA. */
     val cobranca: String? = null,
-    val faixaEtaria: String? = null,
-    val fotoUrl: String? = null,
-    val destaque: String? = null
+    val destaque: String? = null,
+    /** A API ainda não tem foto de atividade: o card mostra o placeholder. */
+    val fotoUrl: String? = null
 ) {
-    val displayNome: String
-        get() = nome ?: titulo ?: "Atividade"
-
-    val displayDuracao: Int
-        get() = duracaoMin ?: duracaoMinutos ?: 45
+    val displayNome: String get() = nome
+    val displayDuracao: Int get() = duracaoMin
 }
 
 data class AtividadesListResponse(
@@ -30,13 +30,11 @@ data class AtividadesListResponse(
 
 data class SessaoAtividade(
     val id: String,
-    val atividadeId: String,
-    val inicio: String? = null,
-    val dataHora: String? = null,
-    val vagasTotais: Int? = null,
-    val vagasLivres: Int? = null,
-    val vagasDisponiveis: Int? = null,
-    val esgotada: Boolean = false
+    /** ISO 8601 com fuso (ex.: 2026-12-02T09:00:00-03:00). */
+    val inicio: String,
+    val vagasTotais: Int,
+    val vagasLivres: Int,
+    val esgotada: Boolean
 )
 
 data class AgendamentoRequest(
@@ -44,12 +42,23 @@ data class AgendamentoRequest(
     val quantidade: Int = 1
 )
 
+data class AgendamentoDto(
+    val id: String,
+    val sessaoId: String,
+    val atividade: String,
+    val inicio: String,
+    val quantidade: Int,
+    val valorCentavos: Long,
+    /** ATIVO ou CANCELADO. */
+    val status: String
+)
+
 data class AgendaItemDto(
     val hora: String,
-    val tipo: String, // CAFE, ATIVIDADE, MESA
+    /** CAFE, ATIVIDADE ou MESA. */
+    val tipo: String,
     val titulo: String,
-    val detalhe: String? = null,
-    val subtitulo: String? = null
+    val detalhe: String? = null
 )
 
 data class AgendaDiaResponse(
@@ -57,23 +66,13 @@ data class AgendaDiaResponse(
     val itens: List<AgendaItemDto> = emptyList()
 )
 
-data class ChatbotRequest(
-    val mensagem: String,
-    @com.google.gson.annotations.SerializedName("id_sessao")
-    val idSessao: String
-)
-
-data class ChatbotResponse(
-    val resposta: String? = null,
-    val mensagem: String? = null,
-    val text: String? = null,
-    val remetente: String? = null
-) {
-    val displayResposta: String
-        get() = resposta ?: mensagem ?: text ?: "Ugh! A Xamã ouviu sua mensagem."
-}
-
+/** Botão "Avisar": tipo CAVERNA ou ATIVIDADE. */
 data class AlertaVagaRequest(
-    val atividadeId: String,
-    val data: String
+    val email: String,
+    val tipo: String = "ATIVIDADE",
+    val cavernaId: String? = null,
+    val sessaoId: String? = null,
+    val checkIn: String? = null,
+    val checkOut: String? = null,
+    val pessoas: Int? = null
 )

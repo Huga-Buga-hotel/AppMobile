@@ -69,6 +69,7 @@
 
                     <TextView
                         style="@style/HB.Text.Eyebrow"
+                        android:id="@+id/tvBanquetStatus"
                         android:text="@string/banq_status"
                         android:textAllCaps="false" />
                 </LinearLayout>

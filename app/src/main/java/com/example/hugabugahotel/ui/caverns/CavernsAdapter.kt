@@ -71,10 +71,12 @@ class CavernsAdapter(
         val specsFormat = LanguageManager.get(context, "specs_format")
         holder.tvSpecs.text = String.format(Locale.getDefault(), specsFormat, cavern.capacidade, cavern.camas, cavern.areaM2)
 
-        holder.tvPrice.text = "R$ ${String.format(Locale.getDefault(), "%,d", cavern.precoBaseCentavos / 100)}"
+        holder.tvPrice.text = com.example.hugabugahotel.util.Formatos.reais(cavern.precoBaseCentavos)
 
         val totalSuffix = LanguageManager.get(context, "total_suffix")
-        holder.tvTotalPrice.text = "R$ ${String.format(Locale.getDefault(), "%,d", (cavern.totalEstadiaCentavos ?: cavern.precoBaseCentavos * 3) / 100)} $totalSuffix"
+        // Só há total da estadia quando a busca tem datas; sem datas mostra o preço da noite
+        holder.tvTotalPrice.text = cavern.totalEstadiaCentavos
+            ?.let { "${com.example.hugabugahotel.util.Formatos.reais(it)} $totalSuffix" } ?: "por noite"
 
         holder.badgeScarcity.visibility = if (cavern.ultimas) View.VISIBLE else View.GONE
 
@@ -109,6 +111,8 @@ class CavernsAdapter(
                     if (context is CavernsListActivity) {
                         if (context.checkIn.isNotEmpty()) putExtra("CHECK_IN", context.checkIn)
                         if (context.checkOut.isNotEmpty()) putExtra("CHECK_OUT", context.checkOut)
+                        if (context.checkInIso.isNotEmpty()) putExtra("CHECK_IN_ISO", context.checkInIso)
+                        if (context.checkOutIso.isNotEmpty()) putExtra("CHECK_OUT_ISO", context.checkOutIso)
                         putExtra("ADULTS", context.adults)
                         putExtra("CHILDREN", context.children)
                     }

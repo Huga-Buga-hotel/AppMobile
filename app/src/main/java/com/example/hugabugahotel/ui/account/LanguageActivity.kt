@@ -5,7 +5,11 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hugabugahotel.R
+import com.example.hugabugahotel.util.AppScope
+import com.example.hugabugahotel.data.api.ApiClient
 import com.example.hugabugahotel.data.api.SessionManager
+import com.example.hugabugahotel.data.model.PreferenciasDto
+import kotlinx.coroutines.launch
 import com.example.hugabugahotel.databinding.ActivityLanguageBinding
 import com.example.hugabugahotel.ui.home.HomeActivity
 import com.example.hugabugahotel.util.LanguageManager
@@ -36,6 +40,13 @@ class LanguageActivity : AppCompatActivity() {
                 else -> "pt"
             }
             sessionManager.saveLanguage(lang)
+            // Com conta, o idioma também fica salvo no perfil (a linguagem "das cavernas" é só do app)
+            if (sessionManager.isLoggedIn()) {
+                val idiomaApi = if (lang == "en") "en" else "pt-BR"
+                AppScope.launch {
+                    runCatching { ApiClient.getApi(applicationContext).atualizarPreferencias(PreferenciasDto(idioma = idiomaApi)) }
+                }
+            }
             Toast.makeText(this, "Idioma alterado com sucesso! Uga! 🪨", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, HomeActivity::class.java).apply {

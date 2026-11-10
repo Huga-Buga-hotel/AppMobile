@@ -47,3 +47,4 @@ google-services.json
 # Local artifacts and caches
 .artifacts/
 .kotlin/
+CLAUDE.md

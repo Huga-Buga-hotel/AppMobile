@@ -13,7 +13,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import coil.load
 import com.example.hugabugahotel.R
+import android.widget.EditText
 import com.example.hugabugahotel.data.api.ApiClient
+import com.example.hugabugahotel.data.api.ApiErrors
 import com.example.hugabugahotel.data.api.SessionManager
 import com.example.hugabugahotel.data.model.CavernDetailResponse
 import com.example.hugabugahotel.data.model.CriarReservaRequest
@@ -30,7 +32,7 @@ class CavernDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCavernDetailBinding
     private var cavernSlug: String = "toca-do-mamute"
-    private var cavernId: String = "3f1c8d52-9a4b-4e7a-b1d2-6c0e5a7f9b10"
+    private var cavernId: String = ""
     private var isFavorited = false
 
     private var checkInDisplay: String = ""
@@ -78,23 +80,25 @@ class CavernDetailActivity : AppCompatActivity() {
         }
 
         binding.btnFavorite.setOnClickListener {
+            if (!SessionManager(this).isLoggedIn()) {
+                Toast.makeText(this, "Entre na sua conta para favoritar cavernas 🪨", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val targetFavorited = !isFavorited
             lifecycleScope.launch {
                 try {
                     val api = ApiClient.getApi(this@CavernDetailActivity)
-                    if (targetFavorited) {
-                        api.adicionarFavorito(cavernId)
-                        isFavorited = true
-                        binding.btnFavorite.setImageResource(R.drawable.ic_heart)
-                        Toast.makeText(this@CavernDetailActivity, LanguageManager.get(this@CavernDetailActivity, "fav_added"), Toast.LENGTH_SHORT).show()
-                    } else {
-                        api.removerFavorito(cavernId)
-                        isFavorited = false
-                        binding.btnFavorite.setImageResource(R.drawable.ic_heart_outline)
-                        Toast.makeText(this@CavernDetailActivity, LanguageManager.get(this@CavernDetailActivity, "fav_removed"), Toast.LENGTH_SHORT).show()
+                    val response = if (targetFavorited) api.adicionarFavorito(cavernId) else api.removerFavorito(cavernId)
+                    if (!response.isSuccessful) {
+                        Toast.makeText(this@CavernDetailActivity, ApiErrors.mensagem(response), Toast.LENGTH_LONG).show()
+                        return@launch
                     }
+                    isFavorited = targetFavorited
+                    binding.btnFavorite.setImageResource(if (isFavorited) R.drawable.ic_heart else R.drawable.ic_heart_outline)
+                    val chave = if (isFavorited) "fav_added" else "fav_removed"
+                    Toast.makeText(this@CavernDetailActivity, LanguageManager.get(this@CavernDetailActivity, chave), Toast.LENGTH_SHORT).show()
                 } catch (e: Exception) {
-                    Toast.makeText(this@CavernDetailActivity, "Erro ao atualizar favorito: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@CavernDetailActivity, ApiErrors.mensagem(e), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -172,8 +176,10 @@ class CavernDetailActivity : AppCompatActivity() {
             val startDate = selection.first
             val endDate = selection.second
             if (startDate != null && endDate != null) {
-                val displaySdf = SimpleDateFormat("dd MMM", Locale.forLanguageTag("pt-BR"))
-                val isoSdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                // O date picker devolve meia-noite em UTC: formatar em UTC evita reservar um dia antes
+                val utc = java.util.TimeZone.getTimeZone("UTC")
+                val displaySdf = SimpleDateFormat("dd MMM", Locale.forLanguageTag("pt-BR")).apply { timeZone = utc }
+                val isoSdf = SimpleDateFormat("yyyy-MM-dd", Locale.US).apply { timeZone = utc }
 
                 checkInDisplay = displaySdf.format(Date(startDate))
                 checkOutDisplay = displaySdf.format(Date(endDate))
@@ -314,11 +320,15 @@ class CavernDetailActivity : AppCompatActivity() {
                     binding.btnReserve.alpha = 1.0f
                     updateBookingSummaryUi()
                 } else {
+                    // ex.: acima da capacidade, estadia acima de 30 noites, datas no passado
                     binding.layoutOccupiedWarning.visibility = View.VISIBLE
                     binding.btnReserve.isEnabled = false
                     binding.btnReserve.alpha = 0.5f
+                    Toast.makeText(this@CavernDetailActivity, ApiErrors.mensagem(response), Toast.LENGTH_LONG).show()
                 }
-            } catch (_: Exception) {}
+            } catch (e: Exception) {
+                Toast.makeText(this@CavernDetailActivity, ApiErrors.mensagem(e), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -327,8 +337,8 @@ class CavernDetailActivity : AppCompatActivity() {
             try {
                 val api = ApiClient.getApi(this@CavernDetailActivity)
 
-                // Fetch favorite status
-                try {
+                // Favoritos só existem para quem tem conta
+                if (SessionManager(this@CavernDetailActivity).isLoggedIn()) try {
                     val favResponse = api.getCavernasFavoritas()
                     if (favResponse.isSuccessful && favResponse.body() != null) {
                         val favs = favResponse.body()!!
@@ -341,7 +351,6 @@ class CavernDetailActivity : AppCompatActivity() {
                 if (response.isSuccessful && response.body() != null) {
                     val detail = response.body()!!
                     cavernId = detail.caverna.id
-                    isFavorited = isFavorited || detail.caverna.id == cavernId
                     binding.btnFavorite.setImageResource(if (isFavorited) R.drawable.ic_heart else R.drawable.ic_heart_outline)
                     bindDetail(detail)
                     fetchCotacao()
@@ -412,48 +421,85 @@ class CavernDetailActivity : AppCompatActivity() {
     }
 
     private fun iniciarReserva() {
-        if (checkInDisplay.isEmpty() || checkOutDisplay.isEmpty()) {
+        if (checkInIso.isEmpty() || checkOutIso.isEmpty()) {
             Toast.makeText(this, "Por favor, selecione as datas da estadia antes de reservar! 🪨", Toast.LENGTH_SHORT).show()
             showDatePicker()
             return
         }
+        val session = SessionManager(this)
+        if (session.isLoggedIn()) {
+            criarReserva(null)
+            return
+        }
+        // Sem conta: a API exige o e-mail do responsável, que depois identifica o dono da reserva
+        val campo = EditText(this).apply {
+            hint = "seu@email.com"
+            inputType = android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS or android.text.InputType.TYPE_CLASS_TEXT
+            session.getResponsavelEmail()?.let { setText(it) }
+        }
+        AlertDialog.Builder(this)
+            .setTitle("Reservar sem conta")
+            .setMessage("Informe o e-mail do responsável. É com ele que você consulta e gerencia a reserva.")
+            .setView(campo)
+            .setPositiveButton("Continuar") { _, _ ->
+                val email = campo.text.toString().trim()
+                if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    Toast.makeText(this, "E-mail inválido", Toast.LENGTH_SHORT).show()
+                } else {
+                    criarReserva(email)
+                }
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
 
+    private fun criarReserva(emailSemConta: String?) {
+        binding.btnReserve.isEnabled = false
         lifecycleScope.launch {
             try {
                 val api = ApiClient.getApi(this@CavernDetailActivity)
-                val idades = List(childrenCount) { 6 }
+                // As idades reais são informadas no passo 1; aqui 6 anos já conta na capacidade sem somar adicional.
                 val request = CriarReservaRequest(
                     cavernaId = cavernId,
                     checkIn = checkInIso,
                     checkOut = checkOutIso,
                     adultos = adultsCount,
-                    idadesCriancas = idades
+                    idadesCriancas = List(childrenCount) { 6 },
+                    email = emailSemConta
                 )
                 val response = api.criarReserva(request)
-                if (response.isSuccessful && response.body() != null) {
-                    val reserva = response.body()!!
-                    val codigoReserva = reserva.codigo
-                    val totalReserva = if (reserva.totalCentavos > 0) reserva.totalCentavos else totalEstadiaCentavos
-
+                val reserva = response.body()
+                if (response.isSuccessful && reserva != null) {
+                    if (emailSemConta != null) {
+                        SessionManager(this@CavernDetailActivity).saveResponsavelEmail(emailSemConta)
+                        SessionManager(this@CavernDetailActivity).addGuestBooking(reserva.codigo)
+                    }
                     val intent = Intent(this@CavernDetailActivity, CheckoutStep1Activity::class.java).apply {
-                        putExtra("RESERVA_CODIGO", codigoReserva)
+                        putExtra("RESERVA_CODIGO", reserva.codigo)
                         putExtra("CHECK_IN", checkInDisplay)
                         putExtra("CHECK_OUT", checkOutDisplay)
-                        putExtra("CHECK_IN_ISO", checkInIso)
-                        putExtra("CHECK_OUT_ISO", checkOutIso)
+                        putExtra("CHECK_IN_ISO", reserva.checkIn)
+                        putExtra("CHECK_OUT_ISO", reserva.checkOut)
                         putExtra("ADULTS", adultsCount)
                         putExtra("CHILDREN", childrenCount)
-                        putExtra("TOTAL_CENTAVOS", totalReserva)
-                        putExtra("NOITES", noitesEstadia)
-                        putExtra("CAVERN_NOME", binding.tvCavernName.text.toString())
+                        putExtra("TOTAL_CENTAVOS", reserva.total)
+                        putExtra("NOITES", reserva.noites)
+                        putExtra("CAVERN_NOME", reserva.cavernaNome)
+                        putExtra("RESPONSAVEL_EMAIL", reserva.responsavelEmail)
                     }
                     startActivity(intent)
                 } else {
-                    val errorMsg = response.errorBody()?.string() ?: "Erro ${response.code()}"
-                    Toast.makeText(this@CavernDetailActivity, "Erro ao criar reserva na API: $errorMsg", Toast.LENGTH_LONG).show()
+                    // 409 SEM_DISPONIBILIDADE traz datas sugeridas; 400 traz o campo com problema
+                    AlertDialog.Builder(this@CavernDetailActivity)
+                        .setTitle("Não deu pra reservar")
+                        .setMessage(ApiErrors.mensagem(response))
+                        .setPositiveButton("OK", null)
+                        .show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@CavernDetailActivity, "Falha de conexão ao criar reserva: ${e.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@CavernDetailActivity, ApiErrors.mensagem(e), Toast.LENGTH_LONG).show()
+            } finally {
+                binding.btnReserve.isEnabled = true
             }
         }
     }

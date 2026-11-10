@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.hugabugahotel.data.api.ApiClient
+import com.example.hugabugahotel.data.api.ApiErrors
 import com.example.hugabugahotel.data.model.UpdateProfileRequest
 import com.example.hugabugahotel.databinding.ActivityEditProfileBinding
 import kotlinx.coroutines.launch
@@ -62,8 +63,10 @@ class EditProfileActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val api = ApiClient.getApi(this@EditProfileActivity)
+                val partes = name.split(Regex("\\s+"))
                 val request = UpdateProfileRequest(
-                    nome = name,
+                    nome = partes.first(),
+                    sobrenome = partes.drop(1).joinToString(" ").ifEmpty { null },
                     celular = phone.ifEmpty { null },
                     aceitaOfertas = offers,
                     dataNascimento = birthDate.ifEmpty { null }
@@ -74,7 +77,7 @@ class EditProfileActivity : AppCompatActivity() {
                     setResult(RESULT_OK)
                     finish()
                 } else {
-                    Toast.makeText(this@EditProfileActivity, "Erro ao atualizar perfil", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@EditProfileActivity, ApiErrors.mensagem(response), Toast.LENGTH_LONG).show()
                 }
             } catch (e: Exception) {
                 Toast.makeText(this@EditProfileActivity, "Erro de conexão: ${e.message}", Toast.LENGTH_SHORT).show()

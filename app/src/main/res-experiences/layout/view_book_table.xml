@@ -90,19 +90,13 @@
         android:textStyle="bold" />
 
     <!-- Horários: use enabled=false para "lotado", selected=true para escolhido -->
+    <!-- Preenchido com GET /restaurante/horarios: LOTADO fica desabilitado -->
     <GridLayout
+        android:id="@+id/slotGrid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/gap_s"
-        android:columnCount="3">
-
-        <TextView style="@style/HB.Slot" android:text="19:00" />
-        <TextView style="@style/HB.Slot" android:enabled="false" android:text="19:30" />
-        <TextView style="@style/HB.Slot" android:text="20:00" />
-        <TextView style="@style/HB.Slot" android:text="20:30" />
-        <TextView style="@style/HB.Slot" android:enabled="false" android:text="21:00" />
-        <TextView style="@style/HB.Slot" android:text="21:30" />
-    </GridLayout>
+        android:columnCount="3" />
 
     <TextView
         style="@style/HB.Text.Muted"
@@ -125,9 +119,10 @@
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchHighchair"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
+            android:checked="false"
             android:thumb="@drawable/switch_thumb"
             app:track="@drawable/switch_track"
             xmlns:app="http://schemas.android.com/apk/res-auto" />
@@ -148,6 +143,7 @@
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchFireSide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:thumb="@drawable/switch_thumb"

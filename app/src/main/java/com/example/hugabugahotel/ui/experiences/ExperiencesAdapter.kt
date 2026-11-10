@@ -58,7 +58,7 @@ class ExperiencesAdapter(
         if (holder is FeaturedViewHolder) {
             holder.title.text = item.displayNome
             holder.desc.text = item.descricao ?: "Atividade em destaque da tribo"
-            holder.price.text = if (item.precoCentavos == 0L) "Grátis" else "R$ ${String.format(Locale.getDefault(), "%,d", item.precoCentavos / 100)}"
+            holder.price.text = if (item.precoCentavos == 0L) "Grátis" else com.example.hugabugahotel.util.Formatos.reais(item.precoCentavos)
             holder.btnReserve.setOnClickListener {
                 onItemClick?.invoke(item)
             }
@@ -71,7 +71,7 @@ class ExperiencesAdapter(
             val ageStr = if (item.idadeMin != null && item.idadeMin > 0) " · ${item.idadeMin}+ anos" else ""
             holder.meta.text = "${item.categoria.uppercase(Locale.getDefault())} · ${item.displayDuracao} min$ageStr"
 
-            holder.price.text = if (item.precoCentavos == 0L) "Grátis" else "R$ ${String.format(Locale.getDefault(), "%,d", item.precoCentavos / 100)}"
+            holder.price.text = if (item.precoCentavos == 0L) "Grátis" else com.example.hugabugahotel.util.Formatos.reais(item.precoCentavos)
             holder.spots.text = "Reservar"
 
             if (!item.fotoUrl.isNullOrEmpty()) {

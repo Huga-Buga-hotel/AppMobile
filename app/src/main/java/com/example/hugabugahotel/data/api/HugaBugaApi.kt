@@ -1,10 +1,16 @@
 package com.example.hugabugahotel.data.api
 
 import com.example.hugabugahotel.data.model.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
+/**
+ * Rotas da API do backend (base: .../api/v1/). A referência completa está no Swagger do backend
+ * (/api/v1/docs). Valores de dinheiro em centavos; datas em ISO (yyyy-MM-dd).
+ */
 interface HugaBugaApi {
 
     // --- Auth ---
@@ -19,6 +25,12 @@ interface HugaBugaApi {
 
     @POST("auth/logout")
     suspend fun logout(@Body body: RefreshRequest): Response<Unit>
+
+    @POST("auth/esqueci-senha")
+    suspend fun esqueciSenha(@Body body: EsqueciSenhaRequest): Response<EsqueciSenhaResponse>
+
+    @POST("auth/redefinir-senha")
+    suspend fun redefinirSenha(@Body body: RedefinirSenhaRequest): Response<Unit>
 
     // --- Cavernas ---
     @GET("cavernas")
@@ -45,6 +57,16 @@ interface HugaBugaApi {
         @Query("idadesCriancas") idadesCriancas: List<Int>? = null
     ): Response<CotacaoResponse>
 
+    @GET("cavernas/{id}/disponibilidade")
+    suspend fun getDisponibilidade(
+        @Path("id") cavernaId: String,
+        @Query("de") de: String? = null,
+        @Query("ate") ate: String? = null
+    ): Response<List<DiaDisponibilidade>>
+
+    @GET("cavernas/{id}/relatos")
+    suspend fun getRelatos(@Path("id") cavernaId: String, @Query("page") page: Int = 0): Response<PaginaRelatos>
+
     @GET("comodidades")
     suspend fun getComodidades(): Response<List<ComodidadeItem>>
 
@@ -70,6 +92,15 @@ interface HugaBugaApi {
         @Body body: AdicionarExtrasRequest
     ): Response<ReservaResponse>
 
+    @GET("restaurante/combos")
+    suspend fun getCombos(): Response<List<ComboDto>>
+
+    @PUT("reservas/{codigo}/combo")
+    suspend fun definirCombo(@Path("codigo") codigo: String, @Body body: ComboRequest): Response<ReservaResponse>
+
+    @DELETE("reservas/{codigo}/combo")
+    suspend fun removerCombo(@Path("codigo") codigo: String): Response<ReservaResponse>
+
     @POST("reservas/{codigo}/cupom")
     suspend fun aplicarCupom(
         @Path("codigo") codigo: String,
@@ -78,15 +109,6 @@ interface HugaBugaApi {
 
     @DELETE("reservas/{codigo}/cupom")
     suspend fun removerCupom(@Path("codigo") codigo: String): Response<ReservaResponse>
-
-    @POST("reservas/{codigo}/ossos")
-    suspend fun usarOssos(
-        @Path("codigo") codigo: String,
-        @Body body: UsarOssosRequest
-    ): Response<ReservaResponse>
-
-    @DELETE("reservas/{codigo}/ossos")
-    suspend fun desfazerOssos(@Path("codigo") codigo: String): Response<ReservaResponse>
 
     @POST("reservas/{codigo}/pagamentos")
     suspend fun realizarPagamento(
@@ -102,19 +124,23 @@ interface HugaBugaApi {
 
     @GET("reservas/{codigo}/voucher.pdf")
     @Streaming
-    suspend fun downloadVoucherPdf(
-        @Path("codigo") codigo: String,
-        @Header("X-Responsavel-Email") responsavelEmail: String? = null
-    ): Response<ResponseBody>
+    suspend fun downloadVoucherPdf(@Path("codigo") codigo: String): Response<ResponseBody>
 
     @POST("reservas/{codigo}/checkin")
-    suspend fun realizarCheckin(
-        @Path("codigo") codigo: String,
-        @Body body: CheckinRequest
-    ): Response<ReservaResponse>
+    suspend fun realizarCheckin(@Path("codigo") codigo: String): Response<ReservaResponse>
 
     @POST("reservas/{codigo}/cancelar")
-    suspend fun cancelarReserva(@Path("codigo") codigo: String): Response<ReservaResponse>
+    suspend fun cancelarReserva(@Path("codigo") codigo: String): Response<CancelarResponse>
+
+    /** Avaliação: multipart com nota (1 a 5), texto e até 5 fotos de até 25 MB. */
+    @Multipart
+    @POST("reservas/{codigo}/relato")
+    suspend fun enviarAvaliacao(
+        @Path("codigo") codigo: String,
+        @Part("nota") nota: RequestBody,
+        @Part("texto") texto: RequestBody?,
+        @Part fotos: List<MultipartBody.Part>
+    ): Response<RelatoDto>
 
     // --- Atividades ---
     @GET("atividades")
@@ -127,17 +153,20 @@ interface HugaBugaApi {
         @Query("ate") ate: String? = null
     ): Response<List<SessaoAtividade>>
 
+    @GET("reservas/{codigo}/agendamentos")
+    suspend fun getAgendamentos(@Path("codigo") codigo: String): Response<List<AgendamentoDto>>
+
     @POST("reservas/{codigo}/agendamentos")
     suspend fun agendarAtividade(
         @Path("codigo") codigo: String,
         @Body body: AgendamentoRequest
-    ): Response<ResponseBody>
+    ): Response<AgendamentoDto>
 
     @DELETE("reservas/{codigo}/agendamentos/{id}")
     suspend fun cancelarAgendamento(
         @Path("codigo") codigo: String,
         @Path("id") id: String
-    ): Response<ResponseBody>
+    ): Response<Unit>
 
     @GET("reservas/{codigo}/agenda")
     suspend fun getAgendaTribo(
@@ -145,11 +174,10 @@ interface HugaBugaApi {
         @Query("data") data: String? = null
     ): Response<AgendaDiaResponse>
 
-    // --- Alertas de Vaga ---
     @POST("alertas-vaga")
-    suspend fun criarAlertaVaga(@Body body: AlertaVagaRequest): Response<ResponseBody>
+    suspend fun criarAlertaVaga(@Body body: AlertaVagaRequest): Response<Unit>
 
-    // --- Chatbot / Xamã ---
+    // --- Chatbot / Xamã (contrato provisório, ver ChatDtos) ---
     @POST("chat")
     suspend fun enviarMensagemChatbot(@Body body: ChatbotRequest): Response<ChatbotResponse>
 
@@ -163,12 +191,30 @@ interface HugaBugaApi {
     @GET("restaurante/cardapio")
     suspend fun getCardapio(@Query("categoria") categoria: String? = null): Response<List<Prato>>
 
-    // --- Conta / Me ---
+    @GET("restaurante/horarios")
+    suspend fun getHorariosMesa(@Query("data") data: String, @Query("pessoas") pessoas: Int): Response<List<MesaHorario>>
+
+    @POST("restaurante/reservas-mesa")
+    suspend fun reservarMesa(@Body body: ReservaMesaRequest): Response<MesaResponse>
+
+    @DELETE("restaurante/reservas-mesa/{codigo}")
+    suspend fun cancelarMesa(@Path("codigo") codigo: String): Response<MesaResponse>
+
+    // --- Conta / Me (exige login) ---
     @GET("me")
     suspend fun getUserProfile(): Response<UserProfileResponse>
 
     @PATCH("me")
     suspend fun updateUserProfile(@Body body: UpdateProfileRequest): Response<UserProfileResponse>
+
+    @PATCH("me/senha")
+    suspend fun trocarSenha(@Body body: TrocarSenhaRequest): Response<Unit>
+
+    @GET("me/preferencias")
+    suspend fun getPreferencias(): Response<PreferenciasDto>
+
+    @PUT("me/preferencias")
+    suspend fun atualizarPreferencias(@Body body: PreferenciasDto): Response<PreferenciasDto>
 
     @GET("me/membros")
     suspend fun getMembrosTribo(): Response<List<MembroTribo>>
@@ -176,14 +222,14 @@ interface HugaBugaApi {
     @POST("me/membros")
     suspend fun adicionarMembroTribo(@Body body: MembroTribo): Response<MembroTribo>
 
-    @GET("me/ossos")
-    suspend fun getOssos(): Response<OssosResponse>
+    @DELETE("me/membros/{id}")
+    suspend fun removerMembroTribo(@Path("id") id: String): Response<Unit>
 
     @GET("me/reservas")
     suspend fun getMinhasReservas(@Query("aba") aba: String = "proximas"): Response<MinhasReservasResponse>
 
     @GET("me/pagamentos")
-    suspend fun getPagamentosSalvos(): Response<List<PagamentoSalvoDto>>
+    suspend fun getPagamentos(): Response<List<PagamentoResumoDto>>
 
     @GET("me/favoritos")
     suspend fun getCavernasFavoritas(): Response<List<CavernSummary>>
@@ -193,7 +239,4 @@ interface HugaBugaApi {
 
     @DELETE("me/favoritos/{cavernaId}")
     suspend fun removerFavorito(@Path("cavernaId") cavernaId: String): Response<Unit>
-
-    @GET("me/notificacoes")
-    suspend fun getNotificacoes(): Response<List<NotificacaoDto>>
 }

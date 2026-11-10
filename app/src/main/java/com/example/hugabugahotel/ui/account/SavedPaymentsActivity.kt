@@ -6,7 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.lifecycle.lifecycleScope
 import com.example.hugabugahotel.data.api.ApiClient
-import com.example.hugabugahotel.data.model.PagamentoSalvoDto
+import com.example.hugabugahotel.data.api.ApiErrors
+import com.example.hugabugahotel.data.api.SessionManager
+import com.example.hugabugahotel.data.model.PagamentoResumoDto
+import android.widget.Toast
 import com.example.hugabugahotel.databinding.ActivitySavedPaymentsBinding
 import com.example.hugabugahotel.util.LanguageManager
 import kotlinx.coroutines.launch
@@ -41,27 +44,22 @@ class SavedPaymentsActivity : AppCompatActivity() {
     }
 
     private fun fetchSavedPayments() {
+        if (!SessionManager(this).isLoggedIn()) return mostrar(emptyList())
         lifecycleScope.launch {
-            val list = try {
-                val api = ApiClient.getApi(this@SavedPaymentsActivity)
-                val response = api.getPagamentosSalvos()
-                if (response.isSuccessful && response.body() != null) {
-                    response.body()!!
-                } else {
-                    emptyList()
-                }
+            try {
+                val response = ApiClient.getApi(this@SavedPaymentsActivity).getPagamentos()
+                if (response.isSuccessful) mostrar(response.body().orEmpty())
+                else Toast.makeText(this@SavedPaymentsActivity, ApiErrors.mensagem(response), Toast.LENGTH_LONG).show()
             } catch (e: Exception) {
-                emptyList()
-            }
-
-            adapter.updateData(list)
-            if (list.isEmpty()) {
-                binding.tvEmptyState.visibility = View.VISIBLE
-                binding.rvSavedPayments.visibility = View.GONE
-            } else {
-                binding.tvEmptyState.visibility = View.GONE
-                binding.rvSavedPayments.visibility = View.VISIBLE
+                Toast.makeText(this@SavedPaymentsActivity, ApiErrors.mensagem(e), Toast.LENGTH_LONG).show()
+                mostrar(emptyList())
             }
         }
+    }
+
+    private fun mostrar(list: List<PagamentoResumoDto>) {
+        adapter.updateData(list)
+        binding.tvEmptyState.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+        binding.rvSavedPayments.visibility = if (list.isEmpty()) View.GONE else View.VISIBLE
     }
 }

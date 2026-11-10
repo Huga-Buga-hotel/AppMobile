@@ -14,6 +14,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hugabugahotel.R
 import com.example.hugabugahotel.data.api.ApiClient
+import com.example.hugabugahotel.data.api.ApiErrors
+import com.example.hugabugahotel.util.Formatos
 import com.example.hugabugahotel.data.api.SessionManager
 import com.example.hugabugahotel.data.model.CavernSummary
 import com.example.hugabugahotel.databinding.ActivityCavernsListBinding
@@ -35,6 +37,9 @@ class CavernsListActivity : AppCompatActivity() {
 
     var checkIn: String = ""
     var checkOut: String = ""
+    /** yyyy-MM-dd, enviados para GET /cavernas (só cavernas com toca livre no período). */
+    var checkInIso: String = ""
+    var checkOutIso: String = ""
     var adults: Int = 2
     var children: Int = 2
 
@@ -45,6 +50,8 @@ class CavernsListActivity : AppCompatActivity() {
 
         checkIn = intent.getStringExtra("CHECK_IN") ?: ""
         checkOut = intent.getStringExtra("CHECK_OUT") ?: ""
+        checkInIso = intent.getStringExtra("CHECK_IN_ISO") ?: ""
+        checkOutIso = intent.getStringExtra("CHECK_OUT_ISO") ?: ""
 
         val sessionManager = SessionManager(this)
         if (sessionManager.isLoggedIn() && sessionManager.getDefaultAdults() >= 1) {
@@ -75,6 +82,20 @@ class CavernsListActivity : AppCompatActivity() {
         setupRecyclerView()
         fetchCaverns()
         fetchTribeMembersFromProfile()
+    }
+
+    /** Vindo da Home com FLAG_ACTIVITY_REORDER_TO_FRONT: a tela já existe, então relê a busca. */
+    override fun onNewIntent(intent: android.content.Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        checkIn = intent.getStringExtra("CHECK_IN") ?: checkIn
+        checkOut = intent.getStringExtra("CHECK_OUT") ?: checkOut
+        checkInIso = intent.getStringExtra("CHECK_IN_ISO") ?: checkInIso
+        checkOutIso = intent.getStringExtra("CHECK_OUT_ISO") ?: checkOutIso
+        adults = intent.getIntExtra("ADULTS", adults)
+        children = intent.getIntExtra("CHILDREN", children)
+        updateSearchSummaryUi()
+        fetchCaverns()
     }
 
     override fun onResume() {
@@ -140,9 +161,13 @@ class CavernsListActivity : AppCompatActivity() {
             val startDate = selection.first
             val endDate = selection.second
             if (startDate != null && endDate != null) {
-                val sdf = SimpleDateFormat("dd MMM", Locale.forLanguageTag("pt-BR"))
-                checkIn = sdf.format(Date(startDate))
-                checkOut = sdf.format(Date(endDate))
+                // O date picker devolve meia-noite em UTC: converter em UTC evita mostrar o dia anterior
+                val inicio = java.time.Instant.ofEpochMilli(startDate).atZone(java.time.ZoneOffset.UTC).toLocalDate()
+                val fim = java.time.Instant.ofEpochMilli(endDate).atZone(java.time.ZoneOffset.UTC).toLocalDate()
+                checkInIso = inicio.toString()
+                checkOutIso = fim.toString()
+                checkIn = Formatos.dataCurta(checkInIso)
+                checkOut = Formatos.dataCurta(checkOutIso)
                 updateSearchSummaryUi()
                 fetchCaverns()
             }
@@ -266,18 +291,19 @@ class CavernsListActivity : AppCompatActivity() {
     }
 
     private fun handleFavoriteToggle(cavern: CavernSummary, isFavorite: Boolean) {
+        if (!SessionManager(this).isLoggedIn()) {
+            Toast.makeText(this, "Entre na sua conta para favoritar cavernas 🪨", Toast.LENGTH_SHORT).show()
+            return
+        }
         lifecycleScope.launch {
             try {
                 val api = ApiClient.getApi(this@CavernsListActivity)
-                if (isFavorite) {
-                    api.adicionarFavorito(cavern.id)
-                    Toast.makeText(this@CavernsListActivity, LanguageManager.get(this@CavernsListActivity, "fav_added"), Toast.LENGTH_SHORT).show()
-                } else {
-                    api.removerFavorito(cavern.id)
-                    Toast.makeText(this@CavernsListActivity, LanguageManager.get(this@CavernsListActivity, "fav_removed"), Toast.LENGTH_SHORT).show()
-                }
+                val response = if (isFavorite) api.adicionarFavorito(cavern.id) else api.removerFavorito(cavern.id)
+                val msg = if (!response.isSuccessful) ApiErrors.mensagem(response)
+                    else LanguageManager.get(this@CavernsListActivity, if (isFavorite) "fav_added" else "fav_removed")
+                Toast.makeText(this@CavernsListActivity, msg, Toast.LENGTH_SHORT).show()
             } catch (e: Exception) {
-                Toast.makeText(this@CavernsListActivity, "Erro: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@CavernsListActivity, ApiErrors.mensagem(e), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -326,7 +352,7 @@ class CavernsListActivity : AppCompatActivity() {
     private fun fetchCaverns() {
         lifecycleScope.launch {
             val api = ApiClient.getApi(this@CavernsListActivity)
-            try {
+            if (SessionManager(this@CavernsListActivity).isLoggedIn()) try {
                 val favResponse = api.getCavernasFavoritas()
                 if (favResponse.isSuccessful && favResponse.body() != null) {
                     val ids = favResponse.body()!!.map { it.id }.toSet()
@@ -335,14 +361,26 @@ class CavernsListActivity : AppCompatActivity() {
             } catch (_: Exception) {}
 
             allCaverns = try {
-                val response = api.getCavernas(page = 0, size = 10, adultos = adults)
-                if (response.isSuccessful && response.body()?.itens?.isNotEmpty() == true) {
-                    response.body()!!.itens
+                val comDatas = checkInIso.isNotEmpty() && checkOutIso.isNotEmpty()
+                val response = api.getCavernas(
+                    checkIn = checkInIso.takeIf { comDatas }, checkOut = checkOutIso.takeIf { comDatas },
+                    adultos = adults, idadesCriancas = List(children) { 6 }.ifEmpty { null },
+                    page = 0, size = 50)
+                val body = response.body()
+                if (response.isSuccessful && body != null) {
+                    if (body.itens.isEmpty() && body.sugestoes.isNotEmpty()) {
+                        Toast.makeText(this@CavernsListActivity, "Tudo ocupado nessas datas. Que tal: " +
+                            body.sugestoes.joinToString(" ou ") { "${Formatos.dataCurta(it.checkIn)}–${Formatos.dataCurta(it.checkOut)}" },
+                            Toast.LENGTH_LONG).show()
+                    }
+                    body.itens
                 } else {
-                    getMockCaverns()
+                    Toast.makeText(this@CavernsListActivity, ApiErrors.mensagem(response), Toast.LENGTH_LONG).show()
+                    emptyList()
                 }
             } catch (e: Exception) {
-                getMockCaverns()
+                Toast.makeText(this@CavernsListActivity, ApiErrors.mensagem(e), Toast.LENGTH_LONG).show()
+                emptyList()
             }
             filterAndPopulate()
         }
@@ -350,9 +388,9 @@ class CavernsListActivity : AppCompatActivity() {
 
     private fun filterAndPopulate() {
         var list = when (currentFilter) {
-            "TOCA" -> allCaverns.filter { it.categoria.contains("Toca", ignoreCase = true) }
-            "FOGUEIRA" -> allCaverns.filter { it.comodidades.any { c -> c.contains("Fogueira", ignoreCase = true) } }
-            "PRICE" -> allCaverns.sortedBy { it.precoBaseCentavos }
+            "TOCA" -> allCaverns.filter { it.slug.contains("toca", ignoreCase = true) || it.categoria == "FAMILIA" }
+            "FOGUEIRA" -> allCaverns.filter { it.comodidades.any { c -> c.contains("fogueira", ignoreCase = true) } }
+            "PRICE" -> allCaverns.sortedBy { it.totalEstadiaCentavos ?: it.precoBaseCentavos }
             else -> allCaverns
         }
 
@@ -365,73 +403,5 @@ class CavernsListActivity : AppCompatActivity() {
 
     private fun populateCaverns(list: List<CavernSummary>) {
         adapter.updateData(list)
-    }
-
-    private fun getMockCaverns(): List<CavernSummary> {
-        return listOf(
-            CavernSummary(
-                id = "1",
-                slug = "toca-do-mamute",
-                nome = "Toca do Mamute Imperial",
-                categoria = "Toca",
-                ala = "Ala Norte",
-                resumo = "Caverna espaçosa com fogueira central e vista para o vale.",
-                capacidade = 5,
-                camas = 3,
-                areaM2 = 42,
-                precoBaseCentavos = 38000,
-                totalEstadiaCentavos = 114000,
-                notaMedia = 4.9,
-                totalRelatos = 42,
-                acessivel = true,
-                aceitaPets = true,
-                fotoUrl = null,
-                unidadesLivres = 2,
-                ultimas = true,
-                comodidades = listOf("Fogueira", "Banheira de Pedra")
-            ),
-            CavernSummary(
-                id = "2",
-                slug = "gruta-do-fogo-azul",
-                nome = "Gruta do Fogo Azul",
-                categoria = "Gruta",
-                ala = "Ala Vulcânica",
-                resumo = "Ambiente aquecido naturalmente com cristais luminescentes.",
-                capacidade = 3,
-                camas = 2,
-                areaM2 = 30,
-                precoBaseCentavos = 29000,
-                totalEstadiaCentavos = 87000,
-                notaMedia = 4.8,
-                totalRelatos = 28,
-                acessivel = false,
-                aceitaPets = true,
-                fotoUrl = null,
-                unidadesLivres = 1,
-                ultimas = true,
-                comodidades = listOf("Caldeira", "Cama de Pele")
-            ),
-            CavernSummary(
-                id = "3",
-                slug = "ninho-do-pterodactilo",
-                nome = "Ninho do Pterodáctilo nas Alturas",
-                categoria = "Ninho",
-                ala = "Penhasco",
-                resumo = "Vista panorâmica espetacular do topo do precipício.",
-                capacidade = 2,
-                camas = 1,
-                areaM2 = 25,
-                precoBaseCentavos = 45000,
-                totalEstadiaCentavos = 135000,
-                notaMedia = 5.0,
-                totalRelatos = 15,
-                acessivel = true,
-                aceitaPets = false,
-                fotoUrl = null,
-                unidadesLivres = 3,
-                ultimas = false,
-                comodidades = listOf("Varanda de Pedra", "Telescópio de Osso")
-            )
-        )
     }
 }

@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.hugabugahotel.R
 import com.example.hugabugahotel.data.api.ApiClient
+import com.example.hugabugahotel.data.api.ApiErrors
+import com.example.hugabugahotel.data.model.RefreshRequest
 import com.example.hugabugahotel.data.api.SessionManager
 import com.example.hugabugahotel.data.model.MembroTribo
 import com.example.hugabugahotel.data.model.UserProfileResponse
@@ -87,12 +89,22 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun setupLogout() {
         binding.btnLogout.setOnClickListener {
-            SessionManager(this).clearSession()
-            Toast.makeText(this, "Sessão encerrada. Até logo! 🪨", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, AuthActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            finish()
+            val session = SessionManager(this)
+            binding.btnLogout.isEnabled = false
+            lifecycleScope.launch {
+                // revoga o refresh no servidor antes de apagar o token (melhor esforço: sai mesmo sem rede)
+                session.getRefreshToken()?.let { refresh ->
+                    kotlinx.coroutines.withTimeoutOrNull(3000) {
+                        runCatching { ApiClient.getApi(this@ProfileActivity).logout(RefreshRequest(refresh)) }
+                    }
+                }
+                session.clearAuth()
+                Toast.makeText(this@ProfileActivity, "Sessão encerrada. Até logo! 🪨", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this@ProfileActivity, AuthActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                })
+                finish()
+            }
         }
     }
 
@@ -129,23 +141,22 @@ class ProfileActivity : AppCompatActivity() {
     private fun fetchProfile() {
         lifecycleScope.launch {
             try {
-                val api = ApiClient.getApi(this@ProfileActivity)
-                val response = api.getUserProfile()
-                if (response.isSuccessful && response.body() != null) {
-                    val profile = response.body()!!
+                val response = ApiClient.getApi(this@ProfileActivity).getUserProfile()
+                val profile = response.body()
+                if (response.isSuccessful && profile != null) {
                     bindProfile(profile)
-                }
-
-                val ossosResponse = api.getOssos()
-                if (ossosResponse.isSuccessful && ossosResponse.body() != null) {
-                    val ossos = ossosResponse.body()!!
-                    binding.tvBonesBalance.text = ossos.saldo.toString()
+                } else if (response.code() == 401) {
+                    // sessão venceu e o refresh não deu: volta para o login
+                    SessionManager(this@ProfileActivity).clearAuth()
+                    startActivity(Intent(this@ProfileActivity, AuthActivity::class.java))
+                    finish()
+                } else {
+                    Toast.makeText(this@ProfileActivity, ApiErrors.mensagem(response), Toast.LENGTH_LONG).show()
                 }
             } catch (e: Exception) {
-                val sessionManager = SessionManager(this@ProfileActivity)
-                val fallbackName = sessionManager.getUserName() ?: "Marina Souza"
-                val fallbackEmail = sessionManager.getUserEmail() ?: "marina@tribo.com"
-                bindFallbackProfile(fallbackName, fallbackEmail)
+                // sem rede: mostra o que está salvo no aparelho
+                val session = SessionManager(this@ProfileActivity)
+                bindFallbackProfile(session.getUserName().orEmpty(), session.getUserEmail().orEmpty())
             }
         }
     }
@@ -166,27 +177,21 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun bindProfile(profile: UserProfileResponse) {
-        val fullName = profile.nome.trim()
+        val fullName = listOfNotNull(profile.nome, profile.sobrenome).joinToString(" ").trim()
         binding.tvProfileName.text = fullName
         binding.tvPersonalName.text = fullName
-
-        val initials = buildInitials(profile.nome)
-        binding.tvAvatarInitials.text = initials
-
-        binding.tvProfileSubtitle.text = profile.nivel
-        binding.tvBonesBalance.text = profile.saldoOssos.toString()
-
-        val contact = "${profile.email}  ${profile.celular ?: "+55 (54) 9 0000-0000"}"
-        binding.tvPersonalContact.text = contact
+        binding.tvAvatarInitials.text = buildInitials(fullName)
+        binding.tvProfileSubtitle.text = if (profile.role == "ADMIN") "Equipe do hotel" else "Visitante da tribo"
+        binding.tvPersonalContact.text = listOfNotNull(profile.email, profile.celular, profile.documentoMascarado)
+            .joinToString("  ·  ")
     }
 
     private fun bindFallbackProfile(name: String, email: String) {
         binding.tvProfileName.text = name
         binding.tvPersonalName.text = name
         binding.tvAvatarInitials.text = buildInitials(name)
-        binding.tvProfileSubtitle.text = "Caçador(a)"
-        binding.tvBonesBalance.text = "340"
-        binding.tvPersonalContact.text = "$email · +55 (54) 9 0000-0000"
+        binding.tvProfileSubtitle.text = "Visitante da tribo"
+        binding.tvPersonalContact.text = email
     }
 
     private fun bindMembros(membros: List<MembroTribo>) {
@@ -231,8 +236,8 @@ class ProfileActivity : AppCompatActivity() {
         layout.addView(spinnerType)
 
         val etAge = EditText(context).apply {
-            hint = "Idade (opcional)"
-            inputType = android.text.InputType.TYPE_CLASS_NUMBER
+            hint = "Nascimento AAAA-MM-DD (obrigatório p/ criança)"
+            inputType = android.text.InputType.TYPE_CLASS_DATETIME or android.text.InputType.TYPE_DATETIME_VARIATION_DATE
         }
         layout.addView(etAge)
 
@@ -242,10 +247,10 @@ class ProfileActivity : AppCompatActivity() {
             .setPositiveButton("Adicionar") { _, _ ->
                 val name = etName.text.toString().trim()
                 val typeStr = if (spinnerType.selectedItemPosition == 0) "ADULTO" else "CRIANCA"
-                val age = etAge.text.toString().toIntOrNull()
+                val nascimento = etAge.text.toString().trim().ifEmpty { null }
 
                 if (name.isNotEmpty()) {
-                    adicionarMembro(name, typeStr, age)
+                    adicionarMembro(name, typeStr, nascimento)
                 } else {
                     Toast.makeText(context, "Nome não pode estar vazio", Toast.LENGTH_SHORT).show()
                 }
@@ -254,17 +259,17 @@ class ProfileActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun adicionarMembro(nome: String, tipo: String, idade: Int?) {
+    private fun adicionarMembro(nome: String, tipo: String, nascimento: String?) {
         lifecycleScope.launch {
             try {
                 val api = ApiClient.getApi(this@ProfileActivity)
-                val membro = MembroTribo(id = null, nome = nome, tipo = tipo, idade = idade)
+                val membro = MembroTribo(id = null, nome = nome, tipo = tipo, dataNascimento = nascimento)
                 val response = api.adicionarMembroTribo(membro)
                 if (response.isSuccessful) {
                     Toast.makeText(this@ProfileActivity, "Membro adicionado à tribo! 🪨", Toast.LENGTH_SHORT).show()
                     fetchMembros()
                 } else {
-                    Toast.makeText(this@ProfileActivity, "Erro ao adicionar membro", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ProfileActivity, ApiErrors.mensagem(response), Toast.LENGTH_LONG).show()
                 }
             } catch (e: Exception) {
                 Toast.makeText(this@ProfileActivity, "Erro: ${e.message}", Toast.LENGTH_SHORT).show()
@@ -274,8 +279,9 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun buildInitials(nome: String): String {
         val clean = nome.trim()
-        val first = clean.firstOrNull()?.uppercaseChar() ?: 'M'
-        val second = clean.drop(1).firstOrNull()?.uppercaseChar() ?: 'S'
+        val partes = clean.split(" ").filter { it.isNotEmpty() }
+        val first = partes.firstOrNull()?.firstOrNull()?.uppercaseChar() ?: 'H'
+        val second = partes.getOrNull(1)?.firstOrNull()?.uppercaseChar() ?: (clean.getOrNull(1)?.uppercaseChar() ?: 'B')
         return "$first$second"
     }
 }

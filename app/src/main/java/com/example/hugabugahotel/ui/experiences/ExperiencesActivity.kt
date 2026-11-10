@@ -2,11 +2,13 @@ package com.example.hugabugahotel.ui.experiences
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hugabugahotel.R
 import com.example.hugabugahotel.data.api.ApiClient
+import com.example.hugabugahotel.data.api.ApiErrors
 import com.example.hugabugahotel.data.model.AtividadeItem
 import com.example.hugabugahotel.databinding.ActivityExperiencesBinding
 import com.example.hugabugahotel.util.LanguageManager
@@ -49,12 +51,15 @@ class ExperiencesActivity : AppCompatActivity() {
         binding.experiencesList.adapter = adapter
     }
 
+    /** Vindo do voucher/gerenciar, a reserva já é conhecida; senão o hóspede escolhe uma reserva confirmada. */
     private fun openSelectBookingScreen(item: AtividadeItem) {
-        val intent = Intent(this, SelectBookingForExperienceActivity::class.java).apply {
+        val reserva = intent.getStringExtra("RESERVA_CODIGO")
+        val destino = if (reserva != null) ExperienceScheduleActivity::class.java else SelectBookingForExperienceActivity::class.java
+        startActivity(Intent(this, destino).apply {
             putExtra("EXPERIENCE_ID", item.id)
             putExtra("EXPERIENCE_NOME", item.displayNome)
-        }
-        startActivity(intent)
+            reserva?.let { putExtra("RESERVA_CODIGO", it) }
+        })
     }
 
     private fun setupFilters() {
@@ -103,33 +108,16 @@ class ExperiencesActivity : AppCompatActivity() {
     private fun fetchAtividades(categoria: String) {
         lifecycleScope.launch {
             val queryParam = if (categoria == "ALL") null else categoria
-            val list = try {
-                val api = ApiClient.getApi(this@ExperiencesActivity)
-                val response = api.getAtividades(queryParam)
-                if (response.isSuccessful && response.body() != null) {
-                    response.body()!!.itens
+            try {
+                val response = ApiClient.getApi(this@ExperiencesActivity).getAtividades(queryParam)
+                if (response.isSuccessful) {
+                    adapter.updateData(response.body()?.itens.orEmpty())
                 } else {
-                    getDefaultAtividades(categoria)
+                    Toast.makeText(this@ExperiencesActivity, ApiErrors.mensagem(response), Toast.LENGTH_LONG).show()
                 }
             } catch (e: Exception) {
-                getDefaultAtividades(categoria)
+                Toast.makeText(this@ExperiencesActivity, ApiErrors.mensagem(e), Toast.LENGTH_LONG).show()
             }
-            adapter.updateData(list)
-        }
-    }
-
-    private fun getDefaultAtividades(categoria: String): List<AtividadeItem> {
-        val all = listOf(
-            AtividadeItem(id = "1", nome = "Escavação de ovo de dino", categoria = "CRIANCAS", descricao = "Procure fósseis na areia vulcânica", precoCentavos = 0L, duracaoMin = 60, idadeMin = 4, idadeMax = 12, cobranca = "POR_PESSOA", faixaEtaria = "4-12 anos"),
-            AtividadeItem(id = "2", nome = "Pintura rupestre", categoria = "CRIANCAS", descricao = "Aprenda a desenhar nas paredes da caverna", precoCentavos = 0L, duracaoMin = 45, idadeMin = 3, idadeMax = 10, cobranca = "POR_PESSOA", faixaEtaria = "3-10 anos"),
-            AtividadeItem(id = "3", nome = "Arco e flecha", categoria = "AVENTURA", descricao = "Aula de pontaria com monitor e equipamento", precoCentavos = 5000L, duracaoMin = 45, idadeMin = 8, cobranca = "POR_PESSOA", faixaEtaria = "8+ anos"),
-            AtividadeItem(id = "4", nome = "Trilha dos mamutes", categoria = "FAMILIA", descricao = "Caminhada guiada pelo vale dos dinos", precoCentavos = 9000L, duracaoMin = 90, idadeMin = 0, cobranca = "POR_PESSOA", faixaEtaria = "Todas idades"),
-            AtividadeItem(id = "5", nome = "Fogueira & histórias", categoria = "FAMILIA", descricao = "Contação de lendas sob as estrelas", precoCentavos = 0L, duracaoMin = 60, idadeMin = 0, cobranca = "POR_PESSOA", faixaEtaria = "Todas idades")
-        )
-        return if (categoria == "ALL") {
-            all
-        } else {
-            all.filter { it.categoria.equals(categoria, ignoreCase = true) }
         }
     }
 }

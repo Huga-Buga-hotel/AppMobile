@@ -4,13 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.lifecycle.lifecycleScope
-import com.example.hugabugahotel.data.api.ApiClient
 import com.example.hugabugahotel.data.api.SessionManager
-import com.example.hugabugahotel.data.model.NotificacaoDto
 import com.example.hugabugahotel.databinding.ActivityNotificationsBinding
 import com.example.hugabugahotel.util.LanguageManager
-import kotlinx.coroutines.launch
 
 class NotificationsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNotificationsBinding
@@ -42,32 +38,11 @@ class NotificationsActivity : AppCompatActivity() {
         binding.rvNotifications.adapter = adapter
     }
 
+    /** Notificações locais do app (ex.: alertas de vaga criados). O backend não tem caixa de notificações. */
     private fun fetchNotifications() {
-        lifecycleScope.launch {
-            val apiList = try {
-                val api = ApiClient.getApi(this@NotificationsActivity)
-                val response = api.getNotificacoes()
-                if (response.isSuccessful && response.body() != null) {
-                    response.body()!!
-                } else {
-                    emptyList()
-                }
-            } catch (e: Exception) {
-                emptyList()
-            }
-
-            val sessionManager = SessionManager(this@NotificationsActivity)
-            val localList = sessionManager.getSavedNotifications()
-            val combinedList = (localList + apiList).distinctBy { it.id ?: it.titulo }
-
-            adapter.updateData(combinedList)
-            if (combinedList.isEmpty()) {
-                binding.tvEmptyState.visibility = View.VISIBLE
-                binding.rvNotifications.visibility = View.GONE
-            } else {
-                binding.tvEmptyState.visibility = View.GONE
-                binding.rvNotifications.visibility = View.VISIBLE
-            }
-        }
+        val lista = SessionManager(this).getSavedNotifications()
+        adapter.updateData(lista)
+        binding.tvEmptyState.visibility = if (lista.isEmpty()) View.VISIBLE else View.GONE
+        binding.rvNotifications.visibility = if (lista.isEmpty()) View.GONE else View.VISIBLE
     }
 }

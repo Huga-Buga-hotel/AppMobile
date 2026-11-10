@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Agenda da sua tribo -->
+<!-- Agenda da sua tribo: os itens (café, atividades, mesa) vêm de GET /reservas/{codigo}/agenda -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -12,274 +12,23 @@
     <TextView
         android:id="@+id/tvAgendaDateEyebrow"
         style="@style/HB.Text.Eyebrow"
-        android:text="SÁBADO, 12 DE DEZEMBRO" />
+        android:text="" />
 
     <TextView
         android:id="@+id/tvAgendaTitle"
         style="@style/HB.Text.H2"
         android:text="@string/agenda_title" />
 
-    <!-- 08h -->
-    <LinearLayout style="@style/HB.AgendaRow">
-        <TextView style="@style/HB.AgendaHour" android:text="@string/agenda_8h" />
-        <LinearLayout
-            android:id="@+id/boxAgenda8h"
-            style="@style/HB.AgendaBox"
-            android:background="@drawable/bg_dashed"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/tvAgenda8hTitle"
-                    style="@style/HB.AgendaTitle"
-                    android:drawableStart="@drawable/ic_plus"
-                    android:drawablePadding="6dp"
-                    android:drawableTint="@color/hb_ink"
-                    android:text="Horário Livre" />
-                <TextView
-                    android:id="@+id/tvAgenda8hSub"
-                    style="@style/HB.Text.Muted"
-                    android:text="LIVRE" />
-            </LinearLayout>
-            <TextView
-                android:id="@+id/btnCancelAgenda8h"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_badge_red"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:text="Cancelar"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <!-- 10h -->
-    <LinearLayout style="@style/HB.AgendaRow">
-        <TextView style="@style/HB.AgendaHour" android:text="@string/agenda_10h" />
-        <LinearLayout
-            android:id="@+id/boxAgenda10h"
-            style="@style/HB.AgendaBox"
-            android:background="@drawable/bg_dashed"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/tvAgenda10hTitle"
-                    style="@style/HB.AgendaTitle"
-                    android:drawableStart="@drawable/ic_plus"
-                    android:drawablePadding="6dp"
-                    android:drawableTint="@color/hb_ink"
-                    android:text="Horário Livre" />
-                <TextView
-                    android:id="@+id/tvAgenda10hSub"
-                    style="@style/HB.Text.Muted"
-                    android:text="LIVRE" />
-            </LinearLayout>
-            <TextView
-                android:id="@+id/btnCancelAgenda10h"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_badge_red"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:text="Cancelar"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <!-- 14h -->
-    <LinearLayout style="@style/HB.AgendaRow">
-        <TextView style="@style/HB.AgendaHour" android:text="@string/agenda_14h" />
-        <LinearLayout
-            android:id="@+id/boxAgenda14h"
-            style="@style/HB.AgendaBox"
-            android:background="@drawable/bg_dashed"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/tvAgenda14hTitle"
-                    style="@style/HB.AgendaTitle"
-                    android:drawableStart="@drawable/ic_plus"
-                    android:drawablePadding="6dp"
-                    android:drawableTint="@color/hb_ink"
-                    android:text="Horário Livre" />
-                <TextView
-                    android:id="@+id/tvAgenda14hSub"
-                    style="@style/HB.Text.Muted"
-                    android:text="LIVRE" />
-            </LinearLayout>
-            <TextView
-                android:id="@+id/btnCancelAgenda14h"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_badge_red"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:text="Cancelar"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <!-- 16h -->
-    <LinearLayout style="@style/HB.AgendaRow">
-        <TextView style="@style/HB.AgendaHour" android:text="@string/agenda_16h" />
-        <LinearLayout
-            android:id="@+id/boxAgenda16h"
-            style="@style/HB.AgendaBox"
-            android:background="@drawable/bg_dashed"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/tvAgenda16hTitle"
-                    style="@style/HB.AgendaTitle"
-                    android:drawableStart="@drawable/ic_plus"
-                    android:drawablePadding="6dp"
-                    android:drawableTint="@color/hb_ink"
-                    android:text="Horário Livre" />
-                <TextView
-                    android:id="@+id/tvAgenda16hSub"
-                    style="@style/HB.Text.Muted"
-                    android:text="LIVRE" />
-            </LinearLayout>
-            <TextView
-                android:id="@+id/btnCancelAgenda16h"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_badge_red"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:text="Cancelar"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <!-- 18h -->
-    <LinearLayout style="@style/HB.AgendaRow">
-        <TextView style="@style/HB.AgendaHour" android:text="@string/agenda_18h" />
-        <LinearLayout
-            android:id="@+id/boxAgenda18h"
-            style="@style/HB.AgendaBox"
-            android:background="@drawable/bg_dashed"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/tvAgenda18hTitle"
-                    style="@style/HB.AgendaTitle"
-                    android:drawableStart="@drawable/ic_plus"
-                    android:drawablePadding="6dp"
-                    android:drawableTint="@color/hb_ink"
-                    android:text="Horário Livre" />
-                <TextView
-                    android:id="@+id/tvAgenda18hSub"
-                    style="@style/HB.Text.Muted"
-                    android:text="LIVRE" />
-            </LinearLayout>
-            <TextView
-                android:id="@+id/btnCancelAgenda18h"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_badge_red"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:text="Cancelar"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <!-- 20h -->
-    <LinearLayout style="@style/HB.AgendaRow">
-        <TextView style="@style/HB.AgendaHour" android:text="@string/agenda_20h" />
-        <LinearLayout
-            android:id="@+id/boxAgenda20h"
-            style="@style/HB.AgendaBox"
-            android:background="@drawable/bg_dashed"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/tvAgenda20hTitle"
-                    style="@style/HB.AgendaTitle"
-                    android:drawableStart="@drawable/ic_plus"
-                    android:drawablePadding="6dp"
-                    android:drawableTint="@color/hb_ink"
-                    android:text="Horário Livre" />
-                <TextView
-                    android:id="@+id/tvAgenda20hSub"
-                    style="@style/HB.Text.Muted"
-                    android:text="LIVRE" />
-            </LinearLayout>
-            <TextView
-                android:id="@+id/btnCancelAgenda20h"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_badge_red"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:text="Cancelar"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
-        </LinearLayout>
-    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layoutAgendaItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
 
     <TextView
+        android:id="@+id/tvAgendaEmpty"
         style="@style/HB.Text.Muted"
-        android:layout_marginTop="@dimen/gap_s"
-        android:text="@string/agenda_note"
-        android:textSize="11sp" />
+        android:layout_marginTop="@dimen/gap_m"
+        android:text="Nada agendado para este dia ainda."
+        android:visibility="gone" />
 </LinearLayout>
