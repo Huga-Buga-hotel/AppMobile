@@ -33,7 +33,7 @@
                 style="@style/HB.Text.H1"
                 android:text="Ajuda da Tribo" />
 
-            <!-- Chatbot Card (Falar com a Xamã) -->
+            <!-- Chatbot Card (Falar com o Bugão) -->
             <LinearLayout
                 android:id="@+id/cardChatXama"
                 android:layout_width="match_parent"
@@ -60,7 +60,7 @@
 
                     <TextView
                         style="@style/HB.Text"
-                        android:text="Falar com a Xamã via Chat"
+                        android:text="Falar com o Bugão via chat"
                         android:textStyle="bold" />
 
                     <TextView

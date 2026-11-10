@@ -5,6 +5,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.hugabugahotel.data.api.ApiClient
+import com.example.hugabugahotel.util.Mascaras
+import com.example.hugabugahotel.util.Mascaras.mascaraCpf
+import com.example.hugabugahotel.util.Mascaras.mascaraTelefone
 import com.example.hugabugahotel.data.api.ApiErrors
 import com.example.hugabugahotel.data.model.UpdateProfileRequest
 import com.example.hugabugahotel.databinding.ActivityEditProfileBinding
@@ -18,6 +21,7 @@ class EditProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityEditProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.etPhone.mascaraTelefone()
 
         binding.appBar.root.setOnClickListener {
             finish()
@@ -57,6 +61,10 @@ class EditProfileActivity : AppCompatActivity() {
 
         if (name.isEmpty()) {
             Toast.makeText(this, "O nome não pode estar vazio", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (phone.isNotEmpty() && Mascaras.digitos(phone).length !in 10..11) {
+            Toast.makeText(this, "Informe o celular com DDD: (00) 00000-0000", Toast.LENGTH_SHORT).show()
             return
         }
 

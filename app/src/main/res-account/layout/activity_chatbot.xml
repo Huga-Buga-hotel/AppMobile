@@ -44,9 +44,22 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/bg_input_field"
-            android:hint="Fale com a Xamã..."
+            android:hint="Pergunte ao Bugão..."
+            android:imeOptions="actionSend"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLength="1000"
+            android:maxLines="4"
             android:padding="12dp"
             android:textSize="14sp" />
+
+        <ImageButton
+            android:id="@+id/btnMic"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_chip"
+            android:contentDescription="Gravar mensagem de voz"
+            android:src="@drawable/ic_mic" />
 
         <Button
             android:id="@+id/btnSendMessage"

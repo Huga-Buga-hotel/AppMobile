@@ -177,12 +177,21 @@ interface HugaBugaApi {
     @POST("alertas-vaga")
     suspend fun criarAlertaVaga(@Body body: AlertaVagaRequest): Response<Unit>
 
-    // --- Chatbot / Xamã (contrato provisório, ver ChatDtos) ---
+    // --- Chatbot (Bugão), via backend: ver ChatDtos ---
     @POST("chat")
     suspend fun enviarMensagemChatbot(@Body body: ChatbotRequest): Response<ChatbotResponse>
 
-    @DELETE("chat/{id_sessao}")
-    suspend fun limparHistoricoChat(@Path("id_sessao") idSessao: String): Response<Unit>
+    /** audio: m4a/AAC; idioma: dica opcional ("pt", "en", "es"). */
+    @Multipart
+    @POST("chat/audio")
+    suspend fun enviarAudioChatbot(
+        @Part audio: MultipartBody.Part,
+        @Part("idSessao") idSessao: RequestBody,
+        @Part("idioma") idioma: RequestBody?
+    ): Response<ChatbotAudioResponse>
+
+    @DELETE("chat/{idSessao}")
+    suspend fun limparHistoricoChat(@Path("idSessao") idSessao: String): Response<Unit>
 
     // --- Restaurante O Banquete ---
     @GET("restaurante")

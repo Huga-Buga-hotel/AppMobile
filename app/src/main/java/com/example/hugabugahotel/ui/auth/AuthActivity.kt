@@ -18,6 +18,9 @@ import com.example.hugabugahotel.data.model.*
 import com.example.hugabugahotel.databinding.ActivityAuthBinding
 import com.example.hugabugahotel.ui.home.HomeActivity
 import com.example.hugabugahotel.util.LanguageManager
+import com.example.hugabugahotel.util.Mascaras
+import com.example.hugabugahotel.util.Mascaras.mascaraCpf
+import com.example.hugabugahotel.util.Mascaras.mascaraTelefone
 import kotlinx.coroutines.launch
 
 class AuthActivity : AppCompatActivity() {
@@ -30,6 +33,8 @@ class AuthActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.etPhone.mascaraTelefone()
+        binding.etDocument.mascaraCpf()
 
         setupTabs()
         setupListeners()
@@ -164,7 +169,7 @@ class AuthActivity : AppCompatActivity() {
             partes.size < 2 -> return aviso("Informe nome e sobrenome")
             email.isEmpty() -> return aviso("Informe o e-mail")
             senha.length < 8 -> return aviso("A senha precisa ter pelo menos 8 caracteres")
-            celular.isEmpty() -> return aviso("Informe o celular")
+            Mascaras.digitos(celular).length !in 10..11 -> return aviso("Informe o celular com DDD: (00) 00000-0000")
             cpf.length != 11 -> return aviso("Informe um CPF com 11 dígitos")
         }
 

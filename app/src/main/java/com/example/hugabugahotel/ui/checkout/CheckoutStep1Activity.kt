@@ -12,6 +12,9 @@ import com.example.hugabugahotel.R
 import com.example.hugabugahotel.data.api.ApiClient
 import com.example.hugabugahotel.data.api.ApiErrors
 import com.example.hugabugahotel.util.Formatos
+import com.example.hugabugahotel.util.Mascaras
+import com.example.hugabugahotel.util.Mascaras.mascaraCpf
+import com.example.hugabugahotel.util.Mascaras.mascaraTelefone
 import com.example.hugabugahotel.data.api.SessionManager
 import com.example.hugabugahotel.data.model.HospedeDto
 import com.example.hugabugahotel.data.model.HospedesRequest
@@ -37,6 +40,8 @@ class CheckoutStep1Activity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCheckoutStep1Binding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.etPhone.mascaraTelefone()
+        binding.etDocument.mascaraCpf()
 
         reservaCodigo = intent.getStringExtra("RESERVA_CODIGO") ?: run { finish(); return }
         checkInDisplay = intent.getStringExtra("CHECK_IN") ?: "12 out"
@@ -212,7 +217,7 @@ class CheckoutStep1Activity : AppCompatActivity() {
         val erro = when {
             nomeInput.isEmpty() -> "Preencha o nome do responsável"
             !android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput).matches() -> "Preencha um e-mail válido"
-            phoneInput.isEmpty() -> "Preencha o celular do responsável"
+            Mascaras.digitos(phoneInput).length !in 10..11 -> "Preencha o celular com DDD: (00) 00000-0000"
             cpf.length != 11 -> "Preencha o CPF do responsável (11 dígitos)"
             else -> null
         }

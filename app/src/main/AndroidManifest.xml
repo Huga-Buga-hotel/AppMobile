@@ -3,8 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Mensagens de voz para o chatbot (pedida só quando o usuário toca no microfone) -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
+        android:name=".HugaBugaApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"

@@ -41,6 +41,7 @@ class HomeActivity : AppCompatActivity() {
 
         setupNavigation()
         setupSearchCard()
+        binding.tvMarqueeBanner.isSelected = true // o marquee só anda com a view selecionada
         fetchTribeMembersFromProfile()
     }
 

@@ -19,6 +19,7 @@ object LanguageManager {
     fun updateBottomNavLanguage(activity: Activity, bottomNav: BottomNavigationView?) {
         bottomNav?.menu?.findItem(R.id.nav_home)?.title = get(activity, "nav_home")
         bottomNav?.menu?.findItem(R.id.nav_caverns)?.title = get(activity, "nav_caverns")
+        bottomNav?.menu?.findItem(R.id.nav_experiences)?.title = get(activity, "nav_experiences")
         bottomNav?.menu?.findItem(R.id.nav_reservations)?.title = get(activity, "nav_reservations")
         bottomNav?.menu?.findItem(R.id.nav_profile)?.title = get(activity, "nav_profile")
     }
@@ -82,6 +83,7 @@ object LanguageManager {
             "fav_removed" -> "Removida dos favoritos"
             "nav_home" -> "Início"
             "nav_caverns" -> "Cavernas"
+            "nav_experiences" -> "Aventuras"
             "nav_reservations" -> "Reservas"
             "nav_profile" -> "Perfil"
             "tab_upcoming" -> "Próximas"
@@ -115,7 +117,7 @@ object LanguageManager {
             "favorite_caverns" -> "Cavernas Preferidas da Caçada"
             "notifications" -> "Sinais de Fumaça (Notificações)"
             "language" -> "Língua dos Antigos · Uga-Uga"
-            "help" -> "Socorro da Xamã (Ajuda)"
+            "help" -> "Socorro do Bugão (Ajuda)"
             "logout" -> "Fugir da Caverna"
             "edit" -> "Polir"
             "add" -> "+ Juntar"
@@ -123,7 +125,7 @@ object LanguageManager {
             "favorite_caverns_title" -> "Cavernas Preferidas"
             "notifications_title" -> "Sinais de Fumaça da Tribo"
             "language_title" -> "Língua dos Antigos"
-            "help_title" -> "Socorro da Xamã"
+            "help_title" -> "Socorro do Bugão"
             "empty_payments" -> "Nenhuma pedra trocada ainda 🪨"
             "empty_favorites" -> "Nenhuma caverna na mira do porrete 🪨"
             "empty_notifications" -> "Nenhum sinal de fumaça no horizonte 🪨"
@@ -159,6 +161,7 @@ object LanguageManager {
             "fav_removed" -> "Tirada da mira"
             "nav_home" -> "Início"
             "nav_caverns" -> "Cavernas"
+            "nav_experiences" -> "Caçadas"
             "nav_reservations" -> "Tocas"
             "nav_profile" -> "Toca"
             "tab_upcoming" -> "Futuras"
@@ -236,6 +239,7 @@ object LanguageManager {
             "fav_removed" -> "Removed from favorites"
             "nav_home" -> "Home"
             "nav_caverns" -> "Caverns"
+            "nav_experiences" -> "Adventures"
             "nav_reservations" -> "Bookings"
             "nav_profile" -> "Profile"
             "tab_upcoming" -> "Upcoming"
